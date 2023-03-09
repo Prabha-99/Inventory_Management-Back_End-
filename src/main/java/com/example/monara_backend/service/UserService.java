@@ -1,9 +1,7 @@
 package com.example.monara_backend.service;
 
-import org.springframework.http.ResponseEntity;
-
-import java.util.Map;
+import com.example.monara_backend.DTO.UserDto;
 
 public interface UserService {
-    ResponseEntity<String> signUp(Map<String,String> requestMap);
+    public String saveUser(UserDto userDto);
 }
