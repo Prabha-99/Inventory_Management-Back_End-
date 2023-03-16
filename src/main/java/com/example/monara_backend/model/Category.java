@@ -1,5 +1,6 @@
 package com.example.monara_backend.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -11,13 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "products")
-public class Product {
+@Table(name = "category")
+public class Category {
     @Id
-    private int product_id;
     private String category_id;
-    private String product_brand;
-    private String product_name;
-    private double product_price;
-    private int product_quantity;
+    private String category_name;
 }
