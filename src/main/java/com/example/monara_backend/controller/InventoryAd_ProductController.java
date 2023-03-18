@@ -50,7 +50,7 @@ public class InventoryAd_ProductController {
         }
     }
 
-    @PutMapping(value = "/updateProduct")
+    @PutMapping(value = "/updateProduct") //Update products
     public ResponseEntity updateProduct(@RequestBody InventoryAd_ProductDto inventoryAd_productDto){
 
         try{
@@ -97,7 +97,7 @@ public class InventoryAd_ProductController {
         }
     }
 
-    @GetMapping("/searchProduct/{productID}")
+    @GetMapping("/searchProduct/{productID}") //Get searched product
     public ResponseEntity searchProduct(@PathVariable int productID){
         try{
             InventoryAd_ProductDto inventoryAd_productDto = inventoryAd_productService.searchProduct(productID);
@@ -121,7 +121,7 @@ public class InventoryAd_ProductController {
     }
 
 
-    @DeleteMapping("/deleteProduct/{productID}")
+    @DeleteMapping("/deleteProduct/{productID}") //delete a product
     public ResponseEntity deleteProduct(@PathVariable int productID){
         try{
             String res = inventoryAd_productService.deleteProduct(productID);
