@@ -18,7 +18,7 @@ public class StockManager_ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
-    public String saveEmployee(StockManager_ProductDto stockManager_productDto){
+    public String saveProduct(StockManager_ProductDto stockManager_productDto){
         if(stockManager_productRepo.existsById(stockManager_productDto.getProduct_id())){
             return VarList.RSP_DUPLICATED;
         }else{
