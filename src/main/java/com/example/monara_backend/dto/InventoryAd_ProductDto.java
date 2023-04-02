@@ -1,18 +1,15 @@
-package com.example.monara_backend.model;
 
-import jakarta.persistence.*;
+//Inventory Admin productDTO
+package com.example.monara_backend.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Table(name = "products")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class InventoryAd_ProductDto {
     private int product_id;
     private String category_id;
     private String product_brand;
