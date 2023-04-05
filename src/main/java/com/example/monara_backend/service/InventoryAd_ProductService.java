@@ -74,4 +74,10 @@ public class InventoryAd_ProductService {
             return VarList.RSP_NO_DATA_FOUND;
         }
     }
+
+    //Count of Product
+
+    public long getProductCount(){
+        return inventoryAd_productRepo.count();
+    }
 }
