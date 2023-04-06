@@ -5,17 +5,16 @@ import com.example.monara_backend.model.Role;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.RoleRepo;
 import com.example.monara_backend.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class userService {
+public class UserService {
     private UserRepo userRepo;
     private RoleRepo roleRepo;
 
-    public userService(UserRepo userRepo, RoleRepo roleRepo) {
+    public UserService(UserRepo userRepo, RoleRepo roleRepo) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
     }
