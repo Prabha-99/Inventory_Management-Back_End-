@@ -6,13 +6,20 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        }
+)
 public class User {
 
     @Id
@@ -21,17 +28,25 @@ public class User {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false , unique = true)
-    private String user_name;
+    private String username;
     @Column(nullable = false , unique = true)
-    private String user_email;
+    private String email;
     @Column(nullable = false)
-    private String user_password;
+    private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
-            name = "users_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "roles_id", referencedColumnName = "id")}
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "roles_id")}
     )
-    private List<Role> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
+
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
 }
