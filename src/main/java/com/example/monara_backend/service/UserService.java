@@ -3,8 +3,8 @@ package com.example.monara_backend.service;
 import com.example.monara_backend.dto.UserDto;
 import com.example.monara_backend.model.Role;
 import com.example.monara_backend.model.User;
-import com.example.monara_backend.repository.RoleRepo;
-import com.example.monara_backend.repository.UserRepo;
+import com.example.monara_backend.repository.RoleRepository;
+import com.example.monara_backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private UserRepo userRepo;
-    private RoleRepo roleRepo;
+    private UserRepository userRepo;
+    private RoleRepository roleRepo;
 
-    public UserService(UserRepo userRepo, RoleRepo roleRepo) {
+    public UserService(UserRepository userRepo, RoleRepository roleRepo) {
         this.userRepo = userRepo;
         this.roleRepo = roleRepo;
     }
