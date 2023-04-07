@@ -2,7 +2,6 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.UserDto;
 import com.example.monara_backend.model.User;
-import com.example.monara_backend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
