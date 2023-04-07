@@ -29,6 +29,10 @@ public class WebSecurityConfig {
         this.userDetailsService = userDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
     }
+
+    public WebSecurityConfig() {
+    }
+
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();

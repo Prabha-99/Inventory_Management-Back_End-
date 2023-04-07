@@ -25,6 +25,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
     }
+
+    public AuthTokenFilter() {
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
