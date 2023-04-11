@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "products")
 public class Product {
     @Id
-    private String product_id;
+    private int product_id;
     private String category_id;
     private String product_name;
     private String product_brand;
