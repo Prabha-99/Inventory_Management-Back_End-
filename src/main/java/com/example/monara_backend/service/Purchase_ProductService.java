@@ -30,4 +30,10 @@ public class Purchase_ProductService {
         List<Product>productList=purchase_productRepo.findAll();
         return modelMapper.map(productList,new TypeToken<List<Purchase_ProductDto>>(){}.getType());
     }
+    public  Purchase_ProductDto updateProduct(Purchase_ProductDto purchase_productDto){
+
+        purchase_productRepo.save(modelMapper.map(purchase_productDto, Product.class));
+        return purchase_productDto;
+
+    }
 }

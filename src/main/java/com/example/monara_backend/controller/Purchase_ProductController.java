@@ -22,4 +22,9 @@ public class Purchase_ProductController {
     public List<Purchase_ProductDto> getUser(){
         return purchase_productService.getAllProducts();
     }
+    @PutMapping("/updateProduct")
+    public Purchase_ProductDto updateProduct(@RequestBody Purchase_ProductDto purchase_productDto){
+        return purchase_productService.updateProduct(purchase_productDto);
+
+    }
 }
