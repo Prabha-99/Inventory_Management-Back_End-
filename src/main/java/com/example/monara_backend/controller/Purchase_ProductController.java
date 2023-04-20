@@ -5,6 +5,8 @@ import com.example.monara_backend.service.Purchase_ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/v1/user")
 @CrossOrigin
@@ -15,5 +17,9 @@ public class Purchase_ProductController {
     @PostMapping("/saveProduct")
     public Purchase_ProductDto saveProduct(@RequestBody Purchase_ProductDto purchase_productDto){
         return purchase_productService.saveProduct(purchase_productDto);
+    }
+    @GetMapping("/getProduct")
+    public List<Purchase_ProductDto> getUser(){
+        return purchase_productService.getAllProducts();
     }
 }
