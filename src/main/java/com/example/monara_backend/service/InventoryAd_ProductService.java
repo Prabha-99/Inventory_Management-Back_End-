@@ -2,6 +2,7 @@ package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.InventoryAd_ProductDto;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.repository.InventoryAd_CategoryRepo;
 import com.example.monara_backend.repository.InventoryAd_ProductRepo;
 import com.example.monara_backend.util.VarList;
 import org.modelmapper.ModelMapper;
@@ -20,6 +21,9 @@ public class InventoryAd_ProductService {
     //Inject
     @Autowired
     private InventoryAd_ProductRepo inventoryAd_productRepo;
+
+    @Autowired
+    private InventoryAd_CategoryRepo inventoryAd_categoryRepo;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -73,5 +77,11 @@ public class InventoryAd_ProductService {
         }else{
             return VarList.RSP_NO_DATA_FOUND;
         }
+    }
+
+    //Count of Product
+
+    public long getProductCount(){
+        return inventoryAd_productRepo.count();
     }
 }

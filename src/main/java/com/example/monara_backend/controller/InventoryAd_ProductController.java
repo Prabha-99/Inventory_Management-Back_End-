@@ -144,4 +144,11 @@ public class InventoryAd_ProductController {
         }
     }
 
+    //To get count of product
+
+    @GetMapping("/productCount")
+    public long getProductCount(){
+        return inventoryAd_productService.getProductCount();
+    }
+
 }
