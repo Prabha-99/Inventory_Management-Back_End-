@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "category")
 public class Category {
     @Id
-    private int category_id;
+    private String category_id;
     private String category_name;
 
 
