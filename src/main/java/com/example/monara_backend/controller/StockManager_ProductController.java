@@ -21,7 +21,7 @@ public class StockManager_ProductController {
 
     @Autowired
     private StockManager_ResponseDto stockManager_responseDto;
-    @PostMapping("saveProduct")
+    @PostMapping("saveProduct")//Add product
     public ResponseEntity saveProduct(@RequestBody StockManager_ProductDto stockManager_productDto){
         try{
             String res = stockManager_productService.saveProduct(stockManager_productDto);
