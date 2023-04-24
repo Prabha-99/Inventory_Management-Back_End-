@@ -1,11 +1,14 @@
 package com.example.monara_backend.service;
 
+import com.example.monara_backend.Configuration.AuthenticationRequest;
+import com.example.monara_backend.Configuration.AuthenticationResponse;
+import com.example.monara_backend.Configuration.RegisterRequest;
 import com.example.monara_backend.model.Role;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +33,6 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .Token(jwtToken)
                 .build();
-
-
-
     }
 
 
