@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class Purchase_CategoryService {
 
-    public String saveCategory
+    public String saveCategory;
 }
