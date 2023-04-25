@@ -1,5 +1,8 @@
 package com.example.monara_backend.controller;
 
+import com.example.monara_backend.model.Report;
+import com.example.monara_backend.repository.ReportRepo;
+import com.example.monara_backend.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
