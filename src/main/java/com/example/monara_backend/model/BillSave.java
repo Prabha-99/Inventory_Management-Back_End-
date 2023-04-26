@@ -14,18 +14,18 @@ import java.sql.Date;
 @Table(name="billsave")
 public class BillSave {
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bill_id;
     private String qu_no;
-    private Date st_date;
-    private Date end_date;
+    private String st_date;
+    private String end_date;
     private String cu_name;
     private String cu_address;
     private String cu_tele;
     private String other;
+    private String material;
     private double quantity;
     private double unit_price;
-    private double amount;
     private double discount;
     private double subamount;
     private double total_amount;
