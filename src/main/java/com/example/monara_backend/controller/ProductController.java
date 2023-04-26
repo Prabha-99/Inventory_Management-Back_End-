@@ -23,6 +23,7 @@ public class ProductController {
     @Autowired
     private ResponseDto responseDto;
 
+    // Beginning of the Inventory Admin
     @PostMapping(value = "/saveProduct")    //Add products
     public ResponseEntity saveProduct(@RequestBody ProductDto productDto){
         try{
@@ -146,9 +147,10 @@ public class ProductController {
     }
 
     //To get count of product
-
     @GetMapping("/productCount")
     public long getProductCount(){
         return productService.getProductCount();
     }
+
+    //End of Inventory Admin
 }

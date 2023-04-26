@@ -15,8 +15,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    // Beginning of the Inventory Admin
     @GetMapping("/categoryCount")
     public long getCategoryCount(){
         return categoryService.getCategoryCount();
     }
+
+    //End of Inventory Admin
 }

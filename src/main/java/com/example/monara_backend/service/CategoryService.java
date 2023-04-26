@@ -15,10 +15,11 @@ public class CategoryService {
         this.categoryRepo = categoryRepo;
         this.modelMapper = modelMapper;
     }
-
+    // Beginning of the Inventory Admin
     //Count category
     public long getCategoryCount(){
 
         return categoryRepo.count();
     }
+    //End of the Inventory Admin
 }

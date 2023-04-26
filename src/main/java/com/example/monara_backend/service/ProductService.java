@@ -27,6 +27,7 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
+    // Beginning of the Inventory Admin
     //Add products to database
     public String saveProduct(ProductDto productDto){
         //Check the data exist or not in the database
@@ -83,4 +84,6 @@ public class ProductService {
     public long getProductCount(){
         return productRepo.count();
     }
+
+    //End of the Inventory Admin
 }
