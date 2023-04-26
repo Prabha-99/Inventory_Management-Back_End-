@@ -2,7 +2,7 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
-import com.example.monara_backend.service.InventoryAd_ProductService;
+import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/product")
 
-public class InventoryAd_ProductController {
+public class ProductController {
 
     @Autowired
-    private InventoryAd_ProductService inventoryAd_productService;
+    private ProductService productService;
 
     @Autowired
     private ResponseDto responseDto;
@@ -26,7 +26,7 @@ public class InventoryAd_ProductController {
     @PostMapping(value = "/saveProduct")    //Add products
     public ResponseEntity saveProduct(@RequestBody ProductDto productDto){
         try{
-            String res = inventoryAd_productService.saveProduct(productDto);
+            String res = productService.saveProduct(productDto);
             if (res.equals("00")){
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
@@ -55,7 +55,7 @@ public class InventoryAd_ProductController {
     public ResponseEntity updateProduct(@RequestBody ProductDto productDto){
 
         try{
-            String res = inventoryAd_productService.updateProduct(productDto);
+            String res = productService.updateProduct(productDto);
             if (res.equals("00")){
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
@@ -84,7 +84,7 @@ public class InventoryAd_ProductController {
     @GetMapping("/getAllProduct") //Get all products from database
     public ResponseEntity geAllProduct(){
         try{
-            List<ProductDto> productDtoList = inventoryAd_productService.getAllProduct();
+            List<ProductDto> productDtoList = productService.getAllProduct();
             responseDto.setCode(VarList.RSP_SUCCESS);
             responseDto.setMessage("Success");
             responseDto.setContent(productDtoList);
@@ -101,7 +101,7 @@ public class InventoryAd_ProductController {
     @GetMapping("/searchProduct/{productID}") //Get searched product
     public ResponseEntity searchProduct(@PathVariable int productID){
         try{
-            ProductDto productDto = inventoryAd_productService.searchProduct(productID);
+            ProductDto productDto = productService.searchProduct(productID);
             if (productDto != null){
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
@@ -125,7 +125,7 @@ public class InventoryAd_ProductController {
     @DeleteMapping("/deleteProduct/{productID}") //delete a product
     public ResponseEntity deleteProduct(@PathVariable int productID){
         try{
-            String res = inventoryAd_productService.deleteProduct(productID);
+            String res = productService.deleteProduct(productID);
             if (res.equals("00")){
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Successfully Deleted");
@@ -149,6 +149,6 @@ public class InventoryAd_ProductController {
 
     @GetMapping("/productCount")
     public long getProductCount(){
-        return inventoryAd_productService.getProductCount();
+        return productService.getProductCount();
     }
 }

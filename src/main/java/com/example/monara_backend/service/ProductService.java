@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class InventoryAd_ProductService {
+public class ProductService {
     //Inject
     @Autowired
     private ProductRepo productRepo;
