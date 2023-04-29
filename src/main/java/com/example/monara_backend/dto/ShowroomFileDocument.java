@@ -40,4 +40,19 @@ public class ShowroomFileDocument {
     public void setDocfile(byte[] docfile) {
         this.docfile = docfile;
     }
+
+    public void setFileName(String name) {
+
+    }
+
+    public void setShowroomDocFile(byte[] bytes) {
+    }
+
+    public String getFileName() {
+        return null;
+    }
+
+    public Object getDocFile() {
+        return null;
+    }
 }

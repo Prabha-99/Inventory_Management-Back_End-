@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShowroomDocFile extends CrudRepository <ShowroomFileDocument,Long> {
 
-    ShowroomFileDocument findByFileName(String fileName);
+    static ShowroomFileDocument findByFileName(String fileName) {
+        return null;
+    }
 }
