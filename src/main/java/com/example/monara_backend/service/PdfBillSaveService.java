@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,7 +27,14 @@ public class PdfBillSaveService {
         return pdfFileRepository.save(pdfFile);
     }
 
-    public List<PdfBillSave> getAllEntities() {
-        return pdfFileRepository.findAll();
+    public byte[] getAllPdfs() throws IOException {
+        List<PdfBillSave> pdfs = pdfFileRepository.findAll();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        for (PdfBillSave pdf : pdfs) {
+            outputStream.write(pdf.getContent());
+        }
+
+        return outputStream.toByteArray();
     }
 }
