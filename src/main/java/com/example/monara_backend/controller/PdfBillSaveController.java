@@ -2,7 +2,6 @@ package com.example.monara_backend.controller;
 
 
 import com.example.monara_backend.model.PdfBillSave;
-import com.example.monara_backend.repository.PdfBillRepo;
 import com.example.monara_backend.service.PdfBillSaveService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Base64;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,7 +26,7 @@ public class PdfBillSaveController {
     }
 
     @PostMapping("/pdf")
-    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("print-section") MultipartFile file) {
+    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("jsPDF-file") MultipartFile file) {
         try {
             PdfBillSave pdfFile = pdfFileService.uploadPdf(file);
             return ResponseEntity.status(HttpStatus.CREATED).body(pdfFile);
@@ -35,22 +35,13 @@ public class PdfBillSaveController {
         }
     }
 
-    @GetMapping(value = "/viewpdf", produces = "text/html")
-    public ResponseEntity<String> getAllPdfAsHtml() {
-        List<PdfBillSave> entities = pdfFileService.getAllEntities();
-
-        StringBuilder htmlBuilder = new StringBuilder();
-        for (PdfBillSave entity : entities) {
-            byte[] data = entity.getContent();
-            String base64Data = Base64.getEncoder().encodeToString(data);
-            String htmlElement = "<embed src=\"data:application/pdf;base64," + base64Data + "\" type=\"application/pdf\" width=\"100%\" height=\"600px\">";
-            htmlBuilder.append(htmlElement);
-        }
+    @GetMapping(value = "/view", produces = "application/pdf")
+    public ResponseEntity<byte[]> viewAllPdfs() throws IOException {
+        byte[] pdfData = pdfFileService.getAllPdfs();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_HTML);
-        headers.setContentLength(htmlBuilder.length());
-        return new ResponseEntity<>(htmlBuilder.toString(), headers, HttpStatus.OK);
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentLength(pdfData.length);
+        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
     }
-
 }
