@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/reports/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()
+                .requestMatchers("/api/file/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

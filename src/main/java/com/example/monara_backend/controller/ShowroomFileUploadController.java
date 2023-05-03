@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/api/file")
 public class ShowroomFileUploadController {
 
     private ShowroomDocFile showroomDocFile;
