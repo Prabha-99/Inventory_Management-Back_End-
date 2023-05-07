@@ -15,9 +15,6 @@ public class BillSaveService {
     public BillSave saveFormData(BillSave billSave) {
         return billSaveRepo.save(billSave);
     }
-   /* public BillSave savebill(BillSave billSave) {
-        return billSaveRepo.save(billSave);
-    }*/
 
 }
 

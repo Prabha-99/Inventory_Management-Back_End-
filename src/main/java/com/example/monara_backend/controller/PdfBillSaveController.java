@@ -3,15 +3,11 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.service.PdfBillSaveService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,11 +15,9 @@ import java.util.List;
 @RequestMapping("api/bill")
 public class PdfBillSaveController {
 
-    private final PdfBillSaveService pdfFileService;
+    @Autowired
+    private PdfBillSaveService pdfFileService;
 
-    public PdfBillSaveController(PdfBillSaveService pdfFileService) {
-        this.pdfFileService = pdfFileService;
-    }
 
     @PostMapping("/pdf")
     public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("jsPDF-file") MultipartFile file) {
@@ -35,13 +29,22 @@ public class PdfBillSaveController {
         }
     }
 
-    @GetMapping(value = "/view", produces = "application/pdf")
-    public ResponseEntity<byte[]> viewAllPdfs() throws IOException {
-        byte[] pdfData = pdfFileService.getAllPdfs();
 
+    @GetMapping("/view")
+    public List<PdfBillSave> getAllPDFs() {
+        return pdfFileService.getAllPDFs();
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<byte[]> getPDFContent(@PathVariable Integer id) {
+        PdfBillSave pdf = pdfFileService.getPDFById(id);
+        if (pdf == null) {
+            return ResponseEntity.notFound().build();
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentLength(pdfData.length);
-        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+        headers.setContentDisposition(ContentDisposition.builder("inline").filename(pdf.getId() + ".pdf").build());
+        return new ResponseEntity<>(pdf.getContent(), headers, HttpStatus.OK);
     }
 }

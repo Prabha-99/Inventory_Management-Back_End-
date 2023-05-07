@@ -1,11 +1,11 @@
 package com.example.monara_backend.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 
 @NoArgsConstructor
 @Data
@@ -13,7 +13,10 @@ import java.sql.Date;
 @Entity
 @Table(name="billsave")
 public class BillSave {
+
     @Id
+
+
    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bill_id;
     private String qu_no;
@@ -23,15 +26,9 @@ public class BillSave {
     private String cu_address;
     private String cu_tele;
     private String other;
-    private String material;
-    private double quantity;
-    private double unit_price;
-    private double discount;
     private double subamount;
     private double total_amount;
     private String note;
-    private double vat;
-
 
 
 }
