@@ -24,8 +24,13 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+
                 .requestMatchers("api/bill/**").permitAll()
                 .requestMatchers("api/billdata/**").permitAll()
+
+
+                .requestMatchers("/api/reports/**").permitAll()
+                .requestMatchers("/api/product/**").permitAll()
 
                 .anyRequest().authenticated()
                 .and()
