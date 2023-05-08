@@ -30,8 +30,8 @@ public class PdfBillSaveService {
                 .map(pdf -> new PdfBillSave(pdf.getId(), pdf.getContent()))
                 .collect(Collectors.toList());
     }
-    public PdfBillSave getPDFById(Integer id) {
-        Optional<PdfBillSave> optionalPDF = pdfFileRepository.findById(id);
-        return optionalPDF.orElse(null);
-    }
+//    public PdfBillSave getPDFById(Integer id) {
+//        Optional<PdfBillSave> optionalPDF = pdfFileRepository.findById(id);
+//        return optionalPDF.orElse(null);
+//    }
 }

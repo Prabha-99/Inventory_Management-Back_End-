@@ -1,8 +1,6 @@
 package com.example.monara_backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +12,9 @@ import lombok.NoArgsConstructor;
 @Table(name="billsave")
 public class BillSave {
 
-    @Id
+   @Id
 
-
-   //@GeneratedValue(strategy = GenerationType.IDENTITY)
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bill_id;
     private String qu_no;
     private String st_date;

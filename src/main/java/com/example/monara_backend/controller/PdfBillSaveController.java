@@ -36,15 +36,15 @@ public class PdfBillSaveController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> getPDFContent(@PathVariable Integer id) {
-        PdfBillSave pdf = pdfFileService.getPDFById(id);
-        if (pdf == null) {
-            return ResponseEntity.notFound().build();
-        }
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDisposition(ContentDisposition.builder("inline").filename(pdf.getId() + ".pdf").build());
-        return new ResponseEntity<>(pdf.getContent(), headers, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<byte[]> getPDFContent(@PathVariable Integer id) {
+//        PdfBillSave pdf = pdfFileService.getPDFById(id);
+//        if (pdf == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_PDF);
+//        headers.setContentDisposition(ContentDisposition.builder("inline").filename(pdf.getId() + ".pdf").build());
+//        return new ResponseEntity<>(pdf.getContent(), headers, HttpStatus.OK);
+//    }
 }
