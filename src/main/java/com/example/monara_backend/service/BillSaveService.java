@@ -24,6 +24,10 @@ public class BillSaveService {
         return billSaveRepo.findAll();
     }
 
+    public void deleteBill(Integer bill_id) {
+        billSaveRepo.deleteById(bill_id);
+    }
+
 }
 
 
