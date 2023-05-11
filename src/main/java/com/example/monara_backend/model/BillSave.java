@@ -23,7 +23,6 @@ public class BillSave {
     private String cu_address;
     private String cu_tele;
     private String other;
-    private double subamount;
     private double total_amount;
     private String note;
 
