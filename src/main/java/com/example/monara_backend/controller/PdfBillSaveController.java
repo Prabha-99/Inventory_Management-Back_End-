@@ -17,8 +17,7 @@ public class PdfBillSaveController {
 
     @Autowired
     private PdfBillSaveService pdfFileService;
-
-
+    
     @PostMapping("/pdf")
     public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("jsPDF-file") MultipartFile file) {
         try {
@@ -28,7 +27,6 @@ public class PdfBillSaveController {
             return ResponseEntity.badRequest().build();
         }
     }
-
 
     @GetMapping("/view")
     public List<PdfBillSave> getAllPDFs() {
