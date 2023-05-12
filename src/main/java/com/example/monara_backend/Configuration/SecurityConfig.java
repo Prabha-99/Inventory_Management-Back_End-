@@ -24,16 +24,9 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
-
-                .requestMatchers("api/bill/**").permitAll()
-                .requestMatchers("api/billdata/**").permitAll()
-
-
                 .requestMatchers("/api/reports/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()
-
                 .requestMatchers("/api/v1/category/**").permitAll()
-
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
