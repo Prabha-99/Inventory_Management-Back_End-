@@ -1,5 +1,6 @@
 package com.example.monara_backend.Configuration;
 
+import com.example.monara_backend.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +22,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
+                .requestMatchers("/api/user/inventory_admin").hasRole(Role.INVENTORY_ADMIN.name())
+                .requestMatchers("/api/user/stock_manager").hasRole(Role.STOCK_MANAGER.name())
+                .requestMatchers("/api/user/purchase_coordinator").hasRole(Role.PURCHASE_COORDINATOR.name())
+                .requestMatchers("/api/user/stock_keeper").hasRole(Role.STOCK_KEEPER.name())
+                .requestMatchers("/api/user/designer").hasRole(Role.DESIGNER.name())
+                .requestMatchers("/api/user/showroom_manager").hasRole(Role.SHOWROOM_MANAGER.name())
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
