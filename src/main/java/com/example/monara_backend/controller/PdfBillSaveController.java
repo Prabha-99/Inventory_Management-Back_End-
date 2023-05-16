@@ -3,11 +3,17 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.service.PdfBillSaveService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,7 +25,7 @@ public class PdfBillSaveController {
     private PdfBillSaveService pdfFileService;
     
     @PostMapping("/pdf")
-    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("jsPDF-file") MultipartFile file) {
+    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("html2pdf-file") MultipartFile file) {
         try {
             PdfBillSave pdfFile = pdfFileService.uploadPdf(file);
             return ResponseEntity.status(HttpStatus.CREATED).body(pdfFile);
@@ -28,10 +34,15 @@ public class PdfBillSaveController {
         }
     }
 
-    @GetMapping("/view")
-    public List<PdfBillSave> getAllPDFs() {
-        return pdfFileService.getAllPDFs();
-    }
 
+    @GetMapping(value = "/view", produces = "application/pdf")
+    public ResponseEntity<byte[]> viewAllPdfs() throws IOException {
+        byte[] pdfData = pdfFileService.getAllPdfs();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentLength(pdfData.length);
+        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+    }
 
 }
