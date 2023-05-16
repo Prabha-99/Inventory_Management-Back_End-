@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -24,14 +28,16 @@ public class PdfBillSaveService {
         return pdfFileRepository.save(pdfFile);
     }
 
-    public List<PdfBillSave> getAllPDFs() {
+
+    public byte[] getAllPdfs() throws IOException {
         List<PdfBillSave> pdfs = pdfFileRepository.findAll();
-        return pdfs.stream()
-                .map(pdf -> new PdfBillSave(pdf.getId(), pdf.getContent()))
-                .collect(Collectors.toList());
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        for (PdfBillSave pdf : pdfs) {
+            outputStream.write(pdf.getContent());
+        }
+
+        return outputStream.toByteArray();
     }
-//    public PdfBillSave getPDFById(Integer id) {
-//        Optional<PdfBillSave> optionalPDF = pdfFileRepository.findById(id);
-//        return optionalPDF.orElse(null);
-//    }
+
 }
