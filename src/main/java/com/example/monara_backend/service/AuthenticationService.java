@@ -21,18 +21,101 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user= User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
-        userRepo.save(user);
-        var jwtToken=jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .Token(jwtToken)
-                .build();
+        if ("ADMIN".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.ADMIN)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        } else if ("PURCHASE_COORDINATOR".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.PURCHASE_COORDINATOR)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        }else if ("INVENTORY_ADMIN".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.INVENTORY_ADMIN)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        }else if ("STOCK_MANAGER".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.STOCK_MANAGER)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        } else if ("STOCK_KEEPER".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.STOCK_KEEPER)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        }
+        else if ("DESIGNER".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.DESIGNER)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        }
+        else if ("SHOWROOM_MANAGER".equals(request.getRole())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Role.SHOWROOM_MANAGER)
+                    .build();
+            userRepo.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .build();
+        }
+        return null;
     }
 
 
