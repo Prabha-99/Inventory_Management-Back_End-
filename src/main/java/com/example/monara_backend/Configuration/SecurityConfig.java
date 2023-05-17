@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+
                 //.requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
                 .requestMatchers("/api/user/inventory_admin").hasRole(Role.ADMIN.name())
@@ -34,6 +35,18 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/stock_keeper").hasRole(Role.STOCK_KEEPER.name())
                 .requestMatchers("/api/user/designer").hasRole(Role.DESIGNER.name())
                 .requestMatchers("/api/user/showroom_manager").hasRole(Role.SHOWROOM_MANAGER.name())
+
+
+                .requestMatchers("api/bill/**").permitAll()
+                .requestMatchers("api/billdata/**").permitAll()
+
+
+                .requestMatchers("/api/reports/**").permitAll()
+                .requestMatchers("/api/product/**").permitAll()
+
+                .requestMatchers("/api/v1/category/**").permitAll()
+
+
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
