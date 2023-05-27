@@ -37,6 +37,11 @@ public class ReportController {
         return reportService.exportPSReport(format);
     }
 
+    @GetMapping("/GIN/{format}")
+    public String generateGINReport(@PathVariable String format) throws JRException, FileNotFoundException {
+        return reportService.exportGIN(format);
+    }
+
 
     @GetMapping("/metadata")
     public List<Report> getDocumentMetadata() {

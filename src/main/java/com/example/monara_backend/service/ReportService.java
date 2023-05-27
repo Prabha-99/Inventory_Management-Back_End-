@@ -183,4 +183,28 @@ public class ReportService {
         }
         return "Report generated Successfully at : "+reportPath;
     }
+
+    public String exportGIN(String format) throws FileNotFoundException, JRException {
+        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+         *****This must be a path to DB*****/
+        List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
+
+        //Loading the .jrxml file and Compiling it
+        File file= ResourceUtils.getFile("classpath:GIN.jrxml");
+        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
+
+        //Mapping List Data into the Report
+        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
+        Map<String,Object> parameters=new HashMap<>();
+        parameters.put("Created by","Monara Creations pvt,Ltd");
+
+        //Printing the Report
+        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
+        if(format.equalsIgnoreCase("html")){
+            JasperExportManager.exportReportToHtmlFile(print,reportPath+"\\GIN.html");
+        }if(format.equalsIgnoreCase("pdf")){
+            JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
+        }
+        return "Report generated Successfully at : "+reportPath;
+    }
 }
