@@ -81,8 +81,7 @@ public class UserController {
     public navBarLogin getCurrentUser(){  //Getting the CurrentUser username Using Authentication Interface that comes with Spring Security
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String firstname=authentication.getName();
-        String authority= authentication.getAuthorities().toString();
-        return new navBarLogin(firstname,authority);
+        return new navBarLogin(firstname);
     }
 
 }
