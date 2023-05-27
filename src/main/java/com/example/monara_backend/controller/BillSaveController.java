@@ -33,7 +33,7 @@ public class BillSaveController {
         return billSaveService.getAllDetails();
     }
 
-    
+
 //    //delete by id bill
     @DeleteMapping("delete/{bill_id}")
     public ResponseEntity<String> deleteBill(@PathVariable Integer bill_id) {

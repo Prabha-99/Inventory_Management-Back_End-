@@ -22,7 +22,7 @@ public class PdfBillSaveController {
     private PdfBillSaveService pdfFileService;
 
     @PostMapping("/pdf")
-    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("fData") MultipartFile file) {
         try {
             PdfBillSave pdf = pdfFileService.savePdf(file);
             return ResponseEntity.ok(pdf);
