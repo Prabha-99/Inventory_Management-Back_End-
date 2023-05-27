@@ -7,20 +7,4 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Table(name="pdfbillsave")
-public class PdfBillSave {
 
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private int id;
-
-    private String filename;
-    private String filepath;
-
-    public PdfBillSave (String fileName, String filePath) {
-    }
-}
