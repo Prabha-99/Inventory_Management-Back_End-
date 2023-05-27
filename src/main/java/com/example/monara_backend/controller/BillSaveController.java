@@ -17,18 +17,21 @@ public class BillSaveController {
     @Autowired
     private BillSaveService billSaveService;
 
-
+    //save billing info
     @PostMapping("/save")
     public ResponseEntity<BillSave> FormData(@RequestBody BillSave bill) {
        BillSave savedBill = billSaveService.FormData(bill);
         return ResponseEntity.ok(savedBill);
     }
+
+    //get all bill info
     @GetMapping("/view")
     public List<BillSave> getAllDetails() {
         return billSaveService.getAllDetails();
     }
 
 
+    //delete by id bill 
     @DeleteMapping("delete/{bill_id}")
     public ResponseEntity<String> deleteBill(@PathVariable Integer bill_id) {
         billSaveService.deleteBill(bill_id);
