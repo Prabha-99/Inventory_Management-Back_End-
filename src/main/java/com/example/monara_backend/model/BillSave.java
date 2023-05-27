@@ -24,6 +24,8 @@ public class BillSave {
     private String other;
     private double total_amount;
     private String note;
+    private double discount;
+    private double subtotal;
 
 
 }
