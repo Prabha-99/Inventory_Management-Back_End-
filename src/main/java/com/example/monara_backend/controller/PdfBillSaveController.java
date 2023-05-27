@@ -20,26 +20,26 @@ public class PdfBillSaveController {
 
     @Autowired
     private PdfBillSaveService pdfFileService;
-    
+
     @PostMapping("/pdf")
-    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("html2pdf-file") MultipartFile file) {
+    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("file") MultipartFile file) {
         try {
-            PdfBillSave pdfFile = pdfFileService.uploadPdf(file);
-            return ResponseEntity.status(HttpStatus.CREATED).body(pdfFile);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            PdfBillSave pdf = pdfFileService.savePdf(file);
+            return ResponseEntity.ok(pdf);
+        } catch (IOException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
 
-    @GetMapping(value = "/view", produces = "application/pdf")
-    public ResponseEntity<byte[]> viewAllPdfs() throws IOException {
-        byte[] pdfData = pdfFileService.getAllPdfs();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentLength(pdfData.length);
-        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
-    }
+//    @GetMapping(value = "/view", produces = "application/pdf")
+//    public ResponseEntity<byte[]> viewAllPdfs() throws IOException {
+//        byte[] pdfData = pdfFileService.getAllPdfs();
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_PDF);
+//        headers.setContentLength(pdfData.length);
+//        return new ResponseEntity<>(pdfData, headers, HttpStatus.OK);
+//    }
 
 }
