@@ -28,14 +28,13 @@ public class PdfBillSaveService {
     private PdfBillRepo pdfFileRepository;
 
     public PdfBillSave savePdf(MultipartFile file) throws IOException {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileExtension = FilenameUtils.getExtension(fileName);
-        String newFileName = UUID.randomUUID().toString() + "." + fileExtension;
-        String filePath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\testfolder\\" + newFileName;
+        String fileExtension = FilenameUtils.getExtension(Objects.requireNonNull(file.getOriginalFilename()));
+        String filename = UUID.randomUUID().toString() + "." + fileExtension;
+        String filePath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\testfolder\\" + filename;
         File newFile = new File(filePath);
         newFile.getParentFile().mkdirs();
         file.transferTo(newFile);
-        PdfBillSave pdf = new PdfBillSave(fileName, filePath);
+        PdfBillSave pdf = new PdfBillSave(filename, filePath);
         return pdfFileRepository.save(pdf);
     }
 
@@ -43,8 +42,6 @@ public class PdfBillSaveService {
 //        File file = new File(filePath);
 //        return Files.readAllBytes(file.toPath());
 //    }
-
-
 
 
 }

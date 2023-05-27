@@ -18,10 +18,18 @@ public class PdfBillSave {
     @Id
     private int id;
 
+    @Column(name = "filename")
     private String filename;
+
+    @Column(name = "filepath")
     private String filepath;
 
 
-    public PdfBillSave (String fileName, String filePath) {
+    public PdfBillSave() {
+    }
+
+    public PdfBillSave(String fileName, String filePath) {
+        this.filename = fileName;
+        this.filepath = filePath;
     }
 }
