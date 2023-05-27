@@ -27,7 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
 
-                //.requestMatchers("/api/user/**").permitAll()
+                .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
                 .requestMatchers("/api/user/inventory_admin").hasRole(Role.ADMIN.name())
                 .requestMatchers("/api/user/stock_manager").hasRole(Role.STOCK_MANAGER.name())

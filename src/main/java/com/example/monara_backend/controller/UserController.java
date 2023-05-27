@@ -2,13 +2,17 @@ package com.example.monara_backend.controller;
 
 
 import com.example.monara_backend.Configuration.AuthenticationRequest;
+import com.example.monara_backend.dto.navBarLogin;
 import com.example.monara_backend.model.Role;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +75,14 @@ public class UserController {
     @GetMapping("/allUsers")
     public List<User> getAllUsers(){
         return userRepo.findAll();
+    }
+
+    @GetMapping("/CurrentUser")
+    public navBarLogin getCurrentUser(){  //Getting the CurrentUser username Using Authentication Interface that comes with Spring Security
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String firstname=authentication.getName();
+        String authority= authentication.getAuthorities().toString();
+        return new navBarLogin(firstname,authority);
     }
 
 }
