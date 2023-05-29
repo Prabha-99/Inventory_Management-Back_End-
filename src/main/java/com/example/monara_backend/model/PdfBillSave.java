@@ -25,8 +25,6 @@ public class PdfBillSave {
     private String filepath;
 
 
-    public PdfBillSave() {
-    }
 
     public PdfBillSave(String fileName, String filePath) {
         this.filename = fileName;

@@ -4,6 +4,11 @@ import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.repository.PdfBillRepo;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +35,7 @@ public class PdfBillSaveService {
     public PdfBillSave savePdf(MultipartFile file) throws IOException {
         String fileExtension = FilenameUtils.getExtension(Objects.requireNonNull(file.getOriginalFilename()));
         String filename = UUID.randomUUID().toString() + "." + fileExtension;
-        String filePath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\testfolder\\" + filename;
+        String filePath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\testfolder\\" + filename; //SET FILE PATH TO SAVE PDF
         File newFile = new File(filePath);
         newFile.getParentFile().mkdirs();
         file.transferTo(newFile);
@@ -38,10 +43,15 @@ public class PdfBillSaveService {
         return pdfFileRepository.save(pdf);
     }
 
-//    public byte[] getPdfFile(String filePath) throws IOException {
-//        File file = new File(filePath);
-//        return Files.readAllBytes(file.toPath());
-//    }
+
+    public byte[] getPdfFile(String filePath) throws IOException {
+        File file = new File(filePath);
+        return Files.readAllBytes(file.toPath());
+    }
+
+    public List<PdfBillSave> getAllPdf() {
+        return pdfFileRepository.findAll();
+    }
 
 
 }
