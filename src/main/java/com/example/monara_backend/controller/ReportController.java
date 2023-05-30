@@ -32,9 +32,9 @@ public class ReportController {
         return reportService.exportProductReport(format);
     }
 
-    @GetMapping("/psReport/{format}")
-    public String generatePSReport(@PathVariable String format) throws JRException, FileNotFoundException {
-        return reportService.exportPSReport(format);
+    @GetMapping("/psReport")
+    public String generatePSReport() throws JRException, FileNotFoundException {
+        return reportService.exportPSReport();
     }
 
     @GetMapping("/GIN/{format}")
