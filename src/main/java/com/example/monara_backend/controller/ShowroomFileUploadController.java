@@ -16,6 +16,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 
 @RestController
+
+
 @RequestMapping("/api/file")
 public class ShowroomFileUploadController {
 
@@ -25,7 +27,7 @@ public class ShowroomFileUploadController {
         this.showroomDocFile = showroomDocFile;
     }
 
-    @PostMapping("single/uploadDb")
+    @PostMapping("uploadDb")
     ShowroomFileUploadResponse FileUpload(@RequestParam("file")MultipartFile file) throws IOException {
 
         String name = StringUtils.cleanPath(file.getOriginalFilename());

@@ -13,9 +13,9 @@ public class ShowroomFileDocument {
     private String filename;
 
     @Column(name = "docfile")
-    @Lob
-
     private byte[] docfile;
+
+    @Lob
 
     public long getId() {
         return id;
