@@ -36,16 +36,13 @@ public class PdfBillSaveController {
     }
 
 
-    @GetMapping("/file/")
-    public ResponseEntity<byte[]> getPdfFile(@RequestParam("filepath") String filePath) {
-        if (filePath == null || filePath.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("file/{id}")
+    public ResponseEntity<byte[]> getPdfFileById(@PathVariable Integer bill_id) {
         try {
-            byte[] pdfBytes = pdfFileService.getPdfFile(filePath);
+            byte[] pdfBytes = pdfFileService.getPdfFile(bill_id);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType("application/pdf"));
-            headers.setContentDispositionFormData("inline", new File(filePath).getName());
+            headers.setContentDispositionFormData("inline", "file.pdf");
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
             ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
             return response;
@@ -60,6 +57,12 @@ public class PdfBillSaveController {
         List<PdfBillSave> pdfList = pdfFileService.getAllPdf();
         return new ResponseEntity<>(pdfList, HttpStatus.OK);
     }
+
+//    @DeleteMapping("delete/{bill_id}")
+//    public ResponseEntity<String> deletePdf(@PathVariable Integer bill_id) {
+//        pdfFileService.deleteBillPdf(bill_id);
+//        return ResponseEntity.ok("Bill deleted");
+//    }
 
 
 }

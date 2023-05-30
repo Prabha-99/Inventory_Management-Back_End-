@@ -16,7 +16,7 @@ public class PdfBillSave {
 
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int id;
+    private int bill_id;
 
     @Column(name = "filename")
     private String filename;

@@ -19,10 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -44,14 +41,22 @@ public class PdfBillSaveService {
     }
 
 
-    public byte[] getPdfFile(String filePath) throws IOException {
+    public byte[] getPdfFile(Integer bill_id) throws IOException {
+        Optional<PdfBillSave> pdfFile = pdfFileRepository.findById(bill_id);
+        String filePath = pdfFile.toString();
         File file = new File(filePath);
-        return Files.readAllBytes(file.toPath());
+        byte[] fileBytes = Files.readAllBytes(file.toPath());
+        return fileBytes;
     }
 
     public List<PdfBillSave> getAllPdf() {
         return pdfFileRepository.findAll();
     }
+
+//    public void deleteBillPdf (Integer bill_id) {
+//        pdfFileRepository.deleteById(bill_id);
+//    }
+
 
 
 }
