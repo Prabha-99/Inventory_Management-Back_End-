@@ -43,10 +43,10 @@ public class ReportController {
     }
 
 
-    @GetMapping("/metadata")
-    public List<Report> getDocumentMetadata() {
-        return reportService.getDocumentMetadata();
-    }
+//    @GetMapping("/metadata")
+//    public List<Report> getDocumentMetadata() {
+//        return reportService.getDocumentMetadata();
+//    }
 
     @GetMapping("/all")
     public List<Report>getAllDocs(Report report){

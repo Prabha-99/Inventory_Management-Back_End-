@@ -19,6 +19,7 @@ public class Report {
     private Long report_id;
     private String report_name;
     private String format;
+//    private String file;
     private byte[] data;
     private Timestamp date;
 
