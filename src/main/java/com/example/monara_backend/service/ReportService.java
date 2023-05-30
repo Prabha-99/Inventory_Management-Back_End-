@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -32,6 +33,8 @@ import java.util.Map;
 
 @Service
 public class ReportService {
+
+    //System Reports are Automatically Generated Every day at 9.00PM
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -209,24 +212,8 @@ public class ReportService {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public String exportProductReport(String format) throws FileNotFoundException, JRException {
+    @Scheduled(cron = "0 0 21 * * ?")
+    public String exportProductReport() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
@@ -242,15 +229,13 @@ public class ReportService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        if(format.equalsIgnoreCase("html")){
-            JasperExportManager.exportReportToHtmlFile(print,reportPath+"\\Products.html");
-        }if(format.equalsIgnoreCase("pdf")){
-            JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Products.pdf");
-        }
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Products.pdf");
+
         return "Report generated Successfully at : "+reportPath;
     }
 
-    public String exportPSReport(String format) throws FileNotFoundException, JRException {
+    @Scheduled(cron = "0 0 21 * * ?")
+    public String exportPSReport() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
@@ -266,15 +251,13 @@ public class ReportService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        if(format.equalsIgnoreCase("html")){
-            JasperExportManager.exportReportToHtmlFile(print,reportPath+"\\ProductSpec.html");
-        }if(format.equalsIgnoreCase("pdf")){
             JasperExportManager.exportReportToPdfFile(print,reportPath+"\\ProductSpec.pdf");
-        }
+
         return "Report generated Successfully at : "+reportPath;
     }
 
-    public String exportGIN(String format) throws FileNotFoundException, JRException {
+    @Scheduled(cron = "0 0 21 * * ?")
+    public String exportGIN() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
@@ -290,11 +273,8 @@ public class ReportService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        if(format.equalsIgnoreCase("html")){
-            JasperExportManager.exportReportToHtmlFile(print,reportPath+"\\GIN.html");
-        }if(format.equalsIgnoreCase("pdf")){
             JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
-        }
+
         return "Report generated Successfully at : "+reportPath;
     }
 }
