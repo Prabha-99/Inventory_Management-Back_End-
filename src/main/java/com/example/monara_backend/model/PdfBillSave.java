@@ -18,8 +18,16 @@ public class PdfBillSave {
     @Id
     private int id;
 
-    @Lob
-    @Column(name = "content", columnDefinition = "LONGBLOB")
-    private byte[] content;
+    @Column(name = "filename")
+    private String filename;
 
+    @Column(name = "filepath")
+    private String filepath;
+
+
+
+    public PdfBillSave(String fileName, String filePath) {
+        this.filename = fileName;
+        this.filepath = filePath;
+    }
 }
