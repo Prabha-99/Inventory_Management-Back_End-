@@ -18,8 +18,7 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long report_id;
     private String report_name;
-    private String format;
-    private byte[] data;
+    private String path;
     private Timestamp date;
 
 }

@@ -27,21 +27,26 @@ public class ReportController {
         return reportService.exportUserReport(format);
     }
 
-    @GetMapping("/productReport/{format}")
+    @GetMapping("/productReport/")
     public String generateProductReport(@PathVariable String format) throws JRException, FileNotFoundException {
-        return reportService.exportProductReport(format);
+        return reportService.exportProductReport();
     }
 
-    @GetMapping("/psReport/{format}")
-    public String generatePSReport(@PathVariable String format) throws JRException, FileNotFoundException {
-        return reportService.exportPSReport(format);
+    @GetMapping("/psReport")
+    public String generatePSReport() throws JRException, FileNotFoundException {
+        return reportService.exportPSReport();
+    }
+
+    @GetMapping("/GIN/")
+    public String generateGINReport(@PathVariable String format) throws JRException, FileNotFoundException {
+        return reportService.exportGIN();
     }
 
 
-    @GetMapping("/metadata")
-    public List<Report> getDocumentMetadata() {
-        return reportService.getDocumentMetadata();
-    }
+//    @GetMapping("/metadata")
+//    public List<Report> getDocumentMetadata() {
+//        return reportService.getDocumentMetadata();
+//    }
 
     @GetMapping("/all")
     public List<Report>getAllDocs(Report report){
