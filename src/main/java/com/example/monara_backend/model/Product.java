@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "products")
 public class Product {
-
     @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int product_id;

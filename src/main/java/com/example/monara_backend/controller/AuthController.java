@@ -3,13 +3,13 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.Configuration.AuthenticationRequest;
 import com.example.monara_backend.Configuration.AuthenticationResponse;
 import com.example.monara_backend.Configuration.RegisterRequest;
+import com.example.monara_backend.dto.navBarLogin;
 import com.example.monara_backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,7 +24,14 @@ public class AuthController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse>register(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<AuthenticationResponse>login(@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @GetMapping("/CurrentUser")
+    public navBarLogin getCurrentUser(){  //Getting the CurrentUser username Using Authentication Interface that comes with Spring Security
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String firstname=authentication.getName();
+        return new navBarLogin(firstname);
     }
 }
