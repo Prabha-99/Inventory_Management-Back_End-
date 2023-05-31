@@ -27,9 +27,9 @@ public class ReportController {
         return reportService.exportUserReport(format);
     }
 
-    @GetMapping("/productReport/{format}")
+    @GetMapping("/productReport/")
     public String generateProductReport(@PathVariable String format) throws JRException, FileNotFoundException {
-        return reportService.exportProductReport(format);
+        return reportService.exportProductReport();
     }
 
     @GetMapping("/psReport")
@@ -37,9 +37,9 @@ public class ReportController {
         return reportService.exportPSReport();
     }
 
-    @GetMapping("/GIN/{format}")
+    @GetMapping("/GIN/")
     public String generateGINReport(@PathVariable String format) throws JRException, FileNotFoundException {
-        return reportService.exportGIN(format);
+        return reportService.exportGIN();
     }
 
 
