@@ -49,6 +49,12 @@ public class ReportService {
         this.reportRepo = reportRepo;
     }
 
+    //Local variable to Store current Data.
+    LocalDate currentDate = LocalDate.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String dateCreated = currentDate.format(formatter);
+
+
 
 
 
@@ -142,10 +148,7 @@ public class ReportService {
         // Retrieving the ID of the inserted row
         long reportId = keyHolder.getKey().longValue();
 
-        //Local variable to Store current Data.
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String dateCreated = currentDate.format(formatter);
+
 
 
         // Saving the report file to the local file system
@@ -231,6 +234,7 @@ public class ReportService {
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
         JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Products.pdf");
 
+
         return "Report generated Successfully at : "+reportPath;
     }
 
@@ -249,12 +253,29 @@ public class ReportService {
         Map<String,Object> parameters=new HashMap<>();
         parameters.put("Created by","Monara Creations pvt,Ltd");
 
+
+        // Saving the report file to the database
+        String sql = "INSERT INTO reports (report_name, path, date) VALUES (?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, "Users"+dateCreated);
+            ps.setString(2,reportPath);
+            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
+            return ps;
+        }, keyHolder);
+
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-            JasperExportManager.exportReportToPdfFile(print,reportPath+"\\ProductSpec.pdf");
+        //Save the Report in the Local File System
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\ProductSpec.pdf");
 
         return "Report generated Successfully at : "+reportPath;
     }
+
+
+
+
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportGIN() throws FileNotFoundException, JRException {
