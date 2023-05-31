@@ -77,11 +77,6 @@ public class UserController {
         return userRepo.findAll();
     }
 
-    @GetMapping("/CurrentUser")
-    public navBarLogin getCurrentUser(){  //Getting the CurrentUser username Using Authentication Interface that comes with Spring Security
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String firstname=authentication.getName();
-        return new navBarLogin(firstname);
-    }
+
 
 }
