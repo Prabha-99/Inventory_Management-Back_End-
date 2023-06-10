@@ -1,1 +1,1 @@
-# Web_Based_Inventory_Management(Back_End) for Monara Creations Pvt.Ltd
+# Web_Based_Inventory_Management(Back_End)
