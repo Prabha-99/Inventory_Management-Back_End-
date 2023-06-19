@@ -54,7 +54,6 @@ public class UserService {
                 return HttpStatus.NOT_FOUND;
             }
 
-
             userRepo.delete(user);
             return HttpStatus.NO_CONTENT;
 
