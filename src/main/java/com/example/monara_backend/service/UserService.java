@@ -26,23 +26,11 @@ public class UserService {
 
 
 
-//    public List<Map<String, Object>> getAllUsers() {
-//        List<User> userList = userRepo.findAll();
-//        List<Map<String, Object>> users = new ArrayList<>();
-//        for (User user : userList) {
-//            try {
-//                Map<String, Object> response = new HashMap<>();
-//                response.put("user", user);
-//                users.add(response);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return users;
-//    }
-        public List<User> getAllUsers() {
+
+    public List<User> getAllUsers() {
             return userRepo.findAll();
         }
+
     public User getUserById(Integer id) {
         return userRepo.findById(id).orElse(null);
     }
@@ -58,6 +46,7 @@ public class UserService {
         existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(existingUser);
     }
+
     public HttpStatus deleteUser(Integer id) {
         try {
             User user = userRepo.findById(id).orElse(null);
