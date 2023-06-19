@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-@CrossOrigin(origins="http://localhost:4200")
+//@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
@@ -51,5 +51,10 @@ public class ReportController {
     @GetMapping("/all")
     public List<Report>getAllDocs(Report report){
         return reportRepo.findAll();
+    }
+
+    @GetMapping("/byPath")
+    public List<Report>getPaths(){
+        return reportRepo.findPath();
     }
 }

@@ -298,4 +298,14 @@ public class ReportService {
 
         return "Report generated Successfully at : "+reportPath;
     }
+
+
+    public List<Report> getAllFiles() {
+        List<FileEntity> fileEntities = fileRepository.findAll();
+        // Convert FileEntity objects to FileDTO objects
+        List<Report> files = fileEntities.stream()
+                .map(this::convertToFileDTO)
+                .collect(Collectors.toList());
+        return files;
+    }
 }
