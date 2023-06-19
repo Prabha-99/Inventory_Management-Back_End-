@@ -2,6 +2,7 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.ShowroomFileDocument;
 import com.example.monara_backend.dto.ShowroomFileUploadResponse;
+import com.example.monara_backend.repository.ShowroomRepo;
 import com.example.monara_backend.service.ShowroomDocFile;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 
@@ -22,9 +24,11 @@ import java.io.IOException;
 public class ShowroomFileUploadController {
 
     private ShowroomDocFile showroomDocFile;
+    private ShowroomRepo showroomRepo;
 
-    public ShowroomFileUploadController(ShowroomDocFile showroomDocFile) {
+    public ShowroomFileUploadController(ShowroomDocFile showroomDocFile, ShowroomRepo showroomRepo) {
         this.showroomDocFile = showroomDocFile;
+        this.showroomRepo = showroomRepo;
     }
 
     @PostMapping("uploadDb")
@@ -61,5 +65,10 @@ public class ShowroomFileUploadController {
                 .contentType(MediaType.parseMediaType(mimeType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename" + doc.getFilename())
                 .body(doc.getDocFile());
+    }
+
+    @GetMapping("GetAll")
+    public List<ShowroomFileDocument> getAllDesigns(){
+        return showroomRepo.findAll();
     }
 }
