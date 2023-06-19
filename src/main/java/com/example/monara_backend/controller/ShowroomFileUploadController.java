@@ -2,8 +2,8 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.ShowroomFileDocument;
 import com.example.monara_backend.dto.ShowroomFileUploadResponse;
-import com.example.monara_backend.service.ShowroomDocFile;
 
+import com.example.monara_backend.repository.ShowroomRepo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,10 +21,10 @@ import java.io.IOException;
 @RequestMapping("/api/file")
 public class ShowroomFileUploadController {
 
-    private ShowroomDocFile showroomDocFile;
+    private ShowroomRepo showroomRepo;
 
-    public ShowroomFileUploadController(ShowroomDocFile showroomDocFile) {
-        this.showroomDocFile = showroomDocFile;
+    public ShowroomFileUploadController(ShowroomRepo showroomRepo) {
+        this.showroomRepo = showroomRepo;
     }
 
     @PostMapping("uploadDb")
@@ -36,7 +36,7 @@ public class ShowroomFileUploadController {
         ShowroomFileDocument.setShowroomDocFile(file.getBytes());
 
 
-        showroomDocFile.save(ShowroomFileDocument);
+        showroomRepo.save(ShowroomFileDocument);
 
 
         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -50,16 +50,5 @@ public class ShowroomFileUploadController {
         return response;
 
     }
-    @GetMapping("/downloadFormDB/{fileName}")
-    ResponseEntity<Object> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
-        ShowroomFileDocument doc = ShowroomDocFile.findByFileName(fileName);
 
-
-        String mimeType = request.getServletContext().getMimeType(doc.getFileName());
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(mimeType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment:filename" + doc.getFilename())
-                .body(doc.getDocFile());
-    }
 }
