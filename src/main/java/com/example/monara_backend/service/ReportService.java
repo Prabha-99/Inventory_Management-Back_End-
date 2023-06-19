@@ -1,5 +1,6 @@
 package com.example.monara_backend.service;
 
+import com.example.monara_backend.dto.ReportDto;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.Report;
 import com.example.monara_backend.model.User;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -300,12 +302,21 @@ public class ReportService {
     }
 
 
-    public List<Report> getAllFiles() {
-        List<FileEntity> fileEntities = fileRepository.findAll();
+    public List<ReportDto> getAllFiles() {
+        List<Report> fileEntities = reportRepo.findAll();
         // Convert FileEntity objects to FileDTO objects
-        List<Report> files = fileEntities.stream()
+        List<ReportDto> files = fileEntities.stream()
                 .map(this::convertToFileDTO)
                 .collect(Collectors.toList());
         return files;
+    }
+
+    private ReportDto convertToFileDTO(Report report) {
+        ReportDto reportDto = new ReportDto();
+        reportDto.setId(fileEntity.getId());
+        reportDto.setFileName(fileEntity.getFileName());
+        reportDto.setCreatedDate(fileEntity.getCreatedDate());
+        reportDto.setFilePath(fileEntity.getFilePath());
+        return fileDTO;
     }
 }

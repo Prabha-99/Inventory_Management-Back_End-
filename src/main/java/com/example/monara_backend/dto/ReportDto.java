@@ -1,0 +1,18 @@
+package com.example.monara_backend.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class ReportDto {
+
+    private Long report_id;
+    private String report_name;
+    private String path;
+    private Timestamp date;
+}
