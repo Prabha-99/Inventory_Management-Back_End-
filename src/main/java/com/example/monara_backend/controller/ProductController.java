@@ -2,6 +2,8 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
+import com.example.monara_backend.model.BillSave;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/product")
 
@@ -82,21 +84,9 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/getAllProduct") //Get all products from database
-    public ResponseEntity geAllProduct(){
-        try{
-            List<ProductDto> productDtoList = productService.getAllProduct();
-            responseDto.setCode(VarList.RSP_SUCCESS);
-            responseDto.setMessage("Success");
-            responseDto.setContent(productDtoList);
-            return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
-
-        }catch (Exception ex){
-            responseDto.setCode(VarList.RSP_ERROR);
-            responseDto.setMessage(ex.getMessage());
-            responseDto.setContent(null);
-            return new ResponseEntity(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/getAllProduct")
+    public List<Product> getAllProduct() {
+        return productService.getAllProduct();
     }
 
     @GetMapping("/searchProduct/{productID}") //Get searched product
