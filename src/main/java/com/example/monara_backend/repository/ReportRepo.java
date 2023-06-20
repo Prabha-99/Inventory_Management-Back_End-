@@ -9,6 +9,9 @@ import java.util.List;
 public interface ReportRepo extends JpaRepository<Report, Long> {
     List<Report> findAll();
 
-    @Query(value = "SELECT path FROM reports", nativeQuery = true)
-    List<Report> findPath();
+    @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'U%'", nativeQuery = true)
+    List<Report> userReports();
+
+    @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'P%'", nativeQuery = true)
+    List<Report> PSReports();
 }
