@@ -1,23 +1,27 @@
 package com.example.monara_backend.controller;
 
-import com.example.monara_backend.model.Designer;
-import com.example.monara_backend.repository.DesignerRepo;
+import com.example.monara_backend.dto.ShowroomFileDocument;
+
+import com.example.monara_backend.service.DesignerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import java.util.List;
 
 @Controller
-@RequestMapping("/dbfile")
+@RequestMapping("/designer")
 public class DesignerController {
 
     @Autowired
-    private DesignerRepo designerRepo;
+    private DesignerService designerService;
 
-    @GetMapping("/allfile")
-    public @ResponseBody Iterable<Designer> getAllDesinger(){
-        return designerRepo.findAll();
+    @GetMapping("/getfiles")
+        public List<ShowroomFileDocument> getDesigner(){
+            return designerService.getAllDesigner();
     }
 }
 

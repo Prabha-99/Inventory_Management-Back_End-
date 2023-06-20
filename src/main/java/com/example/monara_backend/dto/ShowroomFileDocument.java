@@ -1,5 +1,6 @@
 package com.example.monara_backend.dto;
 
+import com.example.monara_backend.model.Designer;
 import jakarta.persistence.*;
 
 @Entity
@@ -54,5 +55,8 @@ public class ShowroomFileDocument {
 
     public Object getDocFile() {
         return null;
+    }
+
+    public void save(Designer map) {
     }
 }
