@@ -1,6 +1,7 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
+import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
@@ -51,11 +52,8 @@ public class ProductService {
         }
     }
 
-    //Get All products
-    public List<ProductDto> getAllProduct(){
-        List<Product> productList = productRepo.findAll();
-        return modelMapper.map(productList, new TypeToken<ArrayList<ProductDto>>(){
-        }.getType());
+    public List<Product> getAllProduct () {
+        return productRepo.findAll();
     }
 
     // Search products
