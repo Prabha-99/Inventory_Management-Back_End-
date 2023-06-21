@@ -26,20 +26,6 @@ public class UserService {
 
 
 
-//    public List<Map<String, Object>> getAllUsers() {
-//        List<User> userList = userRepo.findAll();
-//        List<Map<String, Object>> users = new ArrayList<>();
-//        for (User user : userList) {
-//            try {
-//                Map<String, Object> response = new HashMap<>();
-//                response.put("user", user);
-//                users.add(response);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return users;
-//    }
 
     public List<User> getAllUsers() {
             return userRepo.findAll();
