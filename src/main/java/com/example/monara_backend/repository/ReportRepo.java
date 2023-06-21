@@ -14,4 +14,12 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
 
     @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'P%'", nativeQuery = true)
     List<Report> PSReports();
+
+    @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'GIN%'", nativeQuery = true)
+    List<Report> GINReports();
+
+    @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'GRN%'", nativeQuery = true)
+    List<Report> GRNReports();
+
+
 }

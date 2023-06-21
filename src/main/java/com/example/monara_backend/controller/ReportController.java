@@ -19,7 +19,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
-//@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
@@ -52,11 +51,27 @@ public class ReportController {
 
 
     @GetMapping("getAllPSReport")
-    public List<Report> getAllFiles(){
+    public List<Report> getAllPS(){
         // Retrieve all files from the database
         List<Report> files = reportRepo.PSReports();
         return files;
     }
+
+    @GetMapping("getAllGINReport")
+    public List<Report> getAllGIN(){
+        // Retrieve all files from the database
+        List<Report> files = reportRepo.GINReports();
+        return files;
+    }
+
+    @GetMapping("getAllGRNReport")
+    public List<Report> getAllGRN(){
+        // Retrieve all files from the database
+        List<Report> files = reportRepo.GRNReports();
+        return files;
+    }
+
+    //File Download Endpoint
 
     @GetMapping("/{fileId}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws FileNotFoundException {

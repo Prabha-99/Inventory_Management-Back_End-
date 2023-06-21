@@ -1,7 +1,9 @@
 package com.example.monara_backend.controller;
 import com.example.monara_backend.model.FileUpload;
 import com.example.monara_backend.service.ShowroomService;
+import com.example.monara_backend.service.ShowroomServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,22 +22,24 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/showroom")
+@RequiredArgsConstructor
 public class ShowroomController {
 
-    @Autowired
     private ShowroomService showroomService;
+
+
 
     @GetMapping("/display")
     public ResponseEntity<byte[]>displayFile(@RequestParam("id")long id )throws IOException,SQLException
     {
-        File file = showroomService.viewById(id);
+        FileUpload file = showroomService.viewById(id);
         byte [] fileBytes;
-        try (InputStream inputStream = new FileInputStream(file)) {
+        try (InputStream inputStream = new FileInputStream(String.valueOf(file))) {
             fileBytes = inputStream.readAllBytes();
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
+        headers.setContentType(MediaType.ALL);
         headers.setContentLength(fileBytes.length);
 
         return new ResponseEntity<>(fileBytes, headers, HttpStatus.OK);
@@ -51,7 +55,6 @@ public class ShowroomController {
         fileUpload.setDbFile(blob);
         showroomService.create(fileUpload);
         return "redirect:/";
-
 
     }
 }
