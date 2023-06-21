@@ -4,23 +4,17 @@ import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.repository.PdfBillRepo;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -41,21 +35,31 @@ public class PdfBillSaveService {
     }
 
 
-    public byte[] getPdfFile(Integer bill_id) throws IOException {
-        Optional<PdfBillSave> pdfFile = pdfFileRepository.findById(bill_id);
-        String filePath = pdfFile.toString();
-        File file = new File(filePath);
-        byte[] fileBytes = Files.readAllBytes(file.toPath());
-        return fileBytes;
+//    public byte[] getPdfFile(Integer bill_id) throws IOException {
+//        Optional<PdfBillSave> pdfFile = pdfFileRepository.findById(bill_id);
+//        String filePath = pdfFile.toString();
+//        File file = new File(filePath);
+//        byte[] fileBytes = Files.readAllBytes(file.toPath());
+//        return fileBytes;
+//    }
+
+    public byte[] getPdfFileByPath(String filepath) throws IOException {
+        File file = new File(filepath);
+        if (!file.exists()) {
+            throw new FileNotFoundException("PDF file not found: " + filepath);
+        }
+        return Files.readAllBytes(file.toPath());
     }
+
+
 
     public List<PdfBillSave> getAllPdf() {
         return pdfFileRepository.findAll();
     }
 
-//    public void deleteBillPdf (Integer bill_id) {
-//        pdfFileRepository.deleteById(bill_id);
-//    }
+    public void deleteBillPdf (Integer bill_id) {
+        pdfFileRepository.deleteById(bill_id);
+    }
 
 
 

@@ -39,6 +39,7 @@ public class SecurityConfig {
 
                 .requestMatchers("api/bill/**").permitAll()
                 .requestMatchers("api/billdata/**").permitAll()
+                .requestMatchers("api/mail/**").permitAll()
                 .requestMatchers("api/admin/**").permitAll()
 
 

@@ -161,8 +161,8 @@ public class ReportService {
     }
 
 
-    public String exportProductReport(String format) throws FileNotFoundException, JRException {
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\product_reports";/*Declaring the Report path as a Global variable.
+//    public String exportProductReport(String format) throws FileNotFoundException, JRException {
+//        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\product_reports";/*Declaring the Report path as a Global variable.
 
 
 //    public String exportUserReport(String format) throws IOException, JRException {
@@ -244,8 +244,8 @@ public class ReportService {
     }
 
 
-    public String exportPSReport(String format) throws FileNotFoundException, JRException {
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\ps_reports";/*Declaring the Report path as a Global variable.
+//    public String exportPSReport(String format) throws FileNotFoundException, JRException {
+//        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\ps_reports";/*Declaring the Report path as a Global variable.
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportPSReport() throws FileNotFoundException, JRException {
