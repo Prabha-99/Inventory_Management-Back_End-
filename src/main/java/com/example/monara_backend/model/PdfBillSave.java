@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Table(name="pdfbillsave")
 public class PdfBillSave {
 
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int bill_id;
 
