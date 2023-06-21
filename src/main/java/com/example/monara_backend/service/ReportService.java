@@ -33,7 +33,6 @@ public class ReportService {
 
     //System Reports are Automatically Generated Every day at 9.00PM
 
-    @Autowired
     private final JdbcTemplate jdbcTemplate;
     private final UserRepo userRepo;
     private final ProductRepo productRepo;
