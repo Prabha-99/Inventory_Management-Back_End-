@@ -14,6 +14,7 @@ public class FileUpload {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String name;
     @Lob
     private Blob dbFile;
 
@@ -25,6 +26,14 @@ public class FileUpload {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Blob getDbFile() {
