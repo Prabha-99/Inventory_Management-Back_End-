@@ -3,15 +3,23 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.Report;
 import com.example.monara_backend.repository.ReportRepo;
 import com.example.monara_backend.service.ReportService;
+import jakarta.annotation.Resource;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
-@CrossOrigin(origins="http://localhost:4200")
+
+//@CrossOrigin(origins="http://localhost:4200")
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
@@ -27,8 +35,8 @@ public class ReportController {
         return reportService.exportUserReport(format);
     }
 
-    @GetMapping("/productReport/")
-    public String generateProductReport(@PathVariable String format) throws JRException, FileNotFoundException {
+    @GetMapping("/productReport")
+    public String generateProductReport() throws JRException, FileNotFoundException {
         return reportService.exportProductReport();
     }
 
@@ -37,19 +45,40 @@ public class ReportController {
         return reportService.exportPSReport();
     }
 
-    @GetMapping("/GIN/")
-    public String generateGINReport(@PathVariable String format) throws JRException, FileNotFoundException {
+    @GetMapping("/GIN")
+    public String generateGINReport() throws JRException, FileNotFoundException {
         return reportService.exportGIN();
     }
 
 
-//    @GetMapping("/metadata")
-//    public List<Report> getDocumentMetadata() {
-//        return reportService.getDocumentMetadata();
-//    }
-
-    @GetMapping("/all")
-    public List<Report>getAllDocs(Report report){
-        return reportRepo.findAll();
+    @GetMapping("getAllPSReport")
+    public List<Report> getAllFiles(){
+        // Retrieve all files from the database
+        List<Report> files = reportRepo.PSReports();
+        return files;
     }
+
+    @GetMapping("/{fileId}/download")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws FileNotFoundException {
+        // Retrieve the file record from the database
+        Optional<Report> optionalFile = reportRepo.findById(fileId);
+        if (optionalFile.isPresent()) {
+            Report report = optionalFile.get();
+            // Create a Resource object from the report's local path
+            Resource resource = (Resource) new FileSystemResource(report.getPath());
+            if (((FileSystemResource) resource).exists()) {
+                // Return the report as a downloadable attachment
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
+                        .body(resource);
+            } else {
+                throw new FileNotFoundException("File not found: " + report.getPath());
+            }
+        } else {
+            throw new NoSuchElementException("File not found with ID: " + fileId);
+        }
+    }
+
+
+
 }

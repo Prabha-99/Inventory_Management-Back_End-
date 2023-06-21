@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JWTAuthFilter jwtAuthFilter;
@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/reports/**").permitAll()
 
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
@@ -40,12 +41,14 @@ public class SecurityConfig {
                 .requestMatchers("api/bill/**").permitAll()
                 .requestMatchers("api/billdata/**").permitAll()
                 .requestMatchers("api/admin/**").permitAll()
+                .requestMatchers("api/showroom/**").permitAll()
 
 
-                .requestMatchers("/api/reports/**").permitAll()
+
                 .requestMatchers("/api/product/**").permitAll()
 
                 .requestMatchers("/api/file/**").permitAll()
+                .requestMatchers("/api/add/**").permitAll()
 
 
                 .requestMatchers("/api/v1/category/**").permitAll()
