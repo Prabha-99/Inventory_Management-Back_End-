@@ -68,13 +68,8 @@ public class ProductService {
     }
 
     //Delete products
-    public String deleteProduct(int productId){
-        if (productRepo.existsById(productId)){
-            productRepo.deleteById(productId);
-            return VarList.RSP_SUCCESS;
-        }else{
-            return VarList.RSP_NO_DATA_FOUND;
-        }
+    public void deleteProduct (Integer product_id) {
+        productRepo.deleteById(product_id);
     }
 
     //Count of Product
