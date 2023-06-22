@@ -1,5 +1,5 @@
 package com.example.monara_backend.controller;
-import com.example.monara_backend.model.FileUpload;
+import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.ShowroomService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,13 @@ public class ShowroomController {
     private ShowroomService showroomService;
 
     @PostMapping("/add")
-    public String addFile(HttpServletRequest request, @RequestParam("dbFile")MultipartFile file) throws IOException, SerialException, SQLException
+    public String addFile(HttpServletRequest request, @RequestParam("file")MultipartFile file) throws IOException, SerialException, SQLException
     {
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 
-        FileUpload fileUpload =new FileUpload();
+        ShowroomFile fileUpload =new ShowroomFile();
+        fileUpload.setName(file.getOriginalFilename());
         fileUpload.setDbFile(blob);
         showroomService.create(fileUpload);
         return "redirect:/";

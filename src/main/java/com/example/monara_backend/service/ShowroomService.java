@@ -1,13 +1,18 @@
 package com.example.monara_backend.service;
 
-import com.example.monara_backend.model.FileUpload;
+import com.example.monara_backend.model.ShowroomFile;
+import com.example.monara_backend.repository.ShowroomRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public interface ShowroomService {
-    public FileUpload create(FileUpload dbFile);
-    public <dbFile> List<dbFile> viewAll();
-    public <dbFile> dbFile viewById(long id);
+public class ShowroomService {
+    @Autowired
+    private ShowroomRepo showroomRepo;
+
+
+    public ShowroomFile create(ShowroomFile dbFile) {
+
+        return showroomRepo.save(dbFile);
+    }
 }
