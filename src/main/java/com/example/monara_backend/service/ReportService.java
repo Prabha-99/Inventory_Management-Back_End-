@@ -98,9 +98,10 @@ public class ReportService {
             ps.setString(1, "Users");
             ps.setString(2, format);
             ps.setBytes(3, reportBytes);
-            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
+            ps.setTimestamp(4, Timestamp.valueOf(dateCreated)); // set the current date and time
             return ps;
         }, keyHolder);
+        
 
         // Retrieving the ID of the inserted row
         long reportId = keyHolder.getKey().longValue();
@@ -173,7 +174,7 @@ public class ReportService {
 
 
 
-    @Scheduled(cron = "0 0 22 * * ?")
+    @Scheduled(cron = "0 0 21 * * ?")
     public String exportProductReport() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
@@ -207,7 +208,7 @@ public class ReportService {
         return "Report generated Successfully at : "+reportPath;
     }
 
-    @Scheduled(cron = "0 0 22 * * ?")
+    @Scheduled(cron = "0 0 21 * * ?")
     public String exportPSReport() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
@@ -246,7 +247,7 @@ public class ReportService {
 
 
 
-    @Scheduled(cron = "0 0 22 * * ?")
+    @Scheduled(cron = "0 0 21 * * ?")
     public String exportGIN() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
