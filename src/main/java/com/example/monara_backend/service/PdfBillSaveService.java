@@ -53,5 +53,9 @@ public class PdfBillSaveService {
         return pdfFileRepository.findAll();
     }
 
+    public void deleteBillPdf (Integer bill_id) {
+        pdfFileRepository.deleteById(bill_id);
+    }
+
 
 }
