@@ -134,27 +134,10 @@ public class ProductController {
     }
 
 
-    @DeleteMapping("/deleteProduct/{productID}") //delete a product
-    public ResponseEntity deleteProduct(@PathVariable int productID){
-        try{
-            String res = productService.deleteProduct(productID);
-            if (res.equals("00")){
-                responseDto.setCode(VarList.RSP_SUCCESS);
-                responseDto.setMessage("Successfully Deleted");
-                responseDto.setContent(null);
-                return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
-            }else {
-                responseDto.setCode(VarList.RSP_DUPLICATED);
-                responseDto.setMessage("Product not Available");
-                responseDto.setContent(null);
-                return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }
-        }catch (Exception ex){
-            responseDto.setCode(VarList.RSP_ERROR);
-            responseDto.setMessage(ex.getMessage());
-            responseDto.setContent(ex);
-            return new ResponseEntity(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @DeleteMapping("/deleteProduct/{product_id}") //delete a product
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) {
+        productService.deleteProduct(product_id);
+        return ResponseEntity.ok("Product deleted");
     }
 
     //To get count of product
