@@ -19,7 +19,7 @@ public class BillSaveController {
     @Autowired
     private BillSaveService billSaveService;
 
-    //save billing info
+    //save billing infoc
     @PostMapping("/save")
     public ResponseEntity<BillSave> FormData(@RequestBody BillSave bill) {
         BillSave savedBill = billSaveService.FormData(bill);
