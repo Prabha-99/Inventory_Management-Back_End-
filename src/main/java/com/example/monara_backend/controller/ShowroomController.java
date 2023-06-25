@@ -1,10 +1,8 @@
 package com.example.monara_backend.controller;
 import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.ShowroomService;
-import com.example.monara_backend.service.ShowroomServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.sql.rowset.serial.SerialException;
