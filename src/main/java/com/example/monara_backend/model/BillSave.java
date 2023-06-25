@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class BillSave {
 
    @Id
-  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bill_id;
     private String qu_no;
     private String st_date;
