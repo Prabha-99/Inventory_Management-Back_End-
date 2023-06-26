@@ -44,6 +44,7 @@ public class SecurityConfig {
 
                 .requestMatchers("/api/reports/**").permitAll()
                 .requestMatchers("/api/product/**").permitAll()
+                .requestMatchers("/api/designer/**").permitAll()
 
                 .requestMatchers("/api/file/**").permitAll()
 
