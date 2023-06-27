@@ -3,6 +3,8 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.User;
+import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.util.VarList;
@@ -29,12 +31,18 @@ public class ProductController {
     @Autowired
     private final NotificationService notificationService;
 
-    public ProductController(NotificationService notificationService) {
+    @Autowired
+    private final UserRepo userRepo;
+
+    public ProductController(NotificationService notificationService, UserRepo userRepo) {
         this.notificationService = notificationService;
+        this.userRepo = userRepo;
     }
 
+//    List<User> recipients=userRepo.getMails();
+
     // Get the emails of users to notify
-    List<String> recipientEmails = Arrays.asList(
+    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
     );
 
@@ -51,7 +59,7 @@ public class ProductController {
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
-                    notificationService.sendNotificationEmail(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
+                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
                 }
 
                 return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
