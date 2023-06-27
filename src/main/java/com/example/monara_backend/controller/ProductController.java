@@ -35,7 +35,8 @@ public class ProductController {
 
     // Get the emails of users to notify
     List<String> recipientEmails = Arrays.asList(
-            "prabhashana77@gmail.com"
+            "prabhashana77@gmail.com",
+            "mprabhashmilindu@gmail.com"
     );
 
     // Beginning of the Inventory Admin
