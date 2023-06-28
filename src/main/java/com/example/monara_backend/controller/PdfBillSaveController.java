@@ -61,9 +61,9 @@ public class PdfBillSaveController {
         return new ResponseEntity<>(pdfList, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{bill_id}")
-    public ResponseEntity<String> deletePdf(@PathVariable Integer bill_id) {
-        pdfFileService.deleteBillPdf(bill_id);
+    @DeleteMapping("delete/{pdf_id}")
+    public ResponseEntity<String> deletePdf(@PathVariable Long pdf_id) {
+        pdfFileService.deleteBillPdf(pdf_id);
         return ResponseEntity.ok("Bill deleted");
     }
 }

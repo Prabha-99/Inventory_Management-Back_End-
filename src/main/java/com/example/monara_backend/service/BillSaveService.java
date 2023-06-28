@@ -22,7 +22,7 @@ public class BillSaveService {
             return billSaveRepo.findAll();
         }
 
-        public void deleteBill (Integer bill_id) {
+        public void deleteBill (Long bill_id) {
             billSaveRepo.deleteById(bill_id);
         }
 }

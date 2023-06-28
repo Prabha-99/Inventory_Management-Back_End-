@@ -16,7 +16,9 @@ public class PdfBillSave {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int bill_id;
+
+    @Column(name = "pdf_id")
+    private Long pdf_id;
 
     @Column(name = "filename")
     private String filename;
@@ -24,7 +26,10 @@ public class PdfBillSave {
     @Column(name = "filepath")
     private String filepath;
 
-
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "bill_id")
+    private BillSave billSave;
 
     public PdfBillSave(String fileName, String filePath) {
         this.filename = fileName;
