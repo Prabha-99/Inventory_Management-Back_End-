@@ -84,7 +84,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -161,7 +161,7 @@
 
             <image hAlign="Center">
                 <reportElement x="-8" y="-20" width="137" height="79" forecolor="#263F91" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
-                <imageExpression><![CDATA["F:/Uni Works/Level 3/Sem 1/Group Project/logo1.png"]]></imageExpression>
+                <imageExpression><![CDATA["logo1.png"]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="93" y="0" width="266" height="25" forecolor="#263F91" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
