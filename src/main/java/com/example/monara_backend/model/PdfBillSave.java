@@ -17,19 +17,17 @@ public class PdfBillSave {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
 
-    @Column(name = "pdf_id")
-    private Long pdf_id;
+    @Column(name="bill_id")
+    private Long bill_id;
 
-    @Column(name = "filename")
     private String filename;
 
-    @Column(name = "filepath")
     private String filepath;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "bill_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id", referencedColumnName = "bill_id")
     private BillSave billSave;
+
 
     public PdfBillSave(String fileName, String filePath) {
         this.filename = fileName;

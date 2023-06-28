@@ -4,17 +4,12 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.service.PdfBillSaveService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,23 +31,9 @@ public class PdfBillSaveController {
     }
 
 
-    @GetMapping("/file/")
-    public ResponseEntity<byte[]> getPdfFile(@RequestParam("filepath") String filePath) {
-        if (filePath == null || filePath.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        try {
-            byte[] pdfBytes = pdfFileService.getPdfFile(filePath);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("application/pdf"));
-            headers.setContentDispositionFormData("inline", new File(filePath).getName());
-            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-            ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
-            return response;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/{filename:.+}")
+    public ResponseEntity<byte[]> getPdf(@PathVariable String filename) throws IOException {
+        return pdfFileService.getPdf(filename);
     }
 
     @GetMapping("/all")
@@ -61,9 +42,9 @@ public class PdfBillSaveController {
         return new ResponseEntity<>(pdfList, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{pdf_id}")
-    public ResponseEntity<String> deletePdf(@PathVariable Long pdf_id) {
-        pdfFileService.deleteBillPdf(pdf_id);
-        return ResponseEntity.ok("Bill deleted");
-    }
+//    @DeleteMapping("delete/{bill_id}")
+//    public ResponseEntity<String> deletePdf(@PathVariable Long bill_id) {
+//        pdfFileService.deleteBillPdf(bill_id);
+//        return ResponseEntity.ok("Bill deleted");
+//    }
 }

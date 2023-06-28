@@ -29,7 +29,5 @@ public class BillSave {
     private double discount;
     private double subtotal;
 
- @OneToOne(mappedBy = "billsave", cascade = CascadeType.ALL)
- @PrimaryKeyJoinColumn
- private PdfBillSave pdfBillSave;
+
 }
