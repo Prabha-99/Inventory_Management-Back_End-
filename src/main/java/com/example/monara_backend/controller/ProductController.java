@@ -83,34 +83,10 @@ public class ProductController {
         }
     }
 
-    @PutMapping(value = "/updateProduct") //Update products
-    public ResponseEntity updateProduct(@RequestBody ProductDto productDto){
 
-        try{
-            String res = productService.updateProduct(productDto);
-            if (res.equals("00")){
-                responseDto.setCode(VarList.RSP_SUCCESS);
-                responseDto.setMessage("Success");
-                responseDto.setContent(productDto);
-                return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
-
-            }else if(res.equals("01")){
-                responseDto.setCode(VarList.RSP_DUPLICATED);
-                responseDto.setMessage("Product is not exist");
-                responseDto.setContent(productDto);
-                return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }else {
-                responseDto.setCode(VarList.RSP_FAIL);
-                responseDto.setMessage("Error");
-                responseDto.setContent(null);
-                return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }
-        }catch (Exception ex){
-            responseDto.setCode(VarList.RSP_ERROR);
-            responseDto.setMessage(ex.getMessage());
-            responseDto.setContent(null);
-            return new ResponseEntity(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PutMapping("/updateProduct/{productID}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productID , @RequestBody Product product){
+        return new ResponseEntity<Product>(productService.updateProduct(productID , product) , HttpStatus.OK);
     }
 
     @GetMapping("/getAllProduct")
