@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -21,4 +23,12 @@ public class Report {
     private String path;
     private Date date;
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        return sdf.format(this.date);
+    }
 }
