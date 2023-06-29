@@ -3,7 +3,9 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.Configuration.AuthenticationRequest;
 import com.example.monara_backend.Configuration.AuthenticationResponse;
 import com.example.monara_backend.Configuration.RegisterRequest;
+import com.example.monara_backend.dto.LogUser;
 import com.example.monara_backend.dto.navBarLogin;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +35,13 @@ public class AuthController {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String firstname=authentication.getName();
         return new navBarLogin(firstname);
+    }
+
+    @GetMapping("/CurrentUserRole")
+    public String getCurrentUserRole(){  
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        User user= (User) authentication.getDetails();
+        String role = String.valueOf(user.getRole());
+        return role;
     }
 }
