@@ -12,16 +12,22 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name="reports")
-public class Report {
-
+@Table(name = "GIN")
+public class GIN {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long report_id;
-    private String report_name;
-    private String path;
+    private Long id;
+    private Long invoice_no;
     private Date date;
+    private String customer_name;
+    private String address;
+    private String contact_nu;
+    private String item_description;
+    private int invoiced_quantity;
+    private int issued_quantity;
+    private String remarks;
+    private String path;
 
     public void setDate(Date date) {
         this.date = date;
@@ -31,4 +37,5 @@ public class Report {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         return sdf.format(this.date);
     }
+
 }

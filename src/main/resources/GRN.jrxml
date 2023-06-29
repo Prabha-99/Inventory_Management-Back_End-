@@ -64,8 +64,8 @@
     </field>
     <field name="product_quantity" class="java.lang.Integer">
     </field>
-    <!--        <field name="product_quantity" class="java.sql.Timestamp"> This Timestamp could be important-->
-    <!--        </field>-->
+<!--        <field name="product_quantity" class="java.sql.Timestamp"> This Timestamp could be important-->
+<!--        </field>-->
 
 
 
@@ -185,7 +185,7 @@
                 <textElement>
                     <font size="15" isBold="true" isUnderline="true"/>
                 </textElement>
-                <text><![CDATA[Goods Issue Note]]></text>
+                <text><![CDATA[Goods Received Note]]></text>
             </staticText>
             <staticText>
                 <reportElement x="0" y="91" width="555" height="15" forecolor="#263F91" uuid="64c907e8-fc11-4522-a2e1-8736792c8042"/>
@@ -250,7 +250,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Invoiced Qty]]></text>
+                <text><![CDATA[Ordered Qty]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" positionType="Float" mode="Opaque" x="320" y="0" width="110" height="20" forecolor="#263F91" backcolor="#ABB5D9" uuid="e02b4184-0003-4a7c-a82d-90e4ba98ca6e">
@@ -265,7 +265,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Issued Qty]]></text>
+                <text><![CDATA[Received Qty]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" positionType="Float" mode="Opaque" x="430" y="0" width="124" height="20" forecolor="#263F91" backcolor="#ABB5D9" uuid="769d08d2-e377-449e-b107-36c993920d74">
