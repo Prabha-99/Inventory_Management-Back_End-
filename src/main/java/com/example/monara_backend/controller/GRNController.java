@@ -1,6 +1,6 @@
 package com.example.monara_backend.controller;
 
-import com.example.monara_backend.service.GINService;
+import com.example.monara_backend.service.GRNService;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.FileNotFoundException;
 
 @RestController
-@RequestMapping("api/GIN")
+@RequestMapping("api/GRN")
 @RequiredArgsConstructor
-public class GINController {
+public class GRNController {
 
-    private final GINService ginService;
+    private final GRNService grnService;
 
-    @GetMapping("/generateGIN")
-    public String generateGINReport() throws JRException, FileNotFoundException {
-        return ginService.exportGIN();
+    @GetMapping("/generateGRN")
+    public String generateGRNReport() throws JRException, FileNotFoundException {
+        return grnService.exportGRN();
     }
 }
