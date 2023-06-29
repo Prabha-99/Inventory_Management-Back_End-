@@ -27,7 +27,6 @@ public class GIN {
     private int invoiced_quantity;
     private int issued_quantity;
     private String remarks;
-    private String path;
 
     public void setDate(Date date) {
         this.date = date;
