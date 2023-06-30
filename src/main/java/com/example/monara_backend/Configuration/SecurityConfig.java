@@ -27,6 +27,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/reports/**").permitAll()
+                .requestMatchers("/api/GIN/**").permitAll()
+                .requestMatchers("/api/GRN/**").permitAll()
 
                 .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
@@ -52,6 +54,9 @@ public class SecurityConfig {
 
 
                 .requestMatchers("/api/v1/category/**").permitAll()
+                .requestMatchers("/api/purchaseOrder/**").permitAll()
+                .requestMatchers("/api/sellOrder/**").permitAll()
+
 
 
 

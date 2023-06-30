@@ -12,20 +12,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "GIN")
-public class GIN {
+@Table(name = "GRN")
+public class GRN {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long invoice_no;
     private Date date;
-    private String customer_name;
+    private String supplier_name;
     private String address;
     private String contact_nu;
     private String item_description;
-    private int invoiced_quantity;
-    private int issued_quantity;
+    private int ordered_quantity;
+    private int received_quantity;
     private String remarks;
 
     public void setDate(Date date) {
@@ -36,5 +36,4 @@ public class GIN {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         return sdf.format(this.date);
     }
-
 }
