@@ -10,11 +10,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductNameService {
+
+    private static final String DELIMITER = " - ";
+
     @Autowired
     private ProductRepo productRepo;
+
 
     public List<String> getAllProducts() {
         List<Product> names = productRepo.findAll();
         return names.stream().map(Product::getProduct_name).collect(Collectors.toList());
+    }
+
+    public Double getProductPrice(String productName) {
+        return productRepo.findPriceByProductName(productName);
     }
 }
