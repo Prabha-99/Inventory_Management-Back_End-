@@ -3,7 +3,8 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.Report;
 import com.example.monara_backend.repository.ReportRepo;
 import com.example.monara_backend.service.ReportService;
-import jakarta.annotation.Resource;
+import org.springframework.core.io.Resource;
+
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -49,6 +50,11 @@ public class ReportController {
         return reportService.exportGIN();
     }
 
+    @GetMapping("/GRN")
+    public String generateGRNReport() throws JRException, FileNotFoundException {
+        return reportService.exportGRN();
+    }
+
 
     @GetMapping("getAllPSReport")
     public List<Report> getAllPS(){
@@ -80,8 +86,8 @@ public class ReportController {
         if (optionalFile.isPresent()) {
             Report report = optionalFile.get();
             // Create a Resource object from the report's local path
-            Resource resource = (Resource) new FileSystemResource(report.getPath());
-            if (((FileSystemResource) resource).exists()) {
+            Resource resource = new FileSystemResource(report.getPath());
+            if (resource.exists()) {
                 // Return the report as a downloadable attachment
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
@@ -93,6 +99,7 @@ public class ReportController {
             throw new NoSuchElementException("File not found with ID: " + fileId);
         }
     }
+
 
 
 

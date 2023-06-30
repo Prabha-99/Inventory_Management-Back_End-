@@ -3,6 +3,7 @@ package com.example.monara_backend.service;
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.util.VarList;
@@ -42,15 +43,19 @@ public class ProductService {
     }
 
     //Update product in database
-    public String updateProduct(ProductDto productDto){
-        //Check the product exist or not
-        if(productRepo.existsById(productDto.getProduct_id())){
-            productRepo.save(modelMapper.map(productDto, Product.class));
-            return VarList.RSP_SUCCESS;
-        }else{
-            return VarList.RSP_NO_DATA_FOUND;
+    public Product updateProduct(Integer productID, Product product) {
+        Product existingProduct = productRepo.findById(productID).orElse(null);
+        if (existingProduct == null) {
+            return null;
         }
+        existingProduct.setCategory_id(product.getCategory_id());
+        existingProduct.setProduct_brand(product.getProduct_brand());
+        existingProduct.setProduct_name(product.getProduct_name());
+        existingProduct.setProduct_price(product.getProduct_price());
+        existingProduct.setProduct_quantity(product.getProduct_quantity());
+        return productRepo.save(existingProduct);
     }
+
 
     public List<Product> getAllProduct () {
         return productRepo.findAll();
@@ -84,4 +89,13 @@ public class ProductService {
     }
 
     //End of the Inventory Admin
+
+    public void reduceProductQuantity(String product_name, String product_brand, int product_quantity) {
+        productRepo.reduceProductQuantity(product_name,product_brand,product_quantity);
+    }
+
+
+    public void increaseProductQuantity(String product_name, String product_brand, int product_quantity) {
+        productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
+}
 }

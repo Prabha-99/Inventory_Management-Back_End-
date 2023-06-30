@@ -58,15 +58,15 @@
     </field>
     <field name="contact_nu" class="java.lang.String">
     </field>
-    <field name="customer_name" class="java.lang.String">
+    <field name="supplier_name" class="java.lang.String">
     </field>
     <field name="date" class="java.lang.String">
     </field>
     <field name="invoice_no" class="java.lang.Long">
     </field>
-    <field name="invoiced_quantity" class="java.lang.Integer">
+    <field name="ordered_quantity" class="java.lang.Integer">
     </field>
-    <field name="issued_quantity" class="java.lang.Integer">
+    <field name="received_quantity" class="java.lang.Integer">
     </field>
     <field name="item_description" class="java.lang.String">
     </field>
@@ -133,7 +133,7 @@
 
             <staticText>
                 <reportElement x="358" y="140" width="184" height="15" forecolor="#263F91" uuid="edbd74ac-0cbd-44c9-8a8e-ccf745191172"/>
-                <text><![CDATA[Issued Date: ............................................]]></text>
+                <text><![CDATA[Received Date: ............................................]]></text>
             </staticText>
             <textField>
                 <reportElement x="190" y="135" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -145,7 +145,7 @@
 
             <staticText>
                 <reportElement x="358" y="160" width="196" height="15" forecolor="#263F91" uuid="dd52166a-1135-4931-adef-51e7972118bc"/>
-                <text><![CDATA[Invoice Date: ..........................................]]></text>
+                <text><![CDATA[Purchase Order No: ..........................................]]></text>
             </staticText>
             <textField>
                 <reportElement x="190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -157,7 +157,7 @@
 
             <staticText>
                 <reportElement x="-1" y="160" width="170" height="15" forecolor="#263F91" uuid="2d2f365d-7b12-4a8f-990d-ff528a2660bc"/>
-                <text><![CDATA[Issued Time: ....................................]]></text>
+                <text><![CDATA[Received Time: ....................................]]></text>
             </staticText>
             <textField>
                 <reportElement x="-190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -193,7 +193,7 @@
                 <textElement>
                     <font size="15" isBold="true" isUnderline="true"/>
                 </textElement>
-                <text><![CDATA[Goods Issue Note]]></text>
+                <text><![CDATA[Goods Received Note]]></text>
             </staticText>
             <staticText>
                 <reportElement x="0" y="91" width="555" height="15" forecolor="#263F91" uuid="64c907e8-fc11-4522-a2e1-8736792c8042"/>
@@ -204,7 +204,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -258,7 +258,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Invoiced Qty]]></text>
+                <text><![CDATA[Ordered Qty]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" positionType="Float" mode="Opaque" x="320" y="0" width="110" height="20" forecolor="#263F91" backcolor="#ABB5D9" uuid="e02b4184-0003-4a7c-a82d-90e4ba98ca6e">
@@ -273,7 +273,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Issued Qty]]></text>
+                <text><![CDATA[Received Qty]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" positionType="Float" mode="Opaque" x="430" y="0" width="124" height="20" forecolor="#263F91" backcolor="#ABB5D9" uuid="769d08d2-e377-449e-b107-36c993920d74">
@@ -322,7 +322,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="221" y="0" width="99" height="20" uuid="95b0e4a7-3c43-4994-83f5-7836c3957410">
@@ -337,7 +337,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{issued_quantity}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{received_quantity}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="320" y="0" width="110" height="20" uuid="a356969a-baf5-46ed-9b67-9010678eda83">
@@ -352,7 +352,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{issued_quantity}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{received_quantity}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="430" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
@@ -381,7 +381,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
             <textField>
@@ -391,7 +391,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
 
