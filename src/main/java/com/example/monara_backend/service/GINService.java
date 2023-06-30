@@ -22,14 +22,21 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 @Service
-@RequiredArgsConstructor
+
 public class GINService {
 
     private final JdbcTemplate jdbcTemplate;
     private final GINRepo ginRepo;
+    private final ExecutorService executorService;
 
+    public GINService(JdbcTemplate jdbcTemplate, GINRepo ginRepo, ExecutorService executorService) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.ginRepo = ginRepo;
+        this.executorService = executorService;
+    }
 
     public String exportGIN() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
@@ -63,5 +70,25 @@ public class GINService {
         JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
 
         return "Report generated Successfully at : "+reportPath;
+    }
+
+    public void saveGINData(GIN ginData) {
+        executorService.execute(() -> {
+            try {
+                // Simulate some processing time
+                Thread.sleep(2000);
+
+                // Save GIN data to database table
+                ginRepo.save(ginData);
+
+                System.out.println("GIN data saved successfully: " + ginData);
+
+                // Perform another concurrent task
+//                performConcurrentTask(ginData);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

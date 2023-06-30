@@ -15,6 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
@@ -56,4 +59,10 @@ public class AppConfig {
             }
         };
     }
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10); // Adjust the pool size as per your requirements
+    }
+
 }
