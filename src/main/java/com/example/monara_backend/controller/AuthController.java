@@ -45,9 +45,8 @@ public class AuthController {
     }
 
     @GetMapping("/CurrentUserRole")
-    public String getCurrentUserRole(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
+    public String getCurrentUserRole(@RequestBody AuthenticationRequest request){
+        String email = request.getEmail();
 
         Optional<User> userOptional = userRepo.findByEmail(email);
         if (userOptional.isPresent()) {
