@@ -10,11 +10,21 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductNameService {
+
+    private static final String DELIMITER = " - ";
+
     @Autowired
     private ProductRepo productRepo;
 
+
     public List<String> getAllProducts() {
-        List<Product> names = productRepo.findAll();
-        return names.stream().map(Product::getProduct_name).collect(Collectors.toList());
+        List<Product> products = productRepo.findAll();
+        return products.stream().map(product -> product.getProduct_name() + " - " + product.getProduct_price()).collect(Collectors.toList());
     }
+    
+    public List<Double> getAllPriceProducts() {
+        List<Product> names = productRepo.findAll();
+        return names.stream().map(Product::getProduct_price).collect(Collectors.toList());
+    }
+
 }

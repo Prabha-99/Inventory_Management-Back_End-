@@ -16,14 +16,17 @@ public class PdfBillSave {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int bill_id;
 
-    @Column(name = "filename")
+    @Column(name="bill_id")
+    private Long bill_id;
+
     private String filename;
 
-    @Column(name = "filepath")
     private String filepath;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id", referencedColumnName = "bill_id")
+    private BillSave billSave;
 
 
     public PdfBillSave(String fileName, String filePath) {

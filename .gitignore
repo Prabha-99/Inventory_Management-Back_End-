@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/java/com/example/monara_backend/controller/ProductController.java
+src/main/java/com/example/monara_backend/service/ReportService.java
