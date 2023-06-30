@@ -48,34 +48,34 @@ public class ProductController {
 
     // Beginning of the Inventory Admin
     @PostMapping(value = "/saveProduct")    //Add products
-    public ResponseEntity saveProduct(@RequestBody ProductDto productDto){
-        try{
+    public ResponseEntity saveProduct(@RequestBody ProductDto productDto) {
+        try {
 
             String res = productService.saveProduct(productDto);
-            if (res.equals("00")){
+            if (res.equals("00")) {
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
                 responseDto.setContent(productDto);
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
-                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
+                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(), productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
                 }
 
                 return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
 
-            }else if(res.equals("06")){
+            } else if (res.equals("06")) {
                 responseDto.setCode(VarList.RSP_DUPLICATED);
                 responseDto.setMessage("Product Added");
                 responseDto.setContent(productDto);
                 return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }else{
+            } else {
                 responseDto.setCode(VarList.RSP_FAIL);
                 responseDto.setMessage("Error");
                 responseDto.setContent(null);
                 return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             responseDto.setCode(VarList.RSP_ERROR);
             responseDto.setMessage(ex.getMessage());
             responseDto.setContent(null);
@@ -85,8 +85,8 @@ public class ProductController {
 
 
     @PutMapping("/updateProduct/{productID}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer productID , @RequestBody Product product){
-        return new ResponseEntity<Product>(productService.updateProduct(productID , product) , HttpStatus.OK);
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer productID, @RequestBody Product product) {
+        return new ResponseEntity<Product>(productService.updateProduct(productID, product), HttpStatus.OK);
     }
 
     @GetMapping("/getAllProduct")
@@ -95,21 +95,21 @@ public class ProductController {
     }
 
     @GetMapping("/searchProduct/{productID}") //Get searched product
-    public ResponseEntity searchProduct(@PathVariable int productID){
-        try{
+    public ResponseEntity searchProduct(@PathVariable int productID) {
+        try {
             ProductDto productDto = productService.searchProduct(productID);
-            if (productDto != null){
+            if (productDto != null) {
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
                 responseDto.setContent(productDto);
                 return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
-            }else {
+            } else {
                 responseDto.setCode(VarList.RSP_DUPLICATED);
                 responseDto.setMessage("Product not Available");
                 responseDto.setContent(null);
                 return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             responseDto.setCode(VarList.RSP_ERROR);
             responseDto.setMessage(ex.getMessage());
             responseDto.setContent(ex);
@@ -126,7 +126,7 @@ public class ProductController {
 
     //To get count of product
     @GetMapping("/productCount")
-    public long getProductCount(){
+    public long getProductCount() {
         return productService.getProductCount();
     }
 
@@ -166,4 +166,42 @@ public class ProductController {
             this.product_quantity = product_quantity;
         }
     }
+
+
+
+    @PostMapping("/increase")
+    public void increaseProductQuantity(@RequestBody ProductIncreaseRequest request) {
+        productService.increaseProductQuantity(request.getProduct_name(), request.getProduct_brand(), request.getProduct_quantity());
+    }
+
+    public static class ProductIncreaseRequest {
+        private String product_name;
+        private String product_brand;
+        private int product_quantity;
+
+        public String getProduct_name() {
+            return product_name;
+        }
+
+        public void setProduct_name(String product_name) {
+            this.product_name = product_name;
+        }
+
+        public String getProduct_brand() {
+            return product_brand;
+        }
+
+        public void setProduct_brand(String product_brand) {
+            this.product_brand = product_brand;
+        }
+
+        public int getProduct_quantity() {
+            return product_quantity;
+        }
+
+        public void setProduct_quantity(int product_quantity) {
+            this.product_quantity = product_quantity;
+        }
+    }
+
 }

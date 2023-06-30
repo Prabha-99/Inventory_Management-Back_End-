@@ -93,4 +93,8 @@ public class ProductService {
     public void reduceProductQuantity(String product_name, String product_brand, int product_quantity) {
         productRepo.reduceProductQuantity(product_name,product_brand,product_quantity);
     }
+
+    public void increaseProductQuantity(String product_name, String product_brand, int product_quantity) {
+        productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
+    }
 }
