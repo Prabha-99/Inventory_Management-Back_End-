@@ -41,6 +41,8 @@ public class ProductController {
 
 //    List<User> recipients=userRepo.getMails();
 
+    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
+
     // Get the emails of users to notify
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
@@ -59,7 +61,8 @@ public class ProductController {
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
-                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
+//                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
+                    notificationService.GRNNotification(recipientEmail,productDto.getProduct_name(),productDto.getCategory_id(),String.valueOf(productDto.getProduct_quantity()),attachmentPath);
                 }
 
                 return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
