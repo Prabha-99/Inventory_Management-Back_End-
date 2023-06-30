@@ -6,8 +6,8 @@ public interface Notification {
 
     void productAddNotification(String recipientEmail, String productName, String Category,String Quantity) throws MessagingException;
     void productDeleteNotification();
-    void confirmedGINNotification();
-    void rejectedGINNotification();
+    void GINNotification();
+    void GRNNotification(String recipientEmail, String productName, String Category,String Quantity,String Path) throws MessagingException;
     void confirmedGRNNotification();
 
 }
