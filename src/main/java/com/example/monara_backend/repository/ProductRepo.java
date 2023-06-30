@@ -12,4 +12,9 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
     @Modifying
     @Query("UPDATE Product p SET p.product_quantity = p.product_quantity - :product_quantity WHERE p.product_name = :product_name AND p.product_brand = :product_brand")
     void reduceProductQuantity(String product_name, String product_brand, int product_quantity);
+
+    @Modifying
+    @Query("UPDATE Product p SET p.product_quantity = p.product_quantity + :product_quantity WHERE p.product_name = :product_name AND p.product_brand = :product_brand")
+    void increaseProductQuantity(String product_name, String product_brand, int product_quantity);
 }
+
