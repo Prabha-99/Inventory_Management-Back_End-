@@ -1,16 +1,13 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.GIN;
-import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.GINRepo;
-import com.example.monara_backend.repository.ProductRepo;
-import lombok.RequiredArgsConstructor;
+import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -19,10 +16,12 @@ import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 
@@ -31,12 +30,63 @@ public class GINService {
     private final JdbcTemplate jdbcTemplate;
     private final GINRepo ginRepo;
     private final ExecutorService executorService;
+    private final NotificationService notificationService;
 
-    public GINService(JdbcTemplate jdbcTemplate, GINRepo ginRepo, ExecutorService executorService) {
+    public GINService(JdbcTemplate jdbcTemplate, GINRepo ginRepo, ExecutorService executorService, NotificationService notificationService) {
         this.jdbcTemplate = jdbcTemplate;
         this.ginRepo = ginRepo;
-        this.executorService = executorService;
+        this.notificationService = notificationService;
+        this.executorService = Executors.newFixedThreadPool(2); // Adjust the thread pool size as per your requirements
     }
+
+    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
+            "prabhashana77@gmail.com"
+    );
+
+    public String getPath(){
+        String path= ginRepo.pathToNewestGIN().toString();
+//        path=path+"/GIN.pdf";
+        return path;
+    }
+
+    public void saveGINData(GIN ginData) {
+        executorService.execute(() -> {
+            try {
+                // Simulate some processing time
+                Thread.sleep(2000);
+
+
+
+                ginRepo.save(ginData);// 1. Save GIN data to database table
+
+                exportGIN();// 2. Generating the Report
+
+                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
+                    notificationService.GINNotification(recipientEmail,getPath());
+                }
+
+
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (JRException e) {
+                throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
 
     public String exportGIN() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
@@ -69,26 +119,21 @@ public class GINService {
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
         JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
 
+        //Thread
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return "Report generated Successfully at : "+reportPath;
+
+
     }
 
-    public void saveGINData(GIN ginData) {
-        executorService.execute(() -> {
-            try {
-                // Simulate some processing time
-                Thread.sleep(2000);
 
-                // Save GIN data to database table
-                ginRepo.save(ginData);
-
-                System.out.println("GIN data saved successfully: " + ginData);
-
-                // Perform another concurrent task
-//                performConcurrentTask(ginData);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 }
+
+
+
