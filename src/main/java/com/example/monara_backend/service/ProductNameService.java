@@ -18,11 +18,13 @@ public class ProductNameService {
 
 
     public List<String> getAllProducts() {
+        List<Product> products = productRepo.findAll();
+        return products.stream().map(product -> product.getProduct_name() + " - " + product.getProduct_price()).collect(Collectors.toList());
+    }
+    
+    public List<Double> getAllPriceProducts() {
         List<Product> names = productRepo.findAll();
-        return names.stream().map(Product::getProduct_name).collect(Collectors.toList());
+        return names.stream().map(Product::getProduct_price).collect(Collectors.toList());
     }
 
-    public Double getProductPrice(String productName) {
-        return productRepo.findPriceByProductName(productName);
-    }
 }

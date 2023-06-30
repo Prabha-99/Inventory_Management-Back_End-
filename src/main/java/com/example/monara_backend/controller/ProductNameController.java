@@ -21,14 +21,10 @@ public class ProductNameController {
         return productNameService.getAllProducts();
     }
 
-    @GetMapping("/getprice/{productName}")
-    public ResponseEntity<Double> getProductPrice(@PathVariable String productName) {
-        Double productPrice = productNameService.getProductPrice(productName);
-        if (productPrice == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(productPrice);
-    }
 
+    @GetMapping("/getprice")
+    public List<Double> getAllPriceProducts() {
+        return productNameService.getAllPriceProducts();
+    }
 
 }
