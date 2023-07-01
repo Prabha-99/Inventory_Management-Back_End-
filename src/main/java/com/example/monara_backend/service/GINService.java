@@ -45,7 +45,6 @@ public class GINService {
 
     public String getPath(){
         String path= ginRepo.pathToNewestGIN().toString();
-//        path=path+"/GIN.pdf";
         return path;
     }
 
@@ -53,19 +52,15 @@ public class GINService {
         executorService.execute(() -> {
             try {
                 // Simulate some processing time
-                Thread.sleep(2000);
-
-
+                Thread.sleep(0);
 
                 ginRepo.save(ginData);// 1. Save GIN data to database table
 
                 exportGIN();// 2. Generating the Report
 
-                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
-                    notificationService.GINNotification(recipientEmail,getPath());
-                }
-
-
+//                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
+//                    notificationService.GINNotification(recipientEmail,getPath());
+//                }
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -73,17 +68,9 @@ public class GINService {
                 throw new RuntimeException(e);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
             }
         });
     }
-
-
-
-
-
-
 
 
 
@@ -106,9 +93,10 @@ public class GINService {
         String sql = "INSERT INTO reports (report_name,customer, path, date) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String customerName = gins.get(0).getCustomer_name(); // Assuming customer_name is retrieved from the first GIN object
+        Long invoiceNumber=gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GIN");
+            ps.setString(1, "GIN"+invoiceNumber);
             ps.setString(2,customerName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
@@ -117,12 +105,12 @@ public class GINService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+invoiceNumber+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
 
         //Thread
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
