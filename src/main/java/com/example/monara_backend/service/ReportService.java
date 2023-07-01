@@ -108,7 +108,7 @@ public class ReportService {
 
 
         // Saving the report file to the local file system
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports\\" +dateCreated + "." + format.toLowerCase();
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\user_reports" +dateCreated + "." + format.toLowerCase();
         FileOutputStream fos = new FileOutputStream(reportPath);
         fos.write(reportBytes);
         fos.close();
@@ -176,7 +176,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportProductReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\product_reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
@@ -210,7 +210,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportPSReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\ps_reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
@@ -249,7 +249,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportGIN() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\GIN";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 

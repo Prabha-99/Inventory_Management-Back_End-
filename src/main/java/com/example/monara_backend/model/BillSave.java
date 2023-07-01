@@ -14,7 +14,9 @@ public class BillSave {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bill_id;
+
+   @Column(name="bill_id")
+    private Long bill_id;
     private String qu_no;
     private String st_date;
     private String end_date;

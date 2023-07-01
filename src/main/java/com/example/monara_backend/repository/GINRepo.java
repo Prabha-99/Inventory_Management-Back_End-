@@ -19,6 +19,3 @@ public interface GINRepo extends JpaRepository<GIN,Long> {
 
 }
 
-
-//          SELECT * FROM gin ORDER BY date DESC LIMIT 1
-//          SELECT * FROM gin WHERE date >= NOW() ORDER BY date DESC LIMIT 1;

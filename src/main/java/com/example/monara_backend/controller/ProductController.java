@@ -44,8 +44,13 @@ public class ProductController {
     String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
 
     // Get the emails of users to notify
+
+    List<String> recipientEmails = Arrays.asList(
+            "prabhashana77@gmail.com",
+            "mprabhashmilindu@gmail.com"
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
+
     );
 
     // Beginning of the Inventory Admin
@@ -141,6 +146,44 @@ public class ProductController {
     }
 
     public static class ProductReduceRequest {
+        private String product_name;
+        private String product_brand;
+        private int product_quantity;
+
+        public String getProduct_name() {
+            return product_name;
+        }
+
+        public void setProduct_name(String product_name) {
+            this.product_name = product_name;
+        }
+
+        public String getProduct_brand() {
+            return product_brand;
+        }
+
+        public void setProduct_brand(String product_brand) {
+            this.product_brand = product_brand;
+        }
+
+        public int getProduct_quantity() {
+            return product_quantity;
+        }
+
+        public void setProduct_quantity(int product_quantity) {
+            this.product_quantity = product_quantity;
+        }
+
+
+    }
+
+    @PostMapping("/increase")
+    public void increaseProductQuantity(@RequestBody ProductIncreaseRequest request) {
+        productService.increaseProductQuantity(request.getProduct_name(), request.getProduct_brand(), request.getProduct_quantity());
+    }
+
+    public static class ProductIncreaseRequest {
+
         private String product_name;
         private String product_brand;
         private int product_quantity;
