@@ -15,9 +15,9 @@ import java.util.Date;
 @Table(name = "GIN")
 public class GIN {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Long invoice_no;
     private Date date;
     private String customer_name;

@@ -29,7 +29,7 @@ public class GINController {
 //    }
 
     @PostMapping("/submit")
-    public void submitGINData(@RequestBody GIN ginData) {
+    public void submitGINData(@RequestBody GIN ginData){
         ginService.saveGINData(ginData);
     }
 

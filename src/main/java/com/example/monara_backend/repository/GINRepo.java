@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface GINRepo extends JpaRepository<GIN,Long> {
 
-    @Query(value = "SELECT * FROM gin ORDER BY date DESC LIMIT 1", nativeQuery = true)//Getting the Newest GIN
+    @Query(value = "SELECT * FROM gin WHERE TIME(date) <= CURTIME() ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the Newest GIN
     List<GIN> newestGIN();
 
     @Query(value = "SELECT path FROM reports WHERE report_name LIKE 'GIN%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the path of the Newest GIN
@@ -18,3 +18,4 @@ public interface GINRepo extends JpaRepository<GIN,Long> {
 
 
 }
+
