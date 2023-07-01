@@ -1,7 +1,9 @@
 package com.example.monara_backend.service;
 
+import com.example.monara_backend.model.GIN;
 import com.example.monara_backend.model.GRN;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.repository.GINRepo;
 import com.example.monara_backend.repository.GRNRepo;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
@@ -21,14 +23,21 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 @Service
-@RequiredArgsConstructor
+
 public class GRNService {
 
     private final JdbcTemplate jdbcTemplate;
     private final GRNRepo grnRepo;
+    private final ExecutorService executorService;
 
+    public GRNService(JdbcTemplate jdbcTemplate, GRNRepo grnRepo, ExecutorService executorService) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.grnRepo = grnRepo;
+        this.executorService = executorService;
+    }
 
     public String exportGRN() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
@@ -62,5 +71,25 @@ public class GRNService {
         JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN.pdf");
 
         return "Report generated Successfully at : "+reportPath;
+    }
+
+    public void saveGRNData(GRN grnData) {
+        executorService.execute(() -> {
+            try {
+                // Simulate some processing time
+                Thread.sleep(2000);
+
+                // Save GIN data to database table
+                grnRepo .save(grnData);
+
+                System.out.println("GIN data saved successfully: " + grnData );
+
+                // Perform another concurrent task
+//                performConcurrentTask(ginData);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

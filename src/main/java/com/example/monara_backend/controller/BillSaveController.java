@@ -35,10 +35,11 @@ public class BillSaveController {
 
 
 //    //delete by id bill
-    @DeleteMapping("delete/{bill_id}")
-    public ResponseEntity<String> deleteBill(@PathVariable Integer bill_id) {
-        billSaveService.deleteBill(bill_id);
-        return ResponseEntity.ok("Bill deleted");
+
+    @DeleteMapping("/delete/{bill_id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long bill_id) {
+        billSaveService.deleteById(bill_id);
+        return ResponseEntity.ok().body("Deleted successfully.");
     }
 
 }

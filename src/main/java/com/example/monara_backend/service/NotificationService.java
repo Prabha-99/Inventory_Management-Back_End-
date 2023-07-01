@@ -56,9 +56,31 @@ public class NotificationService implements Notification {
     }
 
     @Override
-    public void GINNotification() {
+    public void GINNotification(String recipientEmail, String Path) throws MessagingException {
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(recipientEmail);
+        helper.setSubject("New Good Issue Note");
 
+
+        String additionalText = "Additionally, I have attached the <mark>Goods Receive Note (GRN)</mark> related to this goods issuance for your reference.";
+        String greeting = "<b><i>Thank you for your attention..Have a nice Day.!!!</i></b>";
+
+
+        String emailContent = additionalText +"\n"+ greeting;
+        helper.setText(emailContent, true);
+
+
+        // Attach the file
+        FileSystemResource file = new FileSystemResource(new File(attachmentPath));
+        helper.addAttachment(file.getFilename(), file);
+
+        emailSender.send(message);
     }
+
+
+
+
 
     @Override
     public void GRNNotification(String recipientEmail, String productName, String Category, String Quantity, String Path) throws MessagingException {
