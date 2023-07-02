@@ -11,8 +11,8 @@ public class ShowroomService {
     private ShowroomRepo showroomRepo;
 
 
-    public ShowroomFile create(ShowroomFile dbFile) {
+    public ShowroomFile saveDetails(ShowroomFile showroomFile) {
 
-        return showroomRepo.save(dbFile);
+        return showroomRepo.save(showroomFile);
     }
 }
