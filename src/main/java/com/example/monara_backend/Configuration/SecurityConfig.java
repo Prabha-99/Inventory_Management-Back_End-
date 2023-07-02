@@ -22,7 +22,6 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
@@ -56,6 +55,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/category/**").permitAll()
                 .requestMatchers("/api/purchaseOrder/**").permitAll()
                 .requestMatchers("/api/sellOrder/**").permitAll()
+
+                .requestMatchers("/api/forecasting/grn/**").permitAll()
 
 
 

@@ -47,11 +47,10 @@ public class ProductController {
 
     List<String> recipientEmails = Arrays.asList(
             "prabhashana77@gmail.com",
-            "mprabhashmilindu@gmail.com"
-    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
-            "prabhashana77@gmail.com"
-
-    );
+            "mprabhashmilindu@gmail.com");
+//    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
+//            "prabhashana77@gmail.com"
+//    );
 
     // Beginning of the Inventory Admin
     @PostMapping(value = "/saveProduct")    //Add products
