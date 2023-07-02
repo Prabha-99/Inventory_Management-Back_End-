@@ -13,9 +13,11 @@ import java.util.Date;
 public class ShowroomFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     private String name;
+
+
     @Lob
     private Blob dbFile;
 
