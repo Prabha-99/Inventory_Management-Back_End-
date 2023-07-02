@@ -17,25 +17,30 @@ public interface ForecastingRepo extends JpaRepository<ForecastingDto,Integer>{
     // get by time
     // select * from grn where
 
-//    @Query(value = "" +
-//            "SELECT YEAR(date) AS purchase_year,\n" +
+    @Query(value = "" +
+            "SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS id, YEAR(date) AS purchase_year,"+
+            "       MONTH(date) AS purchase_month,\n" +
+            "       COUNT(*) AS total_purchases\n" +
+            "FROM grn \n" +
+            "GROUP BY purchase_year, purchase_month\n" +
+            "ORDER BY purchase_year ASC, purchase_month ASC " +
+            ";", nativeQuery = true)//Getting the Newest GIN
+    List<ForecastingDto> getMonthlyGRN();
+
+//    String sqlQuery = "SELECT YEAR(date) AS purchase_year, \n" +
+//            "       MONTH(date) AS purchase_month, \n" +
+//            "       COUNT(*) AS total_purchases \n" +
+//            "FROM grn \n" +
+//            "GROUP BY purchase_year, purchase_month \n" +
+//            "ORDER BY purchase_year ASC, purchase_month ASC \n" +
+//            ";";
+//
+//    @Query(value = "SELECT YEAR('date') AS purchase_year,\n" +
 //            "       MONTH(date) AS purchase_month,\n" +
 //            "       COUNT(*) AS total_purchases\n" +
 //            "FROM grn\n" +
 //            "GROUP BY purchase_year, purchase_month\n" +
-//            "ORDER BY purchase_year ASC, purchase_month ASC " +
-//            "LIMIT 1;", nativeQuery = true)//Getting the Newest GIN
+//            "ORDER BY purchase_year ASC, purchase_month ASC;")
 //    List<ForecastingDto> getMonthlyGRN();
-
-    String sqlQuery = "SELECT YEAR(date) AS purchase_year, \n" +
-            "       MONTH(date) AS purchase_month, \n" +
-            "       COUNT(*) AS total_purchases \n" +
-            "FROM grn \n" +
-            "GROUP BY purchase_year, purchase_month \n" +
-            "ORDER BY purchase_year ASC, purchase_month ASC \n" +
-            ";";
-
-    @Query(value = sqlQuery)
-    List<ForecastingDto> getMonthlyGRN();
 
 }

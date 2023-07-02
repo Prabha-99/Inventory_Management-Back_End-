@@ -26,9 +26,9 @@ public class ForecastingService {
                             && status.equals("")
             ) {
 
-                // grnList = forecastingRepo.getMonthlyGRN();
+                grnList = forecastingRepo.getMonthlyGRN();
 //                System.out.println("TYPE: " + grnList.getClass());
-               grnList.add(new ForecastingDto(1,2022,1,2));
+               // grnList.add(new ForecastingDto(1,2022,1,2));
             }
         } catch(Exception exception) {
             System.out.println(exception);
