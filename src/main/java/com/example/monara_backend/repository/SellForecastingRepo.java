@@ -1,48 +1,33 @@
 package com.example.monara_backend.repository;
 
-import com.example.monara_backend.dto.ForecastingDto;
-import com.example.monara_backend.model.GIN;
-import com.example.monara_backend.model.GRN;
+import com.example.monara_backend.dto.PurchaseForecastingDto;
+import com.example.monara_backend.dto.SellForecastingDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface ForecastingRepo extends JpaRepository<ForecastingDto,Integer>{
-    // search methods
-    // time,category,status
+public interface SellForecastingRepo extends JpaRepository<SellForecastingDto,Integer> {
 
-    // get by time
-    // select * from grn where
-
-
-    //Get purchasing details from monthly all
-    @Query(value = "" +
+    @Query(value =  "" +
             "SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS id, YEAR(date) AS purchase_year,"+
             "       MONTH(date) AS purchase_month,\n" +
-            "       COUNT(*) AS total_purchases\n" +
-            "FROM grn \n" +
+            "       SUM(issued_quantity) AS total\n" +
+            "FROM gin \n" +
             "GROUP BY purchase_year, purchase_month\n" +
             "ORDER BY purchase_year ASC, purchase_month ASC " +
             ";", nativeQuery = true)//Getting the Newest GIN
-    List<ForecastingDto> getMonthlyGRN();
+    List<SellForecastingDto> getMonthlyGIN();
 
-
-    //Get purchasing details from monthly Steron
     @Query(value = "SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS id, YEAR(date) AS purchase_year,\n" +
             "       MONTH(date) AS purchase_month,\n" +
-            "       COUNT(*) AS total_purchases\n" +
-            "FROM grn\n" +
+            "       SUM(issued_quantity) AS total\n" +
+            "FROM gin\n" +
             "WHERE category_id = :category\n" +
             "GROUP BY purchase_year, purchase_month\n" +
             "ORDER BY purchase_year ASC, purchase_month ASC" +
             ";" , nativeQuery = true)//Getting the Newest GIN
-    List<ForecastingDto> getGrnDataByMonthlyAndCategory(@Param("category")String category);
-
-
-
+    List<SellForecastingDto> getGinDataByMonthlyAndCategory(@Param("category")String category);
 
 }

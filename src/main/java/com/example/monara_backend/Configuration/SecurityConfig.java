@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/sellOrder/**").permitAll()
 
                 .requestMatchers("/api/forecasting/grn/**").permitAll()
+                .requestMatchers("/api/forecasting/gin/**").permitAll()
 
 
 

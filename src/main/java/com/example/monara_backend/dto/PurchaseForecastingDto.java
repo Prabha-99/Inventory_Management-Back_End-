@@ -8,17 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-public class ForecastingDto {
+public class PurchaseForecastingDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer purchase_year;
     private Integer purchase_month;
-    private Integer total_purchases;
+    private Integer total;
 }
