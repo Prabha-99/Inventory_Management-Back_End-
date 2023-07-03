@@ -27,20 +27,8 @@ public interface ForecastingRepo extends JpaRepository<ForecastingDto,Integer>{
             ";", nativeQuery = true)//Getting the Newest GIN
     List<ForecastingDto> getMonthlyGRN();
 
-//    String sqlQuery = "SELECT YEAR(date) AS purchase_year, \n" +
-//            "       MONTH(date) AS purchase_month, \n" +
-//            "       COUNT(*) AS total_purchases \n" +
-//            "FROM grn \n" +
-//            "GROUP BY purchase_year, purchase_month \n" +
-//            "ORDER BY purchase_year ASC, purchase_month ASC \n" +
-//            ";";
-//
-//    @Query(value = "SELECT YEAR('date') AS purchase_year,\n" +
-//            "       MONTH(date) AS purchase_month,\n" +
-//            "       COUNT(*) AS total_purchases\n" +
-//            "FROM grn\n" +
-//            "GROUP BY purchase_year, purchase_month\n" +
-//            "ORDER BY purchase_year ASC, purchase_month ASC;")
-//    List<ForecastingDto> getMonthlyGRN();
+
+
+
 
 }
