@@ -15,24 +15,19 @@ public class ForecastingService {
     @Autowired
     private ForecastingRepo forecastingRepo;
 
-    public List<ForecastingDto> getAllGrnData(String timeDuration, String category, String status) {
+    public List <ForecastingDto> getAllGrnData(String timeDuration, String category, String status) {
 
-        List<ForecastingDto> grnList = new ArrayList<>();
+        List < ForecastingDto > grnList = new ArrayList < > ();
 
-        try{
-            if(
-                            timeDuration.equals("monthly")
-                            && category.equals("")
-                            && status.equals("")
-            ) {
-
+        try {
+            if (timeDuration.equals("monthly") && category.equals("") && status.equals("")) {
                 grnList = forecastingRepo.getMonthlyGRN();
-//                System.out.println("TYPE: " + grnList.getClass());
-               // grnList.add(new ForecastingDto(1,2022,1,2));
+            } else if(timeDuration.equals("monthly") && !category.equals("") && status.equals("")) {
+                grnList = forecastingRepo.getGrnDataByMonthlyAndCategory(category);
             }
-        } catch(Exception exception) {
+        } catch (Exception exception) {
             System.out.println(exception);
         }
-        return  grnList;
+        return grnList;
     }
 }
