@@ -3,6 +3,7 @@ package com.example.monara_backend.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name="pdfbillsave")
+@Builder
 public class PdfBillSave {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,8 @@ public class PdfBillSave {
     private Long bill_id;
 
     private String filename;
+
+    private String type;
 
     private String filepath;
 
