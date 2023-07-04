@@ -18,6 +18,7 @@ public class GRN {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String category_id;
     private Long invoice_no;
     private Date date;
     private String supplier_name;
