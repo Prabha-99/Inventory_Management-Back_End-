@@ -29,7 +29,7 @@ public class GIN {
     private String remarks;
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date();
     }
 
     public String getDate() {
