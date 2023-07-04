@@ -45,9 +45,7 @@ public class ProductController {
 
     // Get the emails of users to notify
 
-    List<String> recipientEmails = Arrays.asList(
-            "prabhashana77@gmail.com",
-            "mprabhashmilindu@gmail.com"
+
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
 
