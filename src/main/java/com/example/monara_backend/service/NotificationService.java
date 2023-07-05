@@ -1,33 +1,41 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.common.Notification;
+import com.example.monara_backend.model.GIN;
+import com.example.monara_backend.repository.GINRepo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 @Service
-
+@RequiredArgsConstructor
 public class NotificationService implements Notification {
 
+    @Autowired
     private JavaMailSender emailSender;
 
-    public NotificationService(JavaMailSender emailSender) {
-        this.emailSender = emailSender;
+    @Autowired
+    private final GINRepo ginRepo;
+
+    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/";
+    public String getGINName(){
+        return ginRepo.nameOFNewestGIN();
     }
 
-    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
+
+
     @Override
     public void productAddNotification(String recipientEmail, String productName, String Category, String Quantity) throws MessagingException {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(recipientEmail);
+
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(recipientEmail);
@@ -57,25 +65,43 @@ public class NotificationService implements Notification {
 
     @Override
     public void GINNotification(String recipientEmail, String Path) throws MessagingException {
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setTo(recipientEmail);
-        helper.setSubject("New Good Issue Note");
+
+//        executorService.execute(() -> {
+                List<GIN> gins=ginRepo.newestGIN();//Retrieving Newest GIN Data into a List
+                Long invoice = gins.get(0).getInvoice_no();
+                String customerName = gins.get(0).getCustomer_name();
+                String mobile = gins.get(0).getContact_nu();
+
+                String reportName=getGINName(); //here
+                String path=attachmentPath+reportName+".pdf";
 
 
-        String additionalText = "Additionally, I have attached the <mark>Goods Receive Note (GRN)</mark> related to this goods issuance for your reference.";
-        String greeting = "<b><i>Thank you for your attention..Have a nice Day.!!!</i></b>";
+                MimeMessage message = emailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                helper.setTo(recipientEmail);
+                helper.setSubject("New Good Issue Note - "+reportName);
 
 
-        String emailContent = additionalText +"\n"+ greeting;
-        helper.setText(emailContent, true);
+                String additionalText = "Good Issue Note for,<br><br> <b>Invoice Number</b> : "+invoice+
+                                                            "<br> <b>Customer Name</b> : "+customerName+
+                                                            "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
+                                        "Additionally, below attached the <mark>Goods Issue Note (GIN)</mark> related to above goods issuance for the reference purpose.<br><br>";
+
+                String greeting = "<b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
 
 
-        // Attach the file
-        FileSystemResource file = new FileSystemResource(new File(attachmentPath));
-        helper.addAttachment(file.getFilename(), file);
+                String emailContent = additionalText +"\n"+ greeting;
+                helper.setText(emailContent, true);
 
-        emailSender.send(message);
+
+                // Attach the file
+                FileSystemResource file = new FileSystemResource(new File(path)); //here (path)
+                helper.addAttachment(file.getFilename(), file);
+
+                emailSender.send(message);
+
+//        });
+
     }
 
 
