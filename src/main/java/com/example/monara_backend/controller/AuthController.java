@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @RestController
@@ -46,15 +48,17 @@ public class AuthController {
 
     @GetMapping("/CurrentUserRole")
     public String getCurrentUserRole(@RequestBody AuthenticationRequest request){
-        String email = request.getEmail();
-
-        Optional<User> userOptional = userRepo.findByEmail(email);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return String.valueOf(user.getRole());
-        } else {
-            // Handle user not found or default role
-            return "Default_Role";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            if (authority.getAuthority().equals("ADMIN")) {
+                return "ADMIN";
+            } else if (authority.getAuthority().equals("INVENTORY_ADMIN")) {
+                return "INVENTORY_ADMIN";
+            } else if (authority.getAuthority().equals("STOCK_MANAGER")) {
+                return "STOCK_MANAGER";
+            }
         }
+        return "ROLE_NOT_FOUND";
     }
 }
