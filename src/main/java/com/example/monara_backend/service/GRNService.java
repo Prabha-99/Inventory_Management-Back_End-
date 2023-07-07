@@ -2,16 +2,13 @@ package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.GIN;
 import com.example.monara_backend.model.GRN;
-import com.example.monara_backend.model.Product;
-import com.example.monara_backend.repository.GINRepo;
 import com.example.monara_backend.repository.GRNRepo;
-import lombok.RequiredArgsConstructor;
+import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -20,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +30,44 @@ public class GRNService {
     private final JdbcTemplate jdbcTemplate;
     private final GRNRepo grnRepo;
     private final ExecutorService executorService;
+    private final NotificationService notificationService;
 
-    public GRNService(JdbcTemplate jdbcTemplate, GRNRepo grnRepo, ExecutorService executorService) {
+    public GRNService(JdbcTemplate jdbcTemplate, GRNRepo grnRepo, ExecutorService executorService, NotificationService notificationService) {
         this.jdbcTemplate = jdbcTemplate;
         this.grnRepo = grnRepo;
         this.executorService = executorService;
+        this.notificationService = notificationService;
+    }
+
+
+    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
+            "prabhashana77@gmail.com"
+    );
+    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/";
+
+    public String getGRNName(){
+        return grnRepo.nameOFNewestGRN();
+    }
+    public void saveGRNData(GRN grnData) {
+        executorService.execute(() -> {
+            try {
+                // Simulate some processing time
+                Thread.sleep(0);
+                String reportName=getGRNName();
+                String path=attachmentPath+reportName+".pdf";
+
+                grnRepo.save(grnData);// 1. Save GRN data to database table
+                exportGRN();// 2. Generating the Report
+
+                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
+//                    Thread.sleep(1000);
+                    notificationService.GRNNotification(recipientEmail,path);
+                }
+
+            } catch (InterruptedException | MessagingException | FileNotFoundException | JRException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public String exportGRN() throws FileNotFoundException, JRException {
@@ -57,9 +88,10 @@ public class GRNService {
         String sql = "INSERT INTO reports (report_name, customer, path, date) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String supplierName = grns.get(0).getSupplier_name(); // Assuming customer_name is retrieved from the first GRN object
+        Long invoiceNumber=grns.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GRN");
+            ps.setString(1, "GRN_"+invoiceNumber);
             ps.setString(2,supplierName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
@@ -68,28 +100,12 @@ public class GRNService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN.pdf");
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN_"+invoiceNumber+".pdf");
 
         return "Report generated Successfully at : "+reportPath;
     }
 
-    public void saveGRNData(GRN grnData) {
-        executorService.execute(() -> {
-            try {
-                // Simulate some processing time
-                Thread.sleep(2000);
 
-                // Save GIN data to database table
-                grnRepo .save(grnData);
 
-                System.out.println("GIN data saved successfully: " + grnData );
 
-                // Perform another concurrent task
-//                performConcurrentTask(ginData);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 }

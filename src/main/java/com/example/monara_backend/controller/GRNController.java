@@ -11,14 +11,11 @@ import java.io.FileNotFoundException;
 
 @RestController
 @RequestMapping("api/GRN")
-
+@RequiredArgsConstructor
 public class GRNController {
 
     private final GRNService grnService;
 
-    public GRNController(GRNService grnService) {
-        this.grnService = grnService;
-    }
 
     @GetMapping("/generateGRN")
     public String generateGRNReport() throws JRException, FileNotFoundException {

@@ -65,8 +65,7 @@ public class ProductController {
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
-//                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
-                    notificationService.GRNNotification(recipientEmail,productDto.getProduct_name(),productDto.getCategory_id(),String.valueOf(productDto.getProduct_quantity()),attachmentPath);
+                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
                 }
 
                 return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
