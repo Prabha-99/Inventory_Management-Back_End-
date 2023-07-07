@@ -58,7 +58,7 @@
     </field>
     <field name="contact_nu" class="java.lang.String">
     </field>
-    <field name="customer_name" class="java.lang.String">
+    <field name="supplier_name" class="java.lang.String">
     </field>
     <field name="date" class="java.lang.String">
     </field>
@@ -132,7 +132,7 @@
 
             <staticText>
                 <reportElement x="358" y="140" width="184" height="15" forecolor="#263F91" uuid="edbd74ac-0cbd-44c9-8a8e-ccf745191172"/>
-                <text><![CDATA[Received Date: ............................................]]></text>
+                <text><![CDATA[Received Date: ..............................]]></text>
             </staticText>
             <textField>
                 <reportElement x="190" y="135" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -156,7 +156,7 @@
 
             <staticText>
                 <reportElement x="-1" y="160" width="170" height="15" forecolor="#263F91" uuid="2d2f365d-7b12-4a8f-990d-ff528a2660bc"/>
-                <text><![CDATA[Received Time: ....................................]]></text>
+                <text><![CDATA[Received Time: ..........................]]></text>
             </staticText>
             <textField>
                 <reportElement x="-190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -196,14 +196,14 @@
             </staticText>
             <staticText>
                 <reportElement x="0" y="91" width="555" height="15" forecolor="#263F91" uuid="64c907e8-fc11-4522-a2e1-8736792c8042"/>
-                <text><![CDATA[Customer's Name:  ..................................................................................................................................................................]]></text>
+                <text><![CDATA[Supplier's Name:  ..................................................................................................................................................................]]></text>
             </staticText>
             <textField>
                 <reportElement x="0" y="85" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -380,7 +380,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
             <textField>
@@ -390,7 +390,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
 
 
