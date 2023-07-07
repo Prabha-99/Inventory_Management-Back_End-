@@ -24,23 +24,8 @@ public class PdfBillSaveController {
     @Autowired
     private PdfBillSaveService pdfFileService;
 
-    @PostMapping("/pdf")
-    public ResponseEntity<PdfBillSave> uploadPdf(@RequestParam("html2pdf-file") MultipartFile file) {
-        try {
-            PdfBillSave pdf = pdfFileService.savePdf(file);
-            return ResponseEntity.ok(pdf);
-        } catch (IOException ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 
-
-    @GetMapping("files/{filename:.+}")
-    public ResponseEntity<byte[]> getPdf(@PathVariable String filename) throws IOException {
-        return pdfFileService.getPdf(filename);
-    }
-
-
+//getting all files
     @GetMapping("/all")
     public ResponseEntity<List<PdfBillSave>> getAllPdf () {
         List<PdfBillSave> pdfList = pdfFileService.getAllPdf();
@@ -48,6 +33,7 @@ public class PdfBillSaveController {
     }
 
 
+    //get pdf by name
     @GetMapping("/files/{filename}")
     public ResponseEntity<?> downloadImageFromFileSystem (@PathVariable String filename) throws IOException {
         byte[] fileData = pdfFileService.downloadFileFromFileSystem(filename);
@@ -56,6 +42,7 @@ public class PdfBillSaveController {
                 .body(fileData);
     }
 
+    //post pdf data
     @PostMapping("/pdf")
     public ResponseEntity<?> uploadFile(@RequestParam("html2pdf-file")MultipartFile file) throws IOException {
         String uploadFile = pdfFileService.uploadFileToFileSystem(file);
