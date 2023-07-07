@@ -5,6 +5,7 @@ import com.example.monara_backend.repository.GINRepo;
 import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -28,11 +29,12 @@ import java.util.concurrent.Executors;
 public class GINService {
 
     private final JdbcTemplate jdbcTemplate;
+
     private final GINRepo ginRepo;
     private final ExecutorService executorService;
     private final NotificationService notificationService;
 
-    public GINService(JdbcTemplate jdbcTemplate, GINRepo ginRepo, ExecutorService executorService, NotificationService notificationService) {
+    public GINService(JdbcTemplate jdbcTemplate, ExecutorService executorService, GINRepo ginRepo, NotificationService notificationService) {
         this.jdbcTemplate = jdbcTemplate;
         this.ginRepo = ginRepo;
         this.notificationService = notificationService;
@@ -42,10 +44,10 @@ public class GINService {
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
     );
+    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/";
 
-    public String getPath(){
-        String path= ginRepo.pathToNewestGIN().toString();
-        return path;
+    public String getGINName(){
+        return ginRepo.nameOFNewestGIN();
     }
 
     public void saveGINData(GIN ginData) {
@@ -53,21 +55,19 @@ public class GINService {
             try {
                 // Simulate some processing time
                 Thread.sleep(0);
+                String reportName=getGINName();
+                String path=attachmentPath+reportName+".pdf";
 
                 ginRepo.save(ginData);// 1. Save GIN data to database table
-
                 exportGIN();// 2. Generating the Report
 
-//                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
-//                    notificationService.GINNotification(recipientEmail,getPath());
-//                }
+                for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
+//                    Thread.sleep(1000);
+                    notificationService.GINNotification(recipientEmail,path);
+                }
 
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | MessagingException | FileNotFoundException | JRException e) {
                 e.printStackTrace();
-            } catch (JRException e) {
-                throw new RuntimeException(e);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
             }
         });
     }
@@ -96,7 +96,7 @@ public class GINService {
         Long invoiceNumber=gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GIN"+invoiceNumber);
+            ps.setString(1, "GIN_"+invoiceNumber);
             ps.setString(2,customerName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
