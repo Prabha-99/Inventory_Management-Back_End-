@@ -48,7 +48,7 @@ public class ProductService {
         if (existingProduct == null) {
             return null;
         }
-        existingProduct.setCategory_id(product.getCategory_id());
+        existingProduct.setCategory_name(product.getCategory_name());
         existingProduct.setProduct_brand(product.getProduct_brand());
         existingProduct.setProduct_name(product.getProduct_name());
         existingProduct.setProduct_price(product.getProduct_price());
