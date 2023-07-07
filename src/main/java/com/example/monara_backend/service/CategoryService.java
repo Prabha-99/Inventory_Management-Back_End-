@@ -1,5 +1,9 @@
 package com.example.monara_backend.service;
 
+import com.example.monara_backend.dto.CategoryDto;
+import com.example.monara_backend.dto.ProductDto;
+import com.example.monara_backend.model.Category;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.CategoryRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -20,6 +24,16 @@ public class CategoryService {
     public long getCategoryCount(){
 
         return categoryRepo.count();
+    }
+
+    public CategoryDto searchCategory(int categoryId){
+        if (categoryRepo.existsById(categoryId)){
+            Category category = categoryRepo.findById(categoryId).orElse(null);
+            return modelMapper.map(category, CategoryDto.class);
+        }else{
+            return null;
+
+        }
     }
     //End of the Inventory Admin
 }
