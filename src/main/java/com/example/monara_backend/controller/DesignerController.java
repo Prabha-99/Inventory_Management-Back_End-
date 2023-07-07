@@ -70,31 +70,6 @@ public class DesignerController {
 
     }
 
-    /*@PutMapping("/deductProduct")
-    public ResponseEntity<Product> deductProduct(@PathVariable Integer productID, @RequestBody Product product) {
-        // Retrieve the existing product from the database
-        Product existingProduct = productService.getProductById(productID);
-
-        // Check if the product exists
-        if (existingProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        // Deduct the quantity from the existing product
-        int quantityToDeduct = product.getProduct_quantity();
-        int existingQuantity = existingProduct.getProduct_quantity();
-        if (existingQuantity < quantityToDeduct) {
-            // If the quantity to deduct is greater than the existing quantity, return an error response
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        existingProduct.setProduct_quantity(existingQuantity - quantityToDeduct);
-
-        // Update the product in the database
-        productService.updateProduct(productID, existingProduct);
-
-        // Return the updated product with HTTP status OK
-        return new ResponseEntity<>(existingProduct, HttpStatus.OK);
-    }*/
     @PutMapping("/deductProduct")
     public ResponseEntity<Product> deductProduct(@RequestBody Product product) {
         // Retrieve the existing product from the database using the ID from the request body

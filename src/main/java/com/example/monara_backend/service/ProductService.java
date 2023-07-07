@@ -107,25 +107,6 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    /*public Product getProductById(Integer productID) {
-        Optional<Product> optionalProduct = productRepo.findById(productID);
-        return optionalProduct.orElse(null);
-    }
-
-    public void deductProduct(Integer productID, Product updatedProduct) {
-        // Retrieve the existing product from the database
-        Product existingProduct = getProductById(productID);
-
-        if (existingProduct != null) {
-            // Update the necessary fields of the existing product
-            existingProduct.setProduct_name(updatedProduct.getProduct_name());
-            existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
-            // Update other fields as needed
-
-            // Save the updated product in the database
-            productRepo.save(existingProduct);
-        }
-    }*/
         public Product getProductById(Integer productID) {
             return productRepo.findById(productID).orElse(null);
         }
@@ -136,7 +117,6 @@ public class ProductService {
             if (existingProduct != null) {
 
                 existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
-                // Update other fields as needed
 
                 productRepo.save(existingProduct);
             }
