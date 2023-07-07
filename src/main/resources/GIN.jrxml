@@ -72,8 +72,7 @@
     </field>
     <field name="remarks" class="java.lang.String">
     </field>
-    <!--        <field name="product_quantity" class="java.sql.Timestamp"> This Timestamp could be important-->
-    <!--        </field>-->
+
 
 
 

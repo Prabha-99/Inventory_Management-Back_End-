@@ -58,7 +58,7 @@
     </field>
     <field name="contact_nu" class="java.lang.String">
     </field>
-    <field name="supplier_name" class="java.lang.String">
+    <field name="customer_name" class="java.lang.String">
     </field>
     <field name="date" class="java.lang.String">
     </field>
@@ -72,8 +72,7 @@
     </field>
     <field name="remarks" class="java.lang.String">
     </field>
-    <!--        <field name="product_quantity" class="java.sql.Timestamp"> This Timestamp could be important-->
-    <!--        </field>-->
+
 
 
 
@@ -104,7 +103,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{contact_nu}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -145,7 +144,7 @@
 
             <staticText>
                 <reportElement x="358" y="160" width="196" height="15" forecolor="#263F91" uuid="dd52166a-1135-4931-adef-51e7972118bc"/>
-                <text><![CDATA[Purchase Order No: ..........................................]]></text>
+                <text><![CDATA[Invoice Date: ..........................................]]></text>
             </staticText>
             <textField>
                 <reportElement x="190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
@@ -204,7 +203,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -307,7 +306,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="70" y="0" width="151" height="20" uuid="96217820-0a87-4b37-8727-10f5ae45e0f5">
@@ -322,7 +321,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{item_description}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="221" y="0" width="99" height="20" uuid="95b0e4a7-3c43-4994-83f5-7836c3957410">
@@ -337,7 +336,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{received_quantity}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{ordered_quantity}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="320" y="0" width="110" height="20" uuid="a356969a-baf5-46ed-9b67-9010678eda83">
@@ -367,7 +366,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{item_description}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
@@ -381,7 +380,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
             </textField>
 
             <textField>
@@ -391,7 +390,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
             </textField>
 
 
