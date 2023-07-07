@@ -24,8 +24,8 @@ public class PdfBillSaveController {
     @Autowired
     private PdfBillSaveService pdfFileService;
 
- 
 
+//getting all files
     @GetMapping("/all")
     public ResponseEntity<List<PdfBillSave>> getAllPdf () {
         List<PdfBillSave> pdfList = pdfFileService.getAllPdf();
@@ -33,6 +33,7 @@ public class PdfBillSaveController {
     }
 
 
+    //get pdf by name
     @GetMapping("/files/{filename}")
     public ResponseEntity<?> downloadImageFromFileSystem (@PathVariable String filename) throws IOException {
         byte[] fileData = pdfFileService.downloadFileFromFileSystem(filename);
@@ -41,6 +42,7 @@ public class PdfBillSaveController {
                 .body(fileData);
     }
 
+    //post pdf data
     @PostMapping("/pdf")
     public ResponseEntity<?> uploadFile(@RequestParam("html2pdf-file")MultipartFile file) throws IOException {
         String uploadFile = pdfFileService.uploadFileToFileSystem(file);
