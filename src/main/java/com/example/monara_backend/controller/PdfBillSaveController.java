@@ -31,7 +31,7 @@ public class PdfBillSaveController {
     }
 
 
-    @GetMapping("/{filename:.+}")
+    @GetMapping("files/{filename:.+}")
     public ResponseEntity<byte[]> getPdf(@PathVariable String filename) throws IOException {
         return pdfFileService.getPdf(filename);
     }
