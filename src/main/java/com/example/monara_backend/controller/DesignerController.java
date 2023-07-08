@@ -2,41 +2,28 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.ShowroomFile;
-
 import com.example.monara_backend.repository.ShowroomRepo;
 import com.example.monara_backend.service.DesignerBillSendService;
 import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.service.ShowroomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
-
-import java.io.File;
 import java.io.IOException;
-
-import java.nio.file.Files;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
