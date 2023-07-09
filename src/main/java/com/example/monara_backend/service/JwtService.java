@@ -7,12 +7,15 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.GrantedAuthority;
+
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -36,13 +39,46 @@ public class JwtService {
         return  generateToken(new HashMap<>(),userDetails);
     }
 
-    public String generateToken(Map<String,Object> extraClaims, UserDetails userDetails){ //Generating the JWT and setting other Values to it like Issued time and Expiration
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
+//    public String generateToken(Map<String,Object> extraClaims, UserDetails userDetails){ //Generating the JWT and setting other Values to it like Issued time and Expiration
+//
+////        // Create claims and add additional claims
+////        Claims claims = Jwts.claims();
+////        claims.putAll(extraClaims);
+////
+////        // Add user's role as a claim
+////        claims.put("role", userDetails.getAuthorities().stream()
+////                .map(GrantedAuthority::getAuthority)
+////                .collect(Collectors.toList()));
+//
+//        Map<String, Object> claims = new HashMap<>();
+//        claims.put("Role", userDetails.getAuthorities().stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.toList()));
+//
+//        return Jwts
+//                .builder()
+//                .setClaims(extraClaims)
+//                .setSubject(userDetails.getUsername())
+//                .setIssuedAt(new Date(System.currentTimeMillis()))
+//                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+//                .signWith(getSigninKey(), SignatureAlgorithm.HS256)
+//                .compact();
+//    }
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.putAll(extraClaims);
+
+        // Add user's role as a claim
+        claims.put("role", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList()));
+
+        return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSigninKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
