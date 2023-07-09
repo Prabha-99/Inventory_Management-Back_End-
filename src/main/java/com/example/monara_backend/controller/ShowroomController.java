@@ -51,7 +51,7 @@ public class ShowroomController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
-        DesignerBillSend file = DesignerBillSendService.getFileById(id);
+        DesignerBillSend file = designerBillSendService.getFileById(id);
         if (file == null) {
             return ResponseEntity.notFound().build();
         }
