@@ -3,6 +3,7 @@ package com.example.monara_backend.repository;
 import com.example.monara_backend.model.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,6 +23,10 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
 
     @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'GRN%'", nativeQuery = true)
     List<Report> GRNReports();
+
+
+    @Query(value = "SELECT path FROM reports WHERE report_id = :id", nativeQuery = true)
+    String findFilePathById(@Param("id") Long id);
 
 
 }
