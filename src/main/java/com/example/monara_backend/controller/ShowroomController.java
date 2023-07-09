@@ -6,6 +6,8 @@ import com.example.monara_backend.service.ShowroomService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,4 +48,22 @@ public class ShowroomController {
     public List<DesignerBillSend> getAllFiles() {
         return designerBillSendService .getAllFiles();
     }
+
+    @GetMapping("/download")
+    public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
+        DesignerBillSend file = DesignerBillSendService.getFileById(id);
+        if (file == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Set the response headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFileName());
+
+        // Stream the file content to the response
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(file.getDbFile().getBytes(1, (int) file.getDbFile().length()));
+    }
+
 }
