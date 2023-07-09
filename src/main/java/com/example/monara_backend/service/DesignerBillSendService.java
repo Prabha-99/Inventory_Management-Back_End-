@@ -2,9 +2,12 @@ package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.DesignerBillSend;
 
+import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.repository.DesignerBillSendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DesignerBillSendService {
@@ -14,5 +17,14 @@ public class DesignerBillSendService {
     public DesignerBillSend saveBill(DesignerBillSend designerBillSend) {
 
         return designerBillSendRepo.save(designerBillSend);
+    }
+
+    public DesignerBillSend getFileById(Integer id) {
+        return designerBillSendRepo.findById(id).orElse(null);
+    }
+
+    public List<DesignerBillSend> getAllFiles() {
+
+        return designerBillSendRepo.findAll();
     }
 }
