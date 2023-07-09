@@ -88,7 +88,7 @@
                 <reportElement mode="Opaque" x="-20" y="0" width="305" height="170" uuid="94883631-a913-43e2-b182-ab8d77d0181e">
                     <property name="com.jaspersoft.studio.unit.width" value="px"/>
                 </reportElement>
-                <imageExpression><![CDATA["F:/Uni Works/Level 3/Sem 1/Group Project/Logo.JPG"]]></imageExpression>
+                <imageExpression><![CDATA["Logo.JPG"]]></imageExpression>
             </image>
             <textField pattern="EEEEE dd MMMMM yyyy">
                 <reportElement style="Column header" mode="Opaque" x="386" y="50" width="116" height="20" uuid="3836ce65-eca3-4cad-a6de-b1818def0a2b"/>

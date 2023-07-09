@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -14,11 +15,21 @@ import java.sql.Timestamp;
 @Table(name="reports")
 public class Report {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long report_id;
     private String report_name;
+    private String customer;
     private String path;
-    private Timestamp date;
+    private Date date;
 
+    public void setDate(Date date) {
+        this.date = new Date();
+    }
+
+    public String getDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        return sdf.format(this.date);
+    }
 }

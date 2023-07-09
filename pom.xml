@@ -94,18 +94,24 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.1.1</version>
 		</dependency>
-    
-        <dependency>
-            <groupId>user.java.io</groupId>
-            <artifactId>user.java.io</artifactId>
-            <version>2020.134.36653</version>
-        </dependency>
+<!--    -->
+<!--        <dependency>-->
+<!--            <groupId>user.java.io</groupId>-->
+<!--            <artifactId>user.java.io</artifactId>-->
+<!--            <version>2020.134.36653</version>-->
+<!--        </dependency>-->
 
      <dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 			<version>6.17.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.31.3</version>
+		</dependency>
+
 
 
 

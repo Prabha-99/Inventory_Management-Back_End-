@@ -54,18 +54,25 @@
         </conditionalStyle>
     </style>
 
-    <field name="product_id" class="java.lang.Integer">
+    <field name="address" class="java.lang.String">
     </field>
-    <field name="category_id" class="java.lang.String">
+    <field name="contact_nu" class="java.lang.String">
     </field>
-    <field name="product_name" class="java.lang.String">
+    <field name="customer_name" class="java.lang.String">
     </field>
-    <field name="product_brand" class="java.lang.String">
+    <field name="date" class="java.lang.String">
     </field>
-    <field name="product_quantity" class="java.lang.Integer">
+    <field name="invoice_no" class="java.lang.Long">
     </field>
-    <!--    <field name="product_quantity" class="java.sql.Timestamp"> --><!--This Timestamp could be important-->
-    <!--    </field>-->
+    <field name="invoiced_quantity" class="java.lang.Integer">
+    </field>
+    <field name="issued_quantity" class="java.lang.Integer">
+    </field>
+    <field name="item_description" class="java.lang.String">
+    </field>
+    <field name="remarks" class="java.lang.String">
+    </field>
+
 
 
 
@@ -80,11 +87,11 @@
                 <text><![CDATA[Address:  ..................................................................................................................................................................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="0" y="100" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -92,11 +99,11 @@
                 <text><![CDATA[D/O No: ...........................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="-190" y="135" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -104,11 +111,11 @@
                 <text><![CDATA[Invoice No: ......................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="0" y="135" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -116,11 +123,11 @@
                 <text><![CDATA[Contact No: .....................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="0" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{contact_nu}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -128,23 +135,23 @@
                 <text><![CDATA[Issued Date: ............................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="190" y="135" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
             </textField>
 
             <staticText>
                 <reportElement x="358" y="160" width="196" height="15" forecolor="#263F91" uuid="dd52166a-1135-4931-adef-51e7972118bc"/>
-                <text><![CDATA[Imvoice Date: ..........................................]]></text>
+                <text><![CDATA[Invoice Date: ..........................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
             </textField>
 
             <staticText>
@@ -152,16 +159,16 @@
                 <text><![CDATA[Issued Time: ....................................]]></text>
             </staticText>
             <textField>
-                <reportElement x="0" y="105" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <reportElement x="-190" y="155" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="10" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
             </textField>
 
             <image hAlign="Center">
                 <reportElement x="-8" y="-20" width="137" height="79" forecolor="#263F91" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
-                <imageExpression><![CDATA["F:/Uni Works/Level 3/Sem 1/Group Project/logo1.png"]]></imageExpression>
+                <imageExpression><![CDATA["logo1.png"]]></imageExpression>
             </image>
             <staticText>
                 <reportElement x="93" y="0" width="266" height="25" forecolor="#263F91" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
@@ -191,6 +198,14 @@
                 <reportElement x="0" y="91" width="555" height="15" forecolor="#263F91" uuid="64c907e8-fc11-4522-a2e1-8736792c8042"/>
                 <text><![CDATA[Customer's Name:  ..................................................................................................................................................................]]></text>
             </staticText>
+            <textField>
+                <reportElement x="0" y="85" width="555" height="15" forecolor="#000000" uuid="1d3045ed-03d6-4253-a959-aeeb491b73ca"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="10" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+            </textField>
+
             <staticText>
                 <reportElement x="0" y="120" width="555" height="15" forecolor="#263F91" uuid="cb3d2447-50dc-4862-ae9d-1994b98214f1"/>
                 <text><![CDATA[..................................................................................................................................................................................................]]></text>
@@ -291,7 +306,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="70" y="0" width="151" height="20" uuid="96217820-0a87-4b37-8727-10f5ae45e0f5">
@@ -306,7 +321,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_name}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{item_description}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="221" y="0" width="99" height="20" uuid="95b0e4a7-3c43-4994-83f5-7836c3957410">
@@ -321,7 +336,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_quantity}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{invoiced_quantity}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="320" y="0" width="110" height="20" uuid="a356969a-baf5-46ed-9b67-9010678eda83">
@@ -336,7 +351,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_quantity}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{issued_quantity}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight" isBlankWhenNull="true">
                 <reportElement style="Detail" positionType="Float" x="430" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
@@ -351,7 +366,7 @@
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_brand}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
             </textField>
         </band>
     </detail>
@@ -359,27 +374,33 @@
         <band height="193">
 
             <textField>
-                <reportElement style="Detail" positionType="Float" x="430" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
+                <reportElement style="Detail" positionType="Float" x="50" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
                 </reportElement>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
                     <font fontName="Arial" size="12" isBold="false"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{product_brand}]]></textFieldExpression>
-                <!--            <staticText>-->
-                <!--                <reportElement mode="Opaque" x="60" y="20" width="139" height="40" forecolor="#263F91" uuid="ae5f55c6-5836-4a34-b361-3807190f7131"/>-->
-                <!--                <text><![CDATA[.........................................Issued by Store Keeper]]></text>-->
-                <!--            </staticText>-->
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement style="Detail" positionType="Float" x="350" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
+                </reportElement>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Arial" size="12" isBold="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{customer_name}]]></textFieldExpression>
             </textField>
 
 
             <staticText>
                 <reportElement mode="Opaque" x="60" y="20" width="139" height="40" forecolor="#263F91" uuid="ae5f55c6-5836-4a34-b361-3807190f7131"/>
-                <text><![CDATA[.........................................Issued by Store Keeper]]></text>
+                <text><![CDATA[..................................................Issued by Store Keeper]]></text>
             </staticText>
             <staticText>
                 <reportElement mode="Opaque" x="350" y="20" width="139" height="40" forecolor="#263F91" uuid="e5d28d36-e459-4f07-bd4f-f124268d57b6"/>
-                <text><![CDATA[.........................................Checked by Account's Assistant]]></text>
+                <text><![CDATA[..................................................Checked by Account's Assistant]]></text>
             </staticText>
         </band>
     </lastPageFooter>

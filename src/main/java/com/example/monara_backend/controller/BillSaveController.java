@@ -19,7 +19,7 @@ public class BillSaveController {
     @Autowired
     private BillSaveService billSaveService;
 
-    //save billing info
+    //save billing infoc
     @PostMapping("/save")
     public ResponseEntity<BillSave> FormData(@RequestBody BillSave bill) {
         BillSave savedBill = billSaveService.FormData(bill);
@@ -35,10 +35,11 @@ public class BillSaveController {
 
 
 //    //delete by id bill
-    @DeleteMapping("delete/{bill_id}")
-    public ResponseEntity<String> deleteBill(@PathVariable Integer bill_id) {
-        billSaveService.deleteBill(bill_id);
-        return ResponseEntity.ok("Bill deleted");
+
+    @DeleteMapping("/delete/{bill_id}")
+    public ResponseEntity<String> deleteById(@PathVariable Long bill_id) {
+        billSaveService.deleteById(bill_id);
+        return ResponseEntity.ok().body("Deleted successfully.");
     }
 
 }
