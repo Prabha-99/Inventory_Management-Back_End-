@@ -85,6 +85,7 @@ public class ReportController {
         Optional<Report> optionalFile = reportRepo.findById(fileId);
         if (optionalFile.isPresent()) {
             Report report = optionalFile.get();
+
             // Create a Resource object from the report's local path
             Resource resource = new FileSystemResource(report.getPath());
             if (resource.exists()) {
