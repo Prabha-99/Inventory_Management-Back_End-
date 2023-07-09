@@ -12,11 +12,15 @@ import java.util.List;
 @Service
 public class DesignerBillSendService {
     @Autowired
-    private DesignerBillSendRepo designerBillSendRepo;
+    private static DesignerBillSendRepo designerBillSendRepo;
 
     public DesignerBillSend saveBill(DesignerBillSend designerBillSend) {
 
         return designerBillSendRepo.save(designerBillSend);
+    }
+
+    public static DesignerBillSend getFileById(Integer id) {
+        return designerBillSendRepo.findById(id).orElse(null);
     }
     public List<DesignerBillSend> getAllFiles() {
 
