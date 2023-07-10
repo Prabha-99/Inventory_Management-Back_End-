@@ -1,9 +1,11 @@
 package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
+import com.example.monara_backend.model.DesignerGIN;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.repository.ShowroomRepo;
 import com.example.monara_backend.service.DesignerBillSendService;
+import com.example.monara_backend.service.DesignerGINService;
 import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.service.ShowroomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,6 +46,9 @@ public class DesignerController {
 
     @Autowired
     private ShowroomRepo showroomRepo;
+
+    @Autowired
+    private DesignerGINService designerGINService;
 
 
     @GetMapping("/files")
@@ -89,6 +94,22 @@ public class DesignerController {
         fileUpload.setFileName(file.getOriginalFilename());
         fileUpload.setDbFile(blob);
         designerBillSendService.saveBill(fileUpload);
+        return "redirect:/";
+
+    }
+
+    //saveGIN
+    @PostMapping("/ginSend")
+    public String saveGIN(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, SerialException, SQLException
+    {
+        byte[] bytes = file.getBytes();
+
+        Blob blob = new SerialBlob(bytes);
+
+        DesignerGIN fileUpload =new DesignerGIN();
+        fileUpload.setFileName(file.getOriginalFilename());
+        fileUpload.setDbFile(blob);
+        designerGINService.saveGIN(fileUpload);
         return "redirect:/";
 
     }
