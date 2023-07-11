@@ -1,6 +1,7 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.GIN;
+import com.example.monara_backend.model.GRN;
 import com.example.monara_backend.repository.GINRepo;
 import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
@@ -120,7 +121,9 @@ public class GINService {
 
     }
 
-
+    public List<GIN> getAllGin () {
+        return ginRepo.findAll();
+    }
 }
 
 

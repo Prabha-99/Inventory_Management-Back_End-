@@ -2,6 +2,7 @@ package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.GIN;
 import com.example.monara_backend.model.GRN;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.GRNRepo;
 import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
@@ -105,6 +106,11 @@ public class GRNService {
         return "Report generated Successfully at : "+reportPath;
     }
 
+
+
+    public List<GRN> getAllGrn () {
+        return grnRepo.findAll();
+    }
 
 
 

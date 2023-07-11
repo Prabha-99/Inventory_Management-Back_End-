@@ -2,12 +2,14 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.model.GIN;
 import com.example.monara_backend.model.GRN;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.service.GRNService;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/GRN")
@@ -25,5 +27,10 @@ public class GRNController {
     @PostMapping("/submit")
     public void submitGRNData(@RequestBody GRN grnData) {
         grnService.saveGRNData(grnData);
+    }
+
+    @GetMapping("/getAllGrn")
+    public List<GRN> getAllGrn() {
+        return grnService.getAllGrn();
     }
 }
