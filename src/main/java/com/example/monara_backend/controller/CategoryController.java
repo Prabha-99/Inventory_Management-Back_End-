@@ -3,6 +3,8 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.dto.CategoryDto;
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
+import com.example.monara_backend.model.Category;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.service.CategoryService;
 import com.example.monara_backend.util.VarList;
@@ -11,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/v1/category")
 
@@ -54,4 +58,9 @@ public class CategoryController {
     }
 
     //End of Inventory Admin
+
+    @GetMapping("/getAllCategory")
+    public List<Category> getAllCategory() {
+        return categoryService.getAllCategory();
+    }
 }

@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class CategoryService {
@@ -36,4 +38,9 @@ public class CategoryService {
         }
     }
     //End of the Inventory Admin
+
+    public List<Category> getAllCategory () {
+        return categoryRepo.findAll();
+    }
+
 }
