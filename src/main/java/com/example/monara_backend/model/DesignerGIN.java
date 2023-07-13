@@ -6,23 +6,19 @@ import lombok.Data;
 import java.sql.Blob;
 import java.util.Date;
 
-
 @Entity
 @Data
-@Table(name = "showroom")
-public class ShowroomFile {
+@Table(name="DesignerGINSave")
+public class DesignerGIN {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String fileName;
 
 
     @Lob
     private Blob dbFile;
 
     private Date date = new Date();
-
-
 }
-

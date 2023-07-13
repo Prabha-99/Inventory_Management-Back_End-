@@ -3,6 +3,7 @@ package com.example.monara_backend.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,18 +13,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name="pdfbillsave")
+@Builder
 public class PdfBillSave {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private int bill_id;
 
-    @Column(name = "filename")
+    @Column(name="bill_id")
+    private Long bill_id;
+
     private String filename;
 
-    @Column(name = "filepath")
+    private String type;
+
     private String filepath;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id", referencedColumnName = "bill_id")
+    private BillSave billSave;
 
 
     public PdfBillSave(String fileName, String filePath) {

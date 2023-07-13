@@ -25,7 +25,7 @@ public class Report {
     private Date date;
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date();
     }
 
     public String getDate() {

@@ -19,6 +19,9 @@ public class GRN {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String category_id;
+ 
+    private Long invoice_no;
+ 
     private Date date;
     private String supplier_name;
     private String address;
@@ -29,7 +32,7 @@ public class GRN {
     private String remarks;
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date();
     }
 
     public String getDate() {

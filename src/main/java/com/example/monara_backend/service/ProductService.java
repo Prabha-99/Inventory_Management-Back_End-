@@ -15,10 +15,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class ProductService {
+
+
     //Inject
     @Autowired
     private ProductRepo productRepo;
@@ -89,4 +92,36 @@ public class ProductService {
     }
 
     //End of the Inventory Admin
+
+    public void reduceProductQuantity(String product_name, String product_brand, int product_quantity) {
+        productRepo.reduceProductQuantity(product_name,product_brand,product_quantity);
+    }
+
+
+    public void increaseProductQuantity(String product_name, String product_brand, int product_quantity) {
+        productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
 }
+
+    //designer deduct product
+    public ProductService(ProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
+
+        public Product getProductById(Integer productID) {
+            return productRepo.findById(productID).orElse(null);
+        }
+
+        public void deductProduct(Integer productID, Product updatedProduct) {
+            Product existingProduct = getProductById(productID);
+
+            if (existingProduct != null) {
+
+                existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
+
+                productRepo.save(existingProduct);
+            }
+        }
+    }
+
+
+

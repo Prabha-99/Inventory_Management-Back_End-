@@ -46,31 +46,6 @@ public class ReportService {
     String dateCreated = currentDate.format(formatter);
 
 
-    //    public String exportUserReport(String format) throws FileNotFoundException, JRException {
-//        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
-//                                                                               *****This must be a path to DB*****/
-//        List<User> users=userRepo.findAll();//Retrieving all User Data into a List
-//
-//        //Loading the .jrxml file and Compiling it
-//        File file= ResourceUtils.getFile("classpath:SystemUsers.jrxml");
-//        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
-//
-//        //Mapping List Data into the Report
-//        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
-//        Map<String,Object> parameters=new HashMap<>();
-//        parameters.put("Created by","Monara Creations pvt,Ltd");
-//
-//        //Printing the Report
-//        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-//        if(format.equalsIgnoreCase("html")){
-//            JasperExportManager.exportReportToHtmlFile(print,reportPath+"\\Users.html");
-//        }if(format.equalsIgnoreCase("pdf")){
-//            JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Users.pdf");
-//        }
-//        return "Report generated Successfully at : "+reportPath;
-//    }
-
-
     public String exportUserReport(String format) throws IOException, JRException {
 
         List<User> users=userRepo.findAll();//Retrieving all User Data into a List
@@ -108,7 +83,7 @@ public class ReportService {
 
 
         // Saving the report file to the local file system
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports\\" +dateCreated + "." + format.toLowerCase();
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\user_reports" +dateCreated + "." + format.toLowerCase();
         FileOutputStream fos = new FileOutputStream(reportPath);
         fos.write(reportBytes);
         fos.close();
@@ -118,65 +93,9 @@ public class ReportService {
 
 
 
-
-
-//    public String exportUserReport(String format) throws IOException, JRException {
-//
-//        List<User> users=userRepo.findAll();//Retrieving all User Data into a List
-//
-//        //Loading the .jrxml file and Compiling it
-//        File file= ResourceUtils.getFile("classpath:SystemUsers.jrxml");
-//        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
-//
-//        //Mapping List Data into the Report
-//        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
-//        Map<String,Object> parameters=new HashMap<>();
-//        parameters.put("Created by","Monara Creations pvt,Ltd");
-//
-//        //Printing the Report
-//        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-//
-//        //Local variable to Store current Data.
-//        LocalDate currentDate = LocalDate.now();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        String dateCreated = currentDate.format(formatter);
-//
-//        //File Path
-//        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports\\" +dateCreated + "." + format.toLowerCase();
-//
-//        // Saving the report file to the database
-//        String sql = "INSERT INTO reports (report_name, format, data, date) VALUES (?, ?, ?, ?)";
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        jdbcTemplate.update(connection -> {
-//            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-//            ps.setString(1, "Users");
-//            ps.setString(2, format);
-//            ps.setString(3, reportPath);
-//            ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
-//            return ps;
-//        }, keyHolder);
-//
-//        // Retrieving the ID of the inserted row
-//        long reportId = keyHolder.getKey().longValue();
-//
-//
-//
-//
-//        // Saving the report file to the local file system
-//
-//        FileOutputStream fos = new FileOutputStream(reportPath);
-//        fos.write(reportBytes);
-//        fos.close();
-//
-//        return "Report generated and saved Successfully at : "+reportPath;
-//    }
-
-
-
-
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportProductReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\product_reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
@@ -210,7 +129,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportPSReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\ps_reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
@@ -249,7 +168,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportGIN() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\GIN";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
