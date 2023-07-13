@@ -95,11 +95,11 @@ public class GINService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String customerName = gins.get(0).getCustomer_name(); // Assuming customer_name is retrieved from the first GIN object
 //       new update
-        String categoryID=gins.get(0).getCategory_id(); // Assuming invoice_no is retrieved from the first GIN object
+        Long invoice_no =gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 //new update
-            ps.setString(1, "GIN_"+categoryID);
+            ps.setString(1, "GIN_"+invoice_no);
             ps.setString(2,customerName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
@@ -109,7 +109,7 @@ public class GINService {
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
 //        new update
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+categoryID+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+invoice_no+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
 
         //Thread
 
