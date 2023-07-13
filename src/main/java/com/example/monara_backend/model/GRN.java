@@ -21,7 +21,11 @@ public class GRN {
  
 //    private String category_id;
  
+ 
+//    private String category_id;
+ 
     private String category_id;
+ 
  
  
     private Long invoice_no;
