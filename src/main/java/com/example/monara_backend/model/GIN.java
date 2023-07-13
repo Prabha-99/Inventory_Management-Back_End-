@@ -20,9 +20,9 @@ public class GIN {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
  
     private Long id;
-    private String category_id;
+// private String category_id;
  
-    private Long invoice_no;
+//    private Long invoice_no;
  
     private Date date;
     private String customer_name;
