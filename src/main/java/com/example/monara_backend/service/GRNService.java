@@ -89,10 +89,12 @@ public class GRNService {
         String sql = "INSERT INTO reports (report_name, customer, path, date) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String supplierName = grns.get(0).getSupplier_name(); // Assuming customer_name is retrieved from the first GRN object
-        Long invoiceNumber=grns.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
+//        new update
+        String categoryId =grns.get(0).getCategory_id(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GRN_"+invoiceNumber);
+//            new update
+            ps.setString(1, "GRN_"+categoryId);
             ps.setString(2,supplierName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
@@ -101,7 +103,7 @@ public class GRNService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN_"+invoiceNumber+".pdf");
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN_"+categoryId+".pdf");
 
         return "Report generated Successfully at : "+reportPath;
     }

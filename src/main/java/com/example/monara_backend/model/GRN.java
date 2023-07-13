@@ -28,7 +28,11 @@ public class GRN {
  
  
  
+//    private Long invoice_no;
+ 
+ 
     private Long invoice_no;
+ 
  
     private Date date;
     private String supplier_name;
