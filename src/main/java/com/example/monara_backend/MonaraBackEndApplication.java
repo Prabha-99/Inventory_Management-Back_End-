@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-
 @EnableAsync
+
 public class MonaraBackEndApplication {
 
 	public static void main(String[] args) {

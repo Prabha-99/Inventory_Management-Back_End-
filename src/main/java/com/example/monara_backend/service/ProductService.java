@@ -1,21 +1,16 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
-import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
-import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.util.VarList;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -51,7 +46,7 @@ public class ProductService {
         if (existingProduct == null) {
             return null;
         }
-        existingProduct.setCategory_id(product.getCategory_id());
+        existingProduct.setCat_id(product.getCat_id());
         existingProduct.setProduct_brand(product.getProduct_brand());
         existingProduct.setProduct_name(product.getProduct_name());
         existingProduct.setProduct_price(product.getProduct_price());

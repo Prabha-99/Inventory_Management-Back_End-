@@ -16,11 +16,14 @@ public class Product {
     @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int product_id;
-    private String category_id;
+
+    @ManyToOne
+    @JoinColumn(name = "cat_id", referencedColumnName = "category_id" ,insertable=false, updatable=false)
+    private Category category;
+    private String cat_id;
     private String product_brand;
     private String product_name;
     private double product_price;
     private int product_quantity;
-
 
 }
