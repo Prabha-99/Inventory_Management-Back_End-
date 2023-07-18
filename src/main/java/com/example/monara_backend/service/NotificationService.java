@@ -47,28 +47,67 @@ public class NotificationService implements Notification {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(recipientEmail);
         helper.setSubject("Inventory Update: New Product Added ");
-        helper.setText("A new Product was added to the Inventory by Inventory_Admin. See below for further Details ");
+        String additionalText = "A new Product was added to the Inventory by Inventory_Admin. See below for further Details,<br><br> " +
+                "<b>Product Category</b> : "+Category+ "<br> " +
+                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
+                "<b>Product Name Name</b> : "+Quantity+ "<br><br> " +
+                "Additionally, here the <mark>Product</mark> that has been <mark>Added</mark> to the Inventory.</mark> for the reference purpose.<br><br>";
         String tableContent = "<table style='border-collapse: collapse;'>" +
                 "<tr>" +
-                "<th style='border: 2px solid darkblue; padding: 8px;'>Category</th>" +
-                "<th style='border: 2px solid darkblue; padding: 8px;'>Product</th>" +
-                "<th style='border: 2px solid darkblue; padding: 8px;'>Quantity</th>" +
+                "<th style='border: 2px solid grey; padding: 8px;'>Category</th>" +
+                "<th style='border: 2px solid grey; padding: 8px;'>Product</th>" +
+                "<th style='border: 2px solid grey; padding: 8px;'>Quantity</th>" +
                 "</tr>" +
                 "<tr>" +
-                "<td style='border: 1px solid darkblue; padding: 8px;'>" + Category + "</td>" +
-                "<td style='border: 1px solid darkblue; padding: 8px;'>" + productName + "</td>" +
-                "<td style='border: 1px solid darkblue; padding: 8px;'>" + Quantity + "</td>" +
+                "<td style='border: 1px solid grey; padding: 8px;'>" + Category + "</td>" +
+                "<td style='border: 1px solid grey; padding: 8px;'>" + productName + "</td>" +
+                "<td style='border: 1px solid grey; padding: 8px;'>" + Quantity + "</td>" +
                 "</tr>" +
                 "</table>";
-        helper.setText(tableContent, true);
+
+        String greeting = "<br><b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
+
+
+        String emailContent = additionalText +"\n"+ tableContent+ greeting;
+        helper.setText(emailContent, true);
         emailSender.send(message);
     }
 
 
-    @Override
-    public void productDeleteNotification() {
 
+
+    @Override
+    public void productDeleteNotification(String recipientEmail, String productName, String Category) throws MessagingException {
+
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(recipientEmail);
+        helper.setSubject("Inventory Update: Existing Product Deleted !!! ");
+        String additionalText = "An Existing Product was deleted by the Inventory_Admin. See below for further Details,<br><br> " +
+                "<b>Product Category</b> : "+Category+ "<br> " +
+                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
+                "Additionally, here the Product that has been <mark>Deleted from Inventory.</mark> for the reference purpose.<br><br>";
+
+        String tableContent = "<table style='border-collapse: collapse;'>" +
+                "<tr>" +
+                "<th style='border: 2px solid grey; padding: 8px;'>Category</th>" +
+                "<th style='border: 2px solid grey; padding: 8px;'>Product</th>" +
+                "</tr>" +
+                "<tr>" +
+                "<td style='border: 1px solid grey; padding: 8px;'>" + Category + "</td>" +
+                "<td style='border: 1px solid grey; padding: 8px;'>" + productName + "</td>" +
+                "</tr>" +
+                "</table>";
+
+        String greeting = "<br><b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
+
+        String emailContent = additionalText +"\n"+ tableContent+ greeting;
+        helper.setText(emailContent, true);
+        emailSender.send(message);
     }
+
+
 
     @Override
     public void GINNotification(String recipientEmail, String Path) throws MessagingException {
@@ -82,20 +121,17 @@ public class NotificationService implements Notification {
                 String reportName=getGINName(); //here
                 String path=attachmentPath+reportName+".pdf";
 
-
                 MimeMessage message = emailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
                 helper.setTo(recipientEmail);
                 helper.setSubject("New Good Issue Note - "+reportName);
-
-
                 String additionalText = "Good Issue Note for,<br><br> <b>Invoice Number</b> : "+invoice+
                                                             "<br> <b>Customer Name</b> : "+customerName+
                                                             "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
                                         "Additionally, below attached the <mark>Goods Issue Note (GIN)</mark> related to above goods issuance for the reference purpose.<br><br>";
 
                 String greeting = "<b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
-
 
                 String emailContent = additionalText +"\n"+ greeting;
                 helper.setText(emailContent, true);
@@ -106,7 +142,6 @@ public class NotificationService implements Notification {
                 helper.addAttachment(file.getFilename(), file);
 
                 emailSender.send(message);
-
 
     }
 
@@ -125,13 +160,11 @@ public class NotificationService implements Notification {
         String reportName=getGRNName(); //here
         String path=attachmentPath+reportName+".pdf";
 
-
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
         helper.setTo(recipientEmail);
         helper.setSubject("New Good Received Note - "+reportName);
-
-
         String additionalText = "Good Received Note for,<br><br> <b>Invoice Number</b> : "+invoice+
                 "<br> <b>Supplier</b> : "+supplierName+
                 "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
