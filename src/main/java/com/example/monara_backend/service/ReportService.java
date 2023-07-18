@@ -83,7 +83,7 @@ public class ReportService {
 
 
         // Saving the report file to the local file system
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\user_reports" +dateCreated + "." + format.toLowerCase();
+        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports" +dateCreated + "." + format.toLowerCase();
         FileOutputStream fos = new FileOutputStream(reportPath);
         fos.write(reportBytes);
         fos.close();
@@ -95,16 +95,16 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportProductReport() throws FileNotFoundException, JRException {
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\product_reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
-        List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
+        List<Product> products=productRepo.findAll();//Retrieving all User Data into a List
 
         //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:AllProducts.jrxml");
+        File file= ResourceUtils.getFile("classpath:Products.jrxml");
         JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
 
         //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
+        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(products);
         Map<String,Object> parameters=new HashMap<>();
         parameters.put("Created by","Monara Creations pvt,Ltd");
 
@@ -113,7 +113,7 @@ public class ReportService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Products");
+            ps.setString(1, "Products"+dateCreated);
             ps.setString(2,reportPath);
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
@@ -129,7 +129,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportPSReport() throws FileNotFoundException, JRException {
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\ps_reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
@@ -168,7 +168,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportGIN() throws FileNotFoundException, JRException {
-        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports\\GIN";/*Declaring the Report path as a Global variable.
+        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 

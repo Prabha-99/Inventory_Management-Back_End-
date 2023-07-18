@@ -8,6 +8,7 @@ import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.util.VarList;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -125,8 +126,14 @@ public class ProductController {
 
 
     @DeleteMapping("/deleteProduct/{product_id}") //delete a product
-    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) throws MessagingException {
         productService.deleteProduct(product_id);
+
+        // Send notifications to each user
+        for (String recipientEmail : recipientEmails) {
+            notificationService.productDeleteNotification(recipientEmail, "product_id", "product_id");
+        }
+
         return ResponseEntity.ok("Product deleted");
     }
 
