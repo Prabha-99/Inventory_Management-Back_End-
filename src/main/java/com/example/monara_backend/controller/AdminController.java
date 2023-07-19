@@ -34,12 +34,12 @@ public class AdminController {
             return  new ResponseEntity<>(user,HttpStatus.OK);
         }
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody User user){
         return new ResponseEntity<User>(userService.updateUser(user) , HttpStatus.OK);
     }
 
-    @DeleteMapping("/update")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer id){
         return  new ResponseEntity<HttpStatus>(userService.deleteUser(id));
     }
