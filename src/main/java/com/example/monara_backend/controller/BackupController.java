@@ -18,7 +18,7 @@ public class BackupController {
     @PostMapping("/back")
     public ResponseEntity<String> createBackup() {
         String path = "D:\\Backup-monara"; // Change this to your path
-        String dbName = "abc";
+        String dbName = "monara";
         String dbUser = "root";
 
         // Generate a timestamp for the backup file name
@@ -26,7 +26,7 @@ public class BackupController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
         String timestamp = currentTime.format(formatter);
 
-        String backupFileName = path + "\\backup_" + timestamp + ".sql";
+        String backupFileName = path + "\\Monara_backup_" + timestamp + ".sql";
 
         String executeCmd = "mysqldump -u"+" "+dbUser+" "+dbName+" "+"-r"+" "+backupFileName;
 
