@@ -4,6 +4,7 @@ import com.example.monara_backend.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        http.cors();
+        // Disable Cross-Site Request Forgery (CSRF)
+        http.csrf().disable();
+        // Set the session creation policy to stateless
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
@@ -29,9 +36,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/GIN/**").permitAll()
                 .requestMatchers("/api/GRN/**").permitAll()
 
-                .requestMatchers("/api/user/**").permitAll()
+//                .requestMatchers("/api/user/**").permitAll()
                 .requestMatchers("/api/user/admin").hasRole(Role.ADMIN.name())
-                .requestMatchers("/api/user/inventory_admin").hasRole(Role.ADMIN.name())
+                .requestMatchers("/api/user/inventory_admin").hasRole(Role.INVENTORY_ADMIN.name())
                 .requestMatchers("/api/user/stock_manager").hasRole(Role.STOCK_MANAGER.name())
                 .requestMatchers("/api/user/purchase_coordinator").hasRole(Role.PURCHASE_COORDINATOR.name())
                 .requestMatchers("/api/user/stock_keeper").hasRole(Role.STOCK_KEEPER.name())
