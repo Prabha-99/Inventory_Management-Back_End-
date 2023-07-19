@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/backup")
@@ -19,7 +21,14 @@ public class BackupController {
         String dbName = "abc";
         String dbUser = "root";
 
-        String executeCmd = "mysqldump -u"+" "+dbUser+" "+dbName+" "+"-r"+" "+path+"\\backup8.sql";
+        // Generate a timestamp for the backup file name
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        String timestamp = currentTime.format(formatter);
+
+        String backupFileName = path + "\\backup_" + timestamp + ".sql";
+
+        String executeCmd = "mysqldump -u"+" "+dbUser+" "+dbName+" "+"-r"+" "+backupFileName;
 
 
         Process runtimeProcess;
