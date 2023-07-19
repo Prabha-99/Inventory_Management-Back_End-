@@ -61,6 +61,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/forecasting/grn/**").permitAll()
                 .requestMatchers("/api/forecasting/gin/**").permitAll()
 
+                .requestMatchers("/api/backup/**").permitAll()
+
 
 
 
