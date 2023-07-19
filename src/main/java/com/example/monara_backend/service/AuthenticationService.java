@@ -140,5 +140,16 @@ public class AuthenticationService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
+    public User updateUserProfile(User user) {
+        Integer id = user.getId();
+
+        User user1 = userRepo.findById(id).get();
+        user1.setFirstname(user.getFirstname());
+        user1.setLastname(user.getLastname());
+        user1.setPassword(passwordEncoder.encode(user.getPassword()));
+        user1.setRole(user.getRole());
+        return userRepo.save(user1);
+    }
+
 
 }

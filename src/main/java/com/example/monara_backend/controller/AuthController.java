@@ -7,6 +7,8 @@ import com.example.monara_backend.dto.navBarLogin;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,4 +44,10 @@ public class AuthController {
         String email = authentication.getName();
         return authenticationService.getUserByEmail(email);
     }
+
+    @PutMapping("UpdateProfile")
+    public ResponseEntity<User> updateUserProfile (@RequestBody User user){
+        return new ResponseEntity<>(authenticationService.updateUserProfile(user), HttpStatus.OK);
+    }
+
 }
