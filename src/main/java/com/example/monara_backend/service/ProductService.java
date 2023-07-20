@@ -80,6 +80,16 @@ public class ProductService {
         }
     }
 
+    //Get all products names
+    public List<String> getAllProductNames() {
+        return productRepo.getAllProductNames();
+    }
+
+    //Get all product brands
+    public List<String> getAllProductBrands() {
+        return productRepo.getAllProductBrands();
+    }
+
     //Count of Product
 
     public long getProductCount(){
