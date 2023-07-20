@@ -59,6 +59,8 @@ public class ProductService {
         return productRepo.findAll();
     }
 
+
+
     // Search products
     public ProductDto searchProduct(int productId){
         if (productRepo.existsById(productId)){
@@ -97,26 +99,8 @@ public class ProductService {
         productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
 }
 
-    //designer deduct product
-    public ProductService(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
 
-        public Product getProductById(Integer productID) {
-            return productRepo.findById(productID).orElse(null);
-        }
-
-        public void deductProduct(Integer productID, Product updatedProduct) {
-            Product existingProduct = getProductById(productID);
-
-            if (existingProduct != null) {
-
-                existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
-
-                productRepo.save(existingProduct);
-            }
-        }
-    }
+}
 
 
 
