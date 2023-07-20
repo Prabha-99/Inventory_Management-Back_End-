@@ -137,6 +137,18 @@ public class ProductController {
         return ResponseEntity.ok("Product deleted");
     }
 
+    //Get all product names
+    @GetMapping("/names")
+    public List<String> getAllProductNames() {
+        return productService.getAllProductNames();
+    }
+
+    //Get all product brands
+    @GetMapping("/BrandNames")
+    public List<String> getAllProductBrands() {
+        return productService.getAllProductBrands();
+    }
+
     //To get count of product
     @GetMapping("/productCount")
     public long getProductCount(){
