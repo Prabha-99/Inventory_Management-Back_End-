@@ -37,5 +37,11 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
     @Query("SELECT DISTINCT p.product_brand FROM Product p WHERE p.category.category_id IN ('cat_accessories', 'cat_appliances')")
     List<String> getProductBrandsByCategoryIds();
 
+    @Query("SELECT DISTINCT p.product_brand FROM Product p WHERE p.category.category_id IN ('cat_edge', 'cat_melamine')")
+    List<String> getBrandsByCategoryIds();
+
+    @Query("SELECT DISTINCT p.product_name FROM Product p WHERE p.category.category_id IN ('cat_edge', 'cat_melamine')")
+    List<String> getNamesByCategoryIds();
+
 }
 
