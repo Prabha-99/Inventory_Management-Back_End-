@@ -41,9 +41,6 @@ public class DesignerController {
     private DesignerBillSendService designerBillSendService;
 
 
-
-
-
     @GetMapping("/files")
 
     public List<ShowroomFile> getAllFiles() {
@@ -59,6 +56,9 @@ public class DesignerController {
             return objectMapper;
         }
     }
+
+
+
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
         ShowroomFile file = showroomService.getFileById(id);
