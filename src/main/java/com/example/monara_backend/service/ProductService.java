@@ -100,6 +100,28 @@ public class ProductService {
 }
 
 
+    //designer deduct product
+    /*public void deductProductQuantityByNameAndBrand(String productName, String productBrand, Integer quantityToDeduct) {
+        Product product = productRepo.findByProductNameAndProductBrand(productName, productBrand);
+        updateProductQuantity(product, quantityToDeduct);
+    }
+
+    private void updateProductQuantity(Product product, Integer quantityToDeduct) {
+        if (product != null) {
+            int currentQuantity = product.getProductQuantity();
+            int newQuantity = currentQuantity - quantityToDeduct;
+            if (newQuantity >= 0) {
+                product.setProductQuantity(newQuantity);
+                productRepository.save(product);
+            } else {
+                throw new IllegalArgumentException("Insufficient quantity");
+            }
+        } else {
+            throw new IllegalArgumentException("Product not found");
+        }
+    }
+*/
+
 }
 
 

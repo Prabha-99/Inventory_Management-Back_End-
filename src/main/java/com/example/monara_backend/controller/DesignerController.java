@@ -40,20 +40,9 @@ public class DesignerController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private ShowroomRepo showroomRepo;
-
-    @Autowired
-    private ProductRepo productRepo;
 
 
-    @GetMapping("/getAllProduct")
-    public List<Product> getAllProduct() {
-        return productService.getAllProduct();
-    }// view list of product
+
 
     @GetMapping("/files")
 
