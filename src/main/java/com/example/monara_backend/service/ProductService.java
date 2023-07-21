@@ -1,21 +1,16 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
-import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
-import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.util.VarList;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -64,6 +59,8 @@ public class ProductService {
         return productRepo.findAll();
     }
 
+
+
     // Search products
     public ProductDto searchProduct(int productId){
         if (productRepo.existsById(productId)){
@@ -85,11 +82,38 @@ public class ProductService {
         }
     }
 
+    //Get all products names
+    public List<String> getAllProductNames() {
+        return productRepo.getAllProductNames();
+    }
+
+    //Get all product brands
+    public List<String> getAllProductBrands() {
+        return productRepo.getAllProductBrands();
+    }
+
     //Count of Product
 
     public long getProductCount(){
         return productRepo.count();
     }
+
+    public List<String> getProductNamesByCategoryIds() {
+        return productRepo.getProductNamesByCategoryIds();
+    }
+
+    public List<String> getProductBrandsByCategoryIds() {
+        return productRepo.getProductBrandsByCategoryIds();
+    }
+
+    public List<String> getNamesByCategoryIds() {
+        return productRepo.getNamesByCategoryIds();
+    }
+
+    public List<String> getBrandsByCategoryIds() {
+        return productRepo.getBrandsByCategoryIds();
+    }
+
 
     //End of the Inventory Admin
 
@@ -102,26 +126,9 @@ public class ProductService {
         productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
 }
 
-    //designer deduct product
-    public ProductService(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
 
-        public Product getProductById(Integer productID) {
-            return productRepo.findById(productID).orElse(null);
-        }
 
-        public void deductProduct(Integer productID, Product updatedProduct) {
-            Product existingProduct = getProductById(productID);
-
-            if (existingProduct != null) {
-
-                existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
-
-                productRepo.save(existingProduct);
-            }
-        }
-    }
+}
 
 
 

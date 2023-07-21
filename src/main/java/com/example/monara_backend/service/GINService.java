@@ -1,6 +1,7 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.GIN;
+import com.example.monara_backend.model.GRN;
 import com.example.monara_backend.repository.GINRepo;
 import jakarta.mail.MessagingException;
 import net.sf.jasperreports.engine.*;
@@ -93,10 +94,12 @@ public class GINService {
         String sql = "INSERT INTO reports (report_name,customer, path, date) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String customerName = gins.get(0).getCustomer_name(); // Assuming customer_name is retrieved from the first GIN object
-        Long invoiceNumber=gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
+
+        Long invoiceNo=gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GIN_"+invoiceNumber);
+
+            ps.setString(1, "GIN_"+invoiceNo);
             ps.setString(2,customerName );
             ps.setString(3,reportPath);
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
@@ -105,7 +108,8 @@ public class GINService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+invoiceNumber+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
+
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+invoiceNo+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
 
         //Thread
 
@@ -120,7 +124,9 @@ public class GINService {
 
     }
 
-
+    public List<GIN> getAllGin () {
+        return ginRepo.findAll();
+    }
 }
 
 

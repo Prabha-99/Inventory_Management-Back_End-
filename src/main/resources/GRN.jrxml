@@ -304,7 +304,7 @@
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{invoice_no}]]></textFieldExpression>
             </textField>
@@ -319,7 +319,7 @@
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{item_description}]]></textFieldExpression>
             </textField>
@@ -334,7 +334,7 @@
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{ordered_quantity}]]></textFieldExpression>
             </textField>
@@ -349,7 +349,7 @@
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{received_quantity}]]></textFieldExpression>
             </textField>
@@ -364,7 +364,7 @@
                     <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
                 </box>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{remarks}]]></textFieldExpression>
             </textField>
@@ -378,7 +378,7 @@
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
                 </reportElement>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>
@@ -388,7 +388,7 @@
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
                 </reportElement>
                 <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="12" isBold="false"/>
+                    <font fontName="Arial" size="8" isBold="false"/>
                 </textElement>
                 <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
             </textField>

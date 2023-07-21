@@ -2,6 +2,7 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.ShowroomFile;
+import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.repository.ShowroomRepo;
 import com.example.monara_backend.service.DesignerBillSendService;
 import com.example.monara_backend.service.ProductService;
@@ -39,12 +40,6 @@ public class DesignerController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
-    @Autowired
-    private ProductService productService;
-
-    @Autowired
-    private ShowroomRepo showroomRepo;
-
 
     @GetMapping("/files")
 
@@ -61,6 +56,9 @@ public class DesignerController {
             return objectMapper;
         }
     }
+
+
+
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
         ShowroomFile file = showroomService.getFileById(id);
@@ -93,31 +91,7 @@ public class DesignerController {
 
     }
 
-    @PutMapping("/deductProduct")
-    public ResponseEntity<Product> deductProduct(@RequestBody Product product) {
-        // Retrieve the existing product from the database using the ID from the request body
-        Integer productID = product.getProduct_id();
-        Product existingProduct = productService.getProductById(productID);
 
-        // Check if the product exists
-        if (existingProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
-        // Deduct the quantity from the existing product
-        int quantityToDeduct = product.getProduct_quantity();
-        int existingQuantity = existingProduct.getProduct_quantity();
-        if (existingQuantity < quantityToDeduct) {
-            // If the quantity to deduct is greater than the existing quantity, return an error response
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        existingProduct.setProduct_quantity(existingQuantity - quantityToDeduct);
-
-        // Update the product in the database
-        productService.updateProduct(productID, existingProduct);
-
-        // Return the updated product with HTTP status OK
-        return new ResponseEntity<>(existingProduct, HttpStatus.OK);
-    }
 
 }
