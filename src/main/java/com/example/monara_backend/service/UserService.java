@@ -25,9 +25,6 @@ public class UserService {
     @Autowired
     ModelMapper modelMapper;
 
-
-
-
     public List<User> getAllUsers() {
             return userRepo.findAll();
         }

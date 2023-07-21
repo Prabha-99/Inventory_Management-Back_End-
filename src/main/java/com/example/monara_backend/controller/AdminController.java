@@ -20,10 +20,6 @@ public class AdminController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-//    public ResponseEntity <List<Map<String, Object>>> getAllUser(){
-//        return new ResponseEntity<>(userService.getAllUsers() , HttpStatus.OK);
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Integer id){
         User user = userService.getUserById(id);
