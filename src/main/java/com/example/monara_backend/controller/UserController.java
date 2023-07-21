@@ -3,19 +3,20 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.Configuration.AuthenticationRequest;
 import com.example.monara_backend.dto.navBarLogin;
+import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.Role;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
+import com.example.monara_backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ import java.util.List;
 public class UserController {
 
       private final UserRepo userRepo;
+
+      @Autowired
+      private UserService userService;
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
@@ -77,6 +81,9 @@ public class UserController {
         return userRepo.findAll();
     }
 
-
+    @PutMapping("/updateProfile/{id}")
+    public ResponseEntity<User> updateProfile(@PathVariable Integer id , @RequestBody User profile){
+        return new ResponseEntity<User>(userService.updateProfile(id , profile) , HttpStatus.OK);
+    }
 
 }
