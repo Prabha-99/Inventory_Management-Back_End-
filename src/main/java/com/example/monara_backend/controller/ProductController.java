@@ -155,6 +155,7 @@ public class ProductController {
         return productService.getProductCount();
     }
 
+    //purchase coordinator
     @GetMapping("/productByCate")
     public List<String> getProductNamesByCategoryIds() {
         return productService.getProductNamesByCategoryIds();
@@ -164,7 +165,17 @@ public class ProductController {
     public List<String> getProductBrandsByCategoryIds() {
         return productService.getProductBrandsByCategoryIds();
     }
-    //End of Inventory Admin
+
+    //stock manager
+    @GetMapping("/nameByCate")
+    public List<String> getNamesByCategoryIds() {
+        return productService.getNamesByCategoryIds();
+    }
+
+    @GetMapping("/brandNameByCate")
+    public List<String> getBrandsByCategoryIds() {
+        return productService.getBrandsByCategoryIds();
+    }
 
     @PostMapping("/reduce")
     public void reduceProductQuantity(@RequestBody ProductReduceRequest request) {

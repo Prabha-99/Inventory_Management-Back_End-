@@ -104,6 +104,15 @@ public class ProductService {
         return productRepo.getProductBrandsByCategoryIds();
     }
 
+    public List<String> getNamesByCategoryIds() {
+        return productRepo.getNamesByCategoryIds();
+    }
+
+    public List<String> getBrandsByCategoryIds() {
+        return productRepo.getBrandsByCategoryIds();
+    }
+
+
     //End of the Inventory Admin
 
     public void reduceProductQuantity(String product_name, String product_brand, int product_quantity) {
