@@ -45,7 +45,7 @@ public class AuthController {
         return authenticationService.getUserByEmail(email);
     }
 
-    @PutMapping("UpdateProfile")
+    @PutMapping("/UpdateProfile")
     public ResponseEntity<User> updateUserProfile (@RequestBody User user){
         return new ResponseEntity<>(authenticationService.updateUserProfile(user), HttpStatus.OK);
     }
