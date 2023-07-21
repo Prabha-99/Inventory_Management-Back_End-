@@ -96,6 +96,14 @@ public class ProductService {
         return productRepo.count();
     }
 
+    public List<String> getProductNamesByCategoryIds() {
+        return productRepo.getProductNamesByCategoryIds();
+    }
+
+    public List<String> getProductBrandsByCategoryIds() {
+        return productRepo.getProductBrandsByCategoryIds();
+    }
+
     //End of the Inventory Admin
 
     public void reduceProductQuantity(String product_name, String product_brand, int product_quantity) {
