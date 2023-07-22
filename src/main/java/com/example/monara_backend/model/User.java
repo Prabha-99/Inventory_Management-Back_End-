@@ -1,6 +1,7 @@
 package com.example.monara_backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +43,8 @@ public class User implements UserDetails {
     private Role role;
 
 
-
+    @JsonIgnoreProperties(ignoreUnknown = true) // Add this annotation to ignore the "enabled" field during JSON parsing
+    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
