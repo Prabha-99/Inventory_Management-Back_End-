@@ -16,6 +16,8 @@ public class DesignerBillSend {
 
     private String fileName;
 
+    private String customerName;
+
 
     @Lob
     private Blob dbFile;
