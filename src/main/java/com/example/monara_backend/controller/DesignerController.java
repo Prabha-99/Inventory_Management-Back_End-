@@ -29,7 +29,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/designer")
-@Configuration
 
 
 public class DesignerController {
@@ -47,7 +46,7 @@ public class DesignerController {
         return showroomService.getAllFiles();
     }
 
-    public class JacksonConfig {
+    /*public class JacksonConfig {
 
         @Bean
         public ObjectMapper objectMapper() {
@@ -55,8 +54,7 @@ public class DesignerController {
             objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
             return objectMapper;
         }
-    }
-
+    }*/
 
 
     @GetMapping("/download")
@@ -77,21 +75,49 @@ public class DesignerController {
     }
 
     @PostMapping("/billSend")
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, SerialException, SQLException
-    {
+    public ResponseEntity<String> uploadBill(HttpServletRequest request,
+                                             @RequestParam("filename") String filename,
+                                             @RequestParam("customerName") String customerName,
+                                             @RequestParam("file") MultipartFile file) {
+        try {
+            byte[] bytes = file.getBytes();
+            Blob blob = new SerialBlob(bytes);
+
+            DesignerBillSend fileUpload = new DesignerBillSend();
+            fileUpload.setFileName(file.getOriginalFilename());
+            fileUpload.setCustomerName(customerName);
+            fileUpload.setDbFile(blob);
+            // Save the DesignerBillSend entity to the database using your service
+            designerBillSendService.saveBill(fileUpload);
+
+            // You can add any additional logic here if needed
+
+            return ResponseEntity.ok("Bill uploaded successfully.");
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading bill.");
+        }
+    }
+
+   /* public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, SerialException, SQLException {
         byte[] bytes = file.getBytes();
 
         Blob blob = new SerialBlob(bytes);
 
-        DesignerBillSend fileUpload =new DesignerBillSend();
+        DesignerBillSend fileUpload = new DesignerBillSend();
         fileUpload.setFileName(file.getOriginalFilename());
         fileUpload.setDbFile(blob);
         designerBillSendService.saveBill(fileUpload);
         return "redirect:/";
 
-    }
 
+    public ResponseEntity<String> uploadBill(@RequestParam("filename") String filename,
+                                             @RequestParam("customerName") String customerName,
+                                             @RequestPart("file") MultipartFile file) {
+        // Your logic to process the uploaded file and customer name
+        // You can access them as: filename, customerName, and file
 
+        return ResponseEntity.ok("Bill uploaded successfully.");*/
 
 
 }
