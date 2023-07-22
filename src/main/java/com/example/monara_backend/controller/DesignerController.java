@@ -46,7 +46,7 @@ public class DesignerController {
         return showroomService.getAllFiles();
     }
 
-    /*public class JacksonConfig {
+    public class JacksonConfig {
 
         @Bean
         public ObjectMapper objectMapper() {
@@ -54,7 +54,7 @@ public class DesignerController {
             objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
             return objectMapper;
         }
-    }*/
+    }
 
 
     @GetMapping("/download")
