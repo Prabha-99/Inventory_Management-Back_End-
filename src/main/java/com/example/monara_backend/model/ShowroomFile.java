@@ -15,11 +15,10 @@ public class ShowroomFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String name;
+    private String filename;
 
 
-    @Lob
-    private Blob dbFile;
+    private String filePath;
 
     private Date date = new Date();
 

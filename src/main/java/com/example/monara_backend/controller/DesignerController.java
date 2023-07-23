@@ -1,6 +1,8 @@
 package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
+
 import com.example.monara_backend.model.Product;
+
 import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.repository.ShowroomRepo;
@@ -13,16 +15,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -38,6 +42,17 @@ public class DesignerController {
 
     @Autowired
     private DesignerBillSendService designerBillSendService;
+
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private ShowroomRepo showroomRepo;
+
+
+
+
 
 
     @GetMapping("/files")
@@ -58,23 +73,64 @@ public class DesignerController {
 
 
     @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam Integer id) {
         ShowroomFile file = showroomService.getFileById(id);
         if (file == null) {
             return ResponseEntity.notFound().build();
         }
 
+        // Get the file path from the ShowroomFile entity
+        String filePath = file.getFilePath();
+        File downloadFile = new File(filePath);
+
+        if (!downloadFile.exists() || !downloadFile.isFile()) {
+            return ResponseEntity.notFound().build();
+        }
+
         // Set the response headers
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFilename());
+
+        // Create an InputStreamResource from the file path
+        InputStreamResource inputStreamResource;
+        try {
+            inputStreamResource = new InputStreamResource(new FileInputStream(downloadFile));
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
 
         // Stream the file content to the response
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(file.getDbFile().getBytes(1, (int) file.getDbFile().length()));
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(downloadFile.length())
+                .body(inputStreamResource);
     }
 
     @PostMapping("/billSend")
+
+    public ResponseEntity<String> addFile(@RequestParam("file") MultipartFile file,
+                                          @RequestParam("customerName") String customerName) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return new ResponseEntity<>("Please select a file.", HttpStatus.BAD_REQUEST);
+        }
+
+        String fileName = file.getOriginalFilename();
+        String fileStoragePath = "C:\\Users\\hp\\Desktop\\designer bill\\"; // Replace this with the actual storage path
+
+        // Save the file to the file system
+        File savedFile = new File(fileStoragePath + fileName);
+        file.transferTo(savedFile);
+
+        DesignerBillSend fileUpload = new DesignerBillSend();
+        fileUpload.setFileName(fileName);
+        fileUpload.setFilePath(savedFile.getAbsolutePath());
+        fileUpload.setCustomerName(customerName);
+
+        designerBillSendService.saveBill(fileUpload);
+        return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
+    }
+
     public ResponseEntity<String> uploadBill(HttpServletRequest request,
                                              @RequestParam("filename") String filename,
                                              @RequestParam("customerName") String customerName,
@@ -118,6 +174,7 @@ public class DesignerController {
         // You can access them as: filename, customerName, and file
 
         return ResponseEntity.ok("Bill uploaded successfully.");*/
+
 
 
 }
