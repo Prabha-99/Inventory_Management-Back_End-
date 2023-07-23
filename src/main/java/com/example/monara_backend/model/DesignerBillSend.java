@@ -18,9 +18,7 @@ public class DesignerBillSend {
 
     private String customerName;
 
-
-    @Lob
-    private Blob dbFile;
+    private String filePath;
 
     private Date date = new Date();
 }
