@@ -46,7 +46,7 @@ public class ProductService {
         if (existingProduct == null) {
             return null;
         }
-        existingProduct.setCat_id(product.getCat_id());
+        existingProduct.setCategory_id(product.getCategory_id());
         existingProduct.setProduct_brand(product.getProduct_brand());
         existingProduct.setProduct_name(product.getProduct_name());
         existingProduct.setProduct_price(product.getProduct_price());
@@ -58,6 +58,8 @@ public class ProductService {
     public List<Product> getAllProduct () {
         return productRepo.findAll();
     }
+
+
 
     // Search products
     public ProductDto searchProduct(int productId){
@@ -80,11 +82,38 @@ public class ProductService {
         }
     }
 
+    //Get all products names
+    public List<String> getAllProductNames() {
+        return productRepo.getAllProductNames();
+    }
+
+    //Get all product brands
+    public List<String> getAllProductBrands() {
+        return productRepo.getAllProductBrands();
+    }
+
     //Count of Product
 
     public long getProductCount(){
         return productRepo.count();
     }
+
+    public List<String> getProductNamesByCategoryIds() {
+        return productRepo.getProductNamesByCategoryIds();
+    }
+
+    public List<String> getProductBrandsByCategoryIds() {
+        return productRepo.getProductBrandsByCategoryIds();
+    }
+
+    public List<String> getNamesByCategoryIds() {
+        return productRepo.getNamesByCategoryIds();
+    }
+
+    public List<String> getBrandsByCategoryIds() {
+        return productRepo.getBrandsByCategoryIds();
+    }
+
 
     //End of the Inventory Admin
 
@@ -97,26 +126,9 @@ public class ProductService {
         productRepo.increaseProductQuantity(product_name,product_brand,product_quantity);
 }
 
-    //designer deduct product
-    public ProductService(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
 
-        public Product getProductById(Integer productID) {
-            return productRepo.findById(productID).orElse(null);
-        }
 
-        public void deductProduct(Integer productID, Product updatedProduct) {
-            Product existingProduct = getProductById(productID);
-
-            if (existingProduct != null) {
-
-                existingProduct.setProduct_quantity(updatedProduct.getProduct_quantity());
-
-                productRepo.save(existingProduct);
-            }
-        }
-    }
+}
 
 
 
