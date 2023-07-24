@@ -49,7 +49,7 @@ public class GINService {
 
     public String getGINName(){
         return ginRepo.nameOFNewestGIN();
-    }
+    } //Getting the Newest GIN Name
 
     public void saveGINData(GIN ginData) {
         executorService.execute(() -> {
