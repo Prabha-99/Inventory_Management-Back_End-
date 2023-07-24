@@ -66,6 +66,16 @@ public class UserController {
         return ResponseEntity.ok("Showroom Manager Board");
     }
 
+    @GetMapping("/welcome")
+    public ResponseEntity<String> welcome(){
+        return ResponseEntity.ok("Hey Man..Finally Hahh");
+    }
+
+    @GetMapping("/chat")
+    public ResponseEntity<String> chat(){
+        return ResponseEntity.ok("Are you happy now..???");
+    }
+
     @GetMapping("/allUsers")
     public List<User> getAllUsers(){
         return userRepo.findAll();

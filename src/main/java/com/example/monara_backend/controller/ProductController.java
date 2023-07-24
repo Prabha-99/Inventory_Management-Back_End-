@@ -3,19 +3,17 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ProductService;
-import com.example.monara_backend.service.ReportService;
 import com.example.monara_backend.util.VarList;
 import jakarta.mail.MessagingException;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,13 +35,9 @@ public class ProductController {
     @Autowired
     private final UserRepo userRepo;
 
-    @Autowired
-    private final ReportService reportService;
-
-    public ProductController(NotificationService notificationService, UserRepo userRepo, ReportService reportService) {
+    public ProductController(NotificationService notificationService, UserRepo userRepo) {
         this.notificationService = notificationService;
         this.userRepo = userRepo;
-        this.reportService = reportService;
     }
 
 //    List<User> recipients=userRepo.getMails();
@@ -51,6 +45,9 @@ public class ProductController {
     String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
 
     // Get the emails of users to notify
+
+
+
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
     );
@@ -67,7 +64,6 @@ public class ProductController {
                 responseDto.setMessage("Success");
                 responseDto.setContent(productDto);
 
-                reportService.exportStockReport(); // Generating a new Stock Report After Adding a Product
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
                     notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
@@ -130,10 +126,9 @@ public class ProductController {
 
 
     @DeleteMapping("/deleteProduct/{product_id}") //delete a product
-    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) throws MessagingException, JRException, FileNotFoundException {
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) throws MessagingException {
         productService.deleteProduct(product_id);
 
-        reportService.exportStockReport(); // Generating a new Stock Report After Deleting a Product
         // Send notifications to each user
         for (String recipientEmail : recipientEmails) {
             notificationService.productDeleteNotification(recipientEmail, "product_id", "product_id");
