@@ -115,7 +115,7 @@ public class ReportService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Stock-"+dateCreated);
+            ps.setString(1, "Stock_"+dateCreated);
             ps.setString(2,reportPath);
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
@@ -123,7 +123,7 @@ public class ReportService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Stock-"+dateCreated+".pdf");
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Stock_"+dateCreated+".pdf");
 
 
         return "Report generated Successfully at : "+reportPath;

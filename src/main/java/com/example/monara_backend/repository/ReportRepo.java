@@ -39,5 +39,9 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
     Optional<Report> findByName(@Param("filename") String filename);
 
 
+    @Query(value = "SELECT report_name FROM reports WHERE report_name LIKE 'Stock%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the name of the Newest Stock Report
+    String nameOFNewestStock();
+
+
 
 }
