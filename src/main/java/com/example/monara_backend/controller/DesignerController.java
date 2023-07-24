@@ -1,36 +1,29 @@
 package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
-import com.example.monara_backend.model.DesignerGIN;
-import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.ShowroomFile;
-import com.example.monara_backend.repository.ShowroomRepo;
 import com.example.monara_backend.service.DesignerBillSendService;
-import com.example.monara_backend.service.DesignerGINService;
-import com.example.monara_backend.service.ProductService;
 import com.example.monara_backend.service.ShowroomService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("api/designer")
-@Configuration
 
 
 public class DesignerController {
@@ -41,14 +34,9 @@ public class DesignerController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
-    @Autowired
-    private ProductService productService;
 
-    @Autowired
-    private ShowroomRepo showroomRepo;
 
-    @Autowired
-    private DesignerGINService designerGINService;
+
 
 
     @GetMapping("/files")
@@ -66,79 +54,67 @@ public class DesignerController {
             return objectMapper;
         }
     }
+
+
     @GetMapping("/download")
-    public ResponseEntity<byte[]> downloadFile(@RequestParam Integer id) throws SQLException {
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestParam Integer id) {
         ShowroomFile file = showroomService.getFileById(id);
         if (file == null) {
             return ResponseEntity.notFound().build();
         }
 
+        // Get the file path from the ShowroomFile entity
+        String filePath = file.getFilePath();
+        File downloadFile = new File(filePath);
+
+        if (!downloadFile.exists() || !downloadFile.isFile()) {
+            return ResponseEntity.notFound().build();
+        }
+
         // Set the response headers
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName());
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getFilename());
+
+        // Create an InputStreamResource from the file path
+        InputStreamResource inputStreamResource;
+        try {
+            inputStreamResource = new InputStreamResource(new FileInputStream(downloadFile));
+        } catch (FileNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
 
         // Stream the file content to the response
         return ResponseEntity.ok()
                 .headers(headers)
-                .body(file.getDbFile().getBytes(1, (int) file.getDbFile().length()));
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(downloadFile.length())
+                .body(inputStreamResource);
     }
 
     @PostMapping("/billSend")
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, SerialException, SQLException
-    {
-        byte[] bytes = file.getBytes();
 
-        Blob blob = new SerialBlob(bytes);
+    public ResponseEntity<String> addFile(@RequestParam("file") MultipartFile file,
+                                          @RequestParam("customerName") String customerName) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return new ResponseEntity<>("Please select a file.", HttpStatus.BAD_REQUEST);
+        }
 
-        DesignerBillSend fileUpload =new DesignerBillSend();
-        fileUpload.setFileName(file.getOriginalFilename());
-        fileUpload.setDbFile(blob);
+        String fileName = file.getOriginalFilename();
+        String fileStoragePath = "C:\\Users\\hp\\Desktop\\designer bill\\"; // Replace this with the actual storage path
+
+        // Save the file to the file system
+        File savedFile = new File(fileStoragePath + fileName);
+        file.transferTo(savedFile);
+
+        DesignerBillSend fileUpload = new DesignerBillSend();
+        fileUpload.setFileName(fileName);
+        fileUpload.setFilePath(savedFile.getAbsolutePath());
+        fileUpload.setCustomerName(customerName);
+
         designerBillSendService.saveBill(fileUpload);
-        return "redirect:/";
-
+        return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
     }
 
-    //saveGIN
-    @PostMapping("/ginSend")
-    public String saveGIN(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, SerialException, SQLException
-    {
-        byte[] bytes = file.getBytes();
 
-        Blob blob = new SerialBlob(bytes);
-
-        DesignerGIN fileUpload =new DesignerGIN();
-        fileUpload.setFileName(file.getOriginalFilename());
-        fileUpload.setDbFile(blob);
-        designerGINService.saveGIN(fileUpload);
-        return "redirect:/";
-
-    }
-
-    @PutMapping("/deductProduct")
-    public ResponseEntity<Product> deductProduct(@RequestBody Product product) {
-        // Retrieve the existing product from the database using the ID from the request body
-        Integer productID = product.getProduct_id();
-        Product existingProduct = productService.getProductById(productID);
-
-        // Check if the product exists
-        if (existingProduct == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        // Deduct the quantity from the existing product
-        int quantityToDeduct = product.getProduct_quantity();
-        int existingQuantity = existingProduct.getProduct_quantity();
-        if (existingQuantity < quantityToDeduct) {
-            // If the quantity to deduct is greater than the existing quantity, return an error response
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        existingProduct.setProduct_quantity(existingQuantity - quantityToDeduct);
-
-        // Update the product in the database
-        productService.updateProduct(productID, existingProduct);
-
-        // Return the updated product with HTTP status OK
-        return new ResponseEntity<>(existingProduct, HttpStatus.OK);
-    }
 
 }

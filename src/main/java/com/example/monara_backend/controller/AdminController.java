@@ -34,9 +34,9 @@ public class AdminController {
             return  new ResponseEntity<>(user,HttpStatus.OK);
         }
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer id , @RequestBody User user){
-        return new ResponseEntity<User>(userService.updateUser(id , user) , HttpStatus.OK);
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user){
+        return new ResponseEntity<User>(userService.updateUser(user) , HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

@@ -9,6 +9,7 @@ import com.example.monara_backend.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -134,4 +135,21 @@ public class AuthenticationService {
                 .build();
 
     }
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
+
+    public User updateUserProfile(User user) {
+        Integer id = user.getId();
+
+        User user1 = userRepo.findById(id).get();
+        user1.setFirstname(user.getFirstname());
+        user1.setLastname(user.getLastname());
+        user1.setPassword(passwordEncoder.encode(user.getPassword()));
+        user1.setRole(user.getRole());
+        return userRepo.save(user1);
+    }
+
+
 }
