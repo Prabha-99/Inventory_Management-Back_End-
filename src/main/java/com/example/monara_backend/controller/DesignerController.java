@@ -36,9 +36,6 @@ public class DesignerController {
 
 
 
-
-
-
     @GetMapping("/files")
 
     public List<ShowroomFile> getAllFiles() {

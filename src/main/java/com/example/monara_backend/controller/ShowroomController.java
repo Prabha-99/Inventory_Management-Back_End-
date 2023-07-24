@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,9 +31,19 @@ public class ShowroomController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
+    // Maximum allowed size for uploaded files (20MB).
+    private static final long MAX_FILE_SIZE = 20 * 1024 * 1024;
+
+    // Maximum allowed size for multipart/form-data requests (20MB).
+    private static final long MAX_REQUEST_SIZE = 20 * 1024 * 1024;
+
 
     @PostMapping("/add")
-    public String saveGIN(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+
+        if (file.getSize() > MAX_FILE_SIZE) {
+            throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
+        }
         String fileName = file.getOriginalFilename();
         String fileStoragePath = "C:\\Users\\hp\\Desktop\\showroom\\"; // Replace this with the actual storage path location
 
