@@ -10,12 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -39,9 +35,9 @@ public class ReportController {
         return reportService.exportUserReport(format);
     }
 
-    @GetMapping("/stockReport")
+    @GetMapping("/productReport")
     public String generateProductReport() throws JRException, FileNotFoundException {
-        return reportService.exportStockReport();
+        return reportService.exportProductReport();
     }
 
     @GetMapping("/psReport")
@@ -49,28 +45,21 @@ public class ReportController {
         return reportService.exportPSReport();
     }
 
-//    @GetMapping("/GIN")
-//    public String generateGINReport() throws JRException, FileNotFoundException {
-//        return reportService.exportGIN();
-//    }
-//
-//    @GetMapping("/GRN")
-//    public String generateGRNReport() throws JRException, FileNotFoundException {
-//        return reportService.exportGRN();
-//    }
+    @GetMapping("/GIN")
+    public String generateGINReport() throws JRException, FileNotFoundException {
+        return reportService.exportGIN();
+    }
+
+    @GetMapping("/GRN")
+    public String generateGRNReport() throws JRException, FileNotFoundException {
+        return reportService.exportGRN();
+    }
 
 
     @GetMapping("getAllPSReport")
     public List<Report> getAllPS(){
         // Retrieve all files from the database
         List<Report> files = reportRepo.PSReports();
-        return files;
-    }
-
-    @GetMapping("getAllStockReport")
-    public List<Report> getAllStock(){
-        // Retrieve all files from the database
-        List<Report> files = reportRepo.StockReports();
         return files;
     }
 
@@ -90,63 +79,28 @@ public class ReportController {
 
     //File Download Endpoint
 
-//    @GetMapping("/{fileId}/download")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws FileNotFoundException {
-//        // Retrieve the file record from the database
-//        Optional<Report> optionalFile = reportRepo.findById(fileId);
-//        if (optionalFile.isPresent()) {
-//            Report report = optionalFile.get();
-//
-//            // Create a Resource object from the report's local path
-//            Resource resource = new FileSystemResource(report.getPath());
-//            if (resource.exists()) {
-//                // Return the report as a downloadable attachment
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
-//                        .body(resource);
-//            } else {
-//                throw new FileNotFoundException("File not found: " + report.getPath());
-//            }
-//        } else {
-//            throw new NoSuchElementException("File not found with ID: " + fileId);
-//        }
-//    }
+    @GetMapping("/{fileId}/download")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws FileNotFoundException {
+        // Retrieve the file record from the database
+        Optional<Report> optionalFile = reportRepo.findById(fileId);
+        if (optionalFile.isPresent()) {
+            Report report = optionalFile.get();
 
-//    @GetMapping("/{fileId}/download")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) {
-//        try {
-//            // Retrieve the file record from the database
-//            Optional<Report> optionalFile = reportRepo.findById(fileId);
-//            if (optionalFile.isPresent()) {
-//                Report report = optionalFile.get();
-//
-//                // Create a Resource object from the report's local path
-//                Resource resource = new FileSystemResource(report.getPath());
-//                if (resource.exists()) {
-//                    // Return the report as a downloadable attachment
-//                    return ResponseEntity.ok()
-//                            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
-//                            .body(resource);
-//                } else {
-//                    throw new FileNotFoundException("File not found: " + report.getPath());
-//                }
-//            } else {
-//                throw new NoSuchElementException("File not found with ID: " + fileId);
-//            }
-//        } catch (AccessDeniedException e) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access to the file is denied", e);
-//        } catch (FileNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found", e);
-//        }
-//    }
-
-    @GetMapping("/download/{filename}")
-    public ResponseEntity<?> downloadImageFromFileSystem (@PathVariable String filename) throws IOException {
-        byte[] fileData = reportService.downloadFileFromFileSystem(filename);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("application/pdf"))
-                .body(fileData);
+            // Create a Resource object from the report's local path
+            Resource resource = new FileSystemResource(report.getPath());
+            if (resource.exists()) {
+                // Return the report as a downloadable attachment
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
+                        .body(resource);
+            } else {
+                throw new FileNotFoundException("File not found: " + report.getPath());
+            }
+        } else {
+            throw new NoSuchElementException("File not found with ID: " + fileId);
+        }
     }
+
 
 
 
