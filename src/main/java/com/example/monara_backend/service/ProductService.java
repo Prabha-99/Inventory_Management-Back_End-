@@ -1,6 +1,7 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
+import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
@@ -27,17 +28,10 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    // Beginning of the Inventory Admin
-    //Add products to database
-    public String saveProduct(ProductDto productDto){
-        //Check the data exist or not in the database
-        if(productRepo.existsById(productDto.getProduct_id())){
-            return VarList.RSP_DUPLICATED;
-        }else{
-            productRepo.save(modelMapper.map(productDto, Product.class));
-            return VarList.RSP_SUCCESS;
-        }
 
+    //Add products to database
+    public Product saveProduct (Product product) {
+        return productRepo.save(product);
     }
 
     //Update product in database
