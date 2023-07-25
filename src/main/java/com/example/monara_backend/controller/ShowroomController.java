@@ -4,7 +4,6 @@ import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.DesignerBillSendService;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ShowroomService;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +47,9 @@ public class ShowroomController {
             "prabhashana77@gmail.com"
     );
 
+
     @PostMapping("/add")
-
-    public ResponseEntity<String> addFile(@RequestParam("file") MultipartFile file) {
-
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, MessagingException {
-
+    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
 
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
@@ -63,33 +59,16 @@ public class ShowroomController {
 
         // Save the file to the file system
         File savedFile = new File(fileStoragePath + fileName);
-        try {
-            file.transferTo(savedFile);
+        file.transferTo(savedFile);
 
-            ShowroomFile fileUpload = new ShowroomFile();
-            fileUpload.setFilename(fileName);
-            fileUpload.setFilePath(savedFile.getAbsolutePath());
-            showroomService.saveDetails(fileUpload);
-
-
-            return ResponseEntity.ok("File uploaded successfully!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload the file.");
-        }
 
         ShowroomFile fileUpload = new ShowroomFile();
         fileUpload.setFilename(fileName);
         fileUpload.setFilePath(savedFile.getAbsolutePath());
         showroomService.saveDetails(fileUpload);
-
-
-        // Send the notification to the Designer
-        for (String recipientEmail : recipientEmails) {
-            notificationService.newArchitecturalReport(recipientEmail,file.getOriginalFilename());
-        }
         return "redirect:/";
-
     }
+
 
 
     @GetMapping("/viewBill")
