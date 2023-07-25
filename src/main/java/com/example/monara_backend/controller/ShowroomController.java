@@ -2,7 +2,9 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
 import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.DesignerBillSendService;
+import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ShowroomService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -31,15 +34,21 @@ public class ShowroomController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
+    private final NotificationService notificationService;
+
     // Maximum allowed size for uploaded files (20MB).
     private static final long MAX_FILE_SIZE = 20 * 1024 * 1024;
 
     // Maximum allowed size for multipart/form-data requests (20MB).
     private static final long MAX_REQUEST_SIZE = 20 * 1024 * 1024;
 
+    //Notification Emails List
+    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
+            "prabhashana77@gmail.com"
+    );
 
     @PostMapping("/add")
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, MessagingException {
 
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
@@ -55,6 +64,12 @@ public class ShowroomController {
         fileUpload.setFilename(fileName);
         fileUpload.setFilePath(savedFile.getAbsolutePath());
         showroomService.saveDetails(fileUpload);
+
+
+        // Send the notification to the Designer
+        for (String recipientEmail : recipientEmails) {
+            notificationService.newArchitecturalReport(recipientEmail,file.getOriginalFilename());
+        }
         return "redirect:/";
     }
 
