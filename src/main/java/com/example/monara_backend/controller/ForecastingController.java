@@ -31,32 +31,33 @@ public class ForecastingController {
     @PostMapping(value = "/grn")
     private ResponseEntity getGrnData(@RequestBody FilterForecastingData filterForecastingData)
     {
+        // Call the PurchaseForecastingService to fetch GRN data based on the provided filters
         List<PurchaseForecastingDto> grnList = forecastingService.getAllGrnData(
                 filterForecastingData.getTimeDuration(),
-                filterForecastingData.getCategory(),
-                filterForecastingData.getStatus()
+                filterForecastingData.getCategory()
         );
 
-        System.out.println("List: " + grnList);
+        // Prepare the response containing the GRN data and success status
         responseDto.setCode(VarList.RSP_SUCCESS);
         responseDto.setMessage("success");
         responseDto.setContent(grnList);
+        // Return the ResponseEntity with the ResponseDto containing GRN data and HTTP status code 200 (OK)
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }
 
     @PostMapping(value = "/gin")
     private ResponseEntity getGinData(@RequestBody FilterForecastingData filterForecastingData)
     {
+        // Call the SellForecastingService to fetch GIN data based on the provided filters
         List<SellForecastingDto> ginList = sellForecastingService.getAllGinData(
                 filterForecastingData.getTimeDuration(),
-                filterForecastingData.getCategory(),
-                filterForecastingData.getStatus()
+                filterForecastingData.getCategory()
         );
-
-        System.out.println("List: " + ginList);
+        // Prepare the response containing the GIN data and success status
         responseDto.setCode(VarList.RSP_SUCCESS);
         responseDto.setMessage("success");
         responseDto.setContent(ginList);
+        // Return the ResponseEntity with the ResponseDto containing GIN data and HTTP status code 200 (OK)
         return new ResponseEntity(responseDto, HttpStatus.OK);
     }
 }

@@ -10,14 +10,8 @@ import java.util.List;
 
 @Repository
 public interface PurchaseForecastingRepo extends JpaRepository<PurchaseForecastingDto,Integer>{
-    // search methods
-    // time,category,status
 
-    // get by time
-    // select * from grn where
-
-
-    //Get purchasing details from monthly all
+    //Get purchasing details for all categories
     @Query(value = "" +
             "SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS id, YEAR(date) AS purchase_year,"+
             "       MONTH(date) AS purchase_month,\n" +
@@ -29,7 +23,7 @@ public interface PurchaseForecastingRepo extends JpaRepository<PurchaseForecasti
     List<PurchaseForecastingDto> getMonthlyGRN();
 
 
-    //Get purchasing details from monthly Each category
+    //Get purchasing details for Each category
     @Query(value = "SELECT ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS id, YEAR(date) AS purchase_year,\n" +
             "       MONTH(date) AS purchase_month,\n" +
             "       SUM(received_quantity) AS total\n" +
