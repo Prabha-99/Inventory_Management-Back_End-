@@ -1,5 +1,6 @@
 package com.example.monara_backend.repository;
 
+import com.example.monara_backend.model.GRN;
 import com.example.monara_backend.model.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,8 +26,12 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
     List<Report> GRNReports();
 
 
-    @Query(value = "SELECT path FROM reports WHERE report_id = :id", nativeQuery = true)
-    String findFilePathById(@Param("id") Long id);
+    @Query(value = "SELECT report_name FROM reports WHERE report_name LIKE 'Stock%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the name of the Newest Stock Report
+    String nameOFNewestStock();
 
+    @Query(value = "SELECT * FROM reports WHERE TIME(date) <= CURTIME() ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the Newest Stock Report
+    List<Report> newestStock();
 
+    @Query(value = "SELECT report_name FROM reports WHERE report_name LIKE 'Archi%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the name of the Newest Stock Report
+    String nameOFNewestArchi();
 }

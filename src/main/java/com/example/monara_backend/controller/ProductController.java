@@ -3,17 +3,19 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
 import com.example.monara_backend.model.Product;
-import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ProductService;
+import com.example.monara_backend.service.ReportService;
 import com.example.monara_backend.util.VarList;
 import jakarta.mail.MessagingException;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,9 +37,14 @@ public class ProductController {
     @Autowired
     private final UserRepo userRepo;
 
-    public ProductController(NotificationService notificationService, UserRepo userRepo) {
+    @Autowired
+    private final ReportService reportService;
+
+
+    public ProductController(NotificationService notificationService, UserRepo userRepo, ReportService reportService) {
         this.notificationService = notificationService;
         this.userRepo = userRepo;
+        this.reportService = reportService;
     }
 
 //    List<User> recipients=userRepo.getMails();
@@ -63,6 +70,9 @@ public class ProductController {
                 responseDto.setCode(VarList.RSP_SUCCESS);
                 responseDto.setMessage("Success");
                 responseDto.setContent(productDto);
+
+                //Generating the Updated Stock Report
+                reportService.exportStockReport();
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
@@ -126,8 +136,12 @@ public class ProductController {
 
 
     @DeleteMapping("/deleteProduct/{product_id}") //delete a product
-    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) throws MessagingException {
+    public ResponseEntity<String> deleteProduct(@PathVariable Integer product_id) throws MessagingException, JRException, FileNotFoundException {
         productService.deleteProduct(product_id);
+
+
+        //Generating the Updated Stock Report
+        reportService.exportStockReport();
 
         // Send notifications to each user
         for (String recipientEmail : recipientEmails) {

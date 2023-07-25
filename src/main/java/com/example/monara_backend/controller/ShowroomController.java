@@ -2,7 +2,9 @@ package com.example.monara_backend.controller;
 import com.example.monara_backend.model.DesignerBillSend;
 import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.DesignerBillSendService;
+import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ShowroomService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -32,21 +35,31 @@ public class ShowroomController {
     @Autowired
     private DesignerBillSendService designerBillSendService;
 
+    private final NotificationService notificationService;
+
     // Maximum allowed size for uploaded files (20MB).
     private static final long MAX_FILE_SIZE = 20 * 1024 * 1024;
 
     // Maximum allowed size for multipart/form-data requests (20MB).
     private static final long MAX_REQUEST_SIZE = 20 * 1024 * 1024;
 
+    //Notification Emails List
+    List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
+            "prabhashana77@gmail.com"
+    );
 
     @PostMapping("/add")
+
     public ResponseEntity<String> addFile(@RequestParam("file") MultipartFile file) {
+
+    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, MessagingException {
+
 
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
         }
         String fileName = file.getOriginalFilename();
-        String fileStoragePath = "C:\\Users\\hp\\Desktop\\showroom\\"; // Replace this with the actual storage path location
+        String fileStoragePath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports\\"; // Replace this with the actual storage path location
 
         // Save the file to the file system
         File savedFile = new File(fileStoragePath + fileName);
@@ -58,10 +71,24 @@ public class ShowroomController {
             fileUpload.setFilePath(savedFile.getAbsolutePath());
             showroomService.saveDetails(fileUpload);
 
+
             return ResponseEntity.ok("File uploaded successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload the file.");
         }
+
+        ShowroomFile fileUpload = new ShowroomFile();
+        fileUpload.setFilename(fileName);
+        fileUpload.setFilePath(savedFile.getAbsolutePath());
+        showroomService.saveDetails(fileUpload);
+
+
+        // Send the notification to the Designer
+        for (String recipientEmail : recipientEmails) {
+            notificationService.newArchitecturalReport(recipientEmail,file.getOriginalFilename());
+        }
+        return "redirect:/";
+
     }
 
 

@@ -13,14 +13,18 @@ import java.util.List;
 public class SellForecastingService {
     @Autowired
     private SellForecastingRepo sellForecastingRepo;
-    public List<SellForecastingDto> getAllGinData(String timeDuration, String category, String status) {
+    public List<SellForecastingDto> getAllGinData( String category) {
 
-        List <SellForecastingDto> ginList = new ArrayList< >();
+        // Create an empty list to store the result
+        List <SellForecastingDto> ginList = new ArrayList<>();
 
         try {
-            if (timeDuration.equals("monthly") && category.equals("")) {
+            // Check if a specific category is provided to determine which query to call
+            if (category.equals("")) {
+                // If no specific category is provided, retrieve GIN data for all categories
                 ginList = sellForecastingRepo.getMonthlyGIN();
-            } else if(timeDuration.equals("monthly") && !category.equals("")) {
+            } else if( !category.equals("")) {
+                // If a specific category is provided, retrieve GIN data for that category
                 ginList = sellForecastingRepo.getGinDataByMonthlyAndCategory(category);
             }
         } catch (Exception exception) {
