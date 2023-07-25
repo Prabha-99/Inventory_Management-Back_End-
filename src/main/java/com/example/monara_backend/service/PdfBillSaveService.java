@@ -29,12 +29,12 @@ public class PdfBillSaveService {
     private final String FOLDER_PATH="C:\\Users\\milin\\Documents\\SPRING\\GIT12\\testfolder\\";
 
 
-
+//get all pdf files
     public List<PdfBillSave> getAllPdf() {
         return pdfFileRepository.findAll();
     }
 
-
+//get pdf file
     public byte[] downloadFileFromFileSystem(String filename) throws IOException {
         Optional<PdfBillSave> fileData = pdfGetFileRepo.findByName(filename);
         String filePath=fileData.get().getFilepath();
@@ -42,6 +42,7 @@ public class PdfBillSaveService {
         return filePdf;
     }
 
+    //upload pdf file
     public String uploadFileToFileSystem(MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(originalFilename);
