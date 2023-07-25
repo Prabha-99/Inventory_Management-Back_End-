@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,11 +56,14 @@ public class UserService {
        Integer id = user.getId();
 
        User user1 = userRepo.findById(id).get();
+       user1.setId(user.getId());
        user1.setFirstname(user.getFirstname());
        user1.setLastname(user.getLastname());
+       user1.setEmail(user.getEmail());
        user1.setRole(user.getRole());
        return userRepo.save(user1);
     }
+
 
     public HttpStatus deleteUser(Integer id) {
         try {

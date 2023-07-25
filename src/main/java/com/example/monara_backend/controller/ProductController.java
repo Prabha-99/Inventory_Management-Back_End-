@@ -137,13 +137,45 @@ public class ProductController {
         return ResponseEntity.ok("Product deleted");
     }
 
+    //Get all product names
+    @GetMapping("/names")
+    public List<String> getAllProductNames() {
+        return productService.getAllProductNames();
+    }
+
+    //Get all product brands
+    @GetMapping("/BrandNames")
+    public List<String> getAllProductBrands() {
+        return productService.getAllProductBrands();
+    }
+
     //To get count of product
     @GetMapping("/productCount")
     public long getProductCount(){
         return productService.getProductCount();
     }
 
-    //End of Inventory Admin
+    //purchase coordinator
+    @GetMapping("/productByCate")
+    public List<String> getProductNamesByCategoryIds() {
+        return productService.getProductNamesByCategoryIds();
+    }
+
+    @GetMapping("/brandByCate")
+    public List<String> getProductBrandsByCategoryIds() {
+        return productService.getProductBrandsByCategoryIds();
+    }
+
+    //stock manager
+    @GetMapping("/nameByCate")
+    public List<String> getNamesByCategoryIds() {
+        return productService.getNamesByCategoryIds();
+    }
+
+    @GetMapping("/brandNameByCate")
+    public List<String> getBrandsByCategoryIds() {
+        return productService.getBrandsByCategoryIds();
+    }
 
     @PostMapping("/reduce")
     public void reduceProductQuantity(@RequestBody ProductReduceRequest request) {

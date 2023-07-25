@@ -55,6 +55,7 @@ public class SecurityConfig {
 
 
 
+
                 .requestMatchers("/api/product/**").permitAll()
 
                 .requestMatchers("/api/file/**").permitAll()
@@ -68,7 +69,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/forecasting/grn/**").permitAll()
                 .requestMatchers("/api/forecasting/gin/**").permitAll()
 
+                .requestMatchers("api/admin/**").permitAll()
+
                 .requestMatchers("/api/backup/**").permitAll()
+
 
 
 
