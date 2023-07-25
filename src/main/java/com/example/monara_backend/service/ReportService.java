@@ -163,21 +163,18 @@ public class ReportService {
     }
 
 
-
-
-
     @Scheduled(cron = "0 0 21 * * ?")
-    public String exportGIN() throws FileNotFoundException, JRException {
+    public String exportStockReport() throws FileNotFoundException, JRException {
         String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
-        List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
+        List<Product> products=productRepo.findAll();//Retrieving all User Data into a List
 
         //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:GIN.jrxml");
+        File file= ResourceUtils.getFile("classpath:Products.jrxml");
         JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
 
         //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
+        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(products);
         Map<String,Object> parameters=new HashMap<>();
         parameters.put("Created by","Monara Creations pvt,Ltd");
 
@@ -186,7 +183,7 @@ public class ReportService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GIN");
+            ps.setString(1, "Stock_"+dateCreated);
             ps.setString(2,reportPath);
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
@@ -194,43 +191,17 @@ public class ReportService {
 
         //Printing the Report
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-            JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN.pdf");
+        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Stock_"+dateCreated+".pdf");
+
 
         return "Report generated Successfully at : "+reportPath;
     }
 
 
-    @Scheduled(cron = "0 0 21 * * ?")
-    public String exportGRN() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
-         *****This must be a path to DB*****/
-        List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
 
-        //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:GRN.jrxml");
-        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
 
-        //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("Created by","Monara Creations pvt,Ltd");
 
-        // Saving the report file to the database
-        String sql = "INSERT INTO reports (report_name, path, date) VALUES (?, ?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "GRN");
-            ps.setString(2,reportPath);
-            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
-            return ps;
-        }, keyHolder);
 
-        //Printing the Report
-        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GRN.pdf");
 
-        return "Report generated Successfully at : "+reportPath;
-    }
 
 }
