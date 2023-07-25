@@ -36,6 +36,8 @@ public class PdfSendMailService {
 
         String Qu_Number = pdfSendRepo.findQuatationNoById(bill_id);
 
+        String Cu_Name = pdfSendRepo.findNameById(bill_id);
+
         //Get filename
         String filename = pdfSendRepo.findPdfFileNameByBillId(bill_id);
         byte[] fileContent = downloadFileFromFileSystem(filename);
@@ -50,12 +52,15 @@ public class PdfSendMailService {
         helper.setSubject("MONARA CREATIONS (pvt) ltd." + bill_id);
 
         String TextMail="<h2>MONARA CREATIONS (pvt) ltd.</h2> <br> " +
-                "Please find attached the PDF file <br>" +
-                " Your Quotation_no: " + Qu_Number +"<br> No.262,High level Road,<br>" +
+                "Please find attached PDF file <br>" +
+                " Quotation_no: " + Qu_Number +
+                "<br> Name: " + Cu_Name +"<br><br>" +
+                "<br> No.262,High level Road,<br>" +
                 " Nugegoda.,Sri Lanka.<br>" +
-                "Tel : 011 28 22 969<br>" +
-                "Mob : 076 55 62 725<br>" +
-                "Web : www.monaracreations.lk<br>";
+                "Web : www.monaracreations.lk<br><br>"+
+                "<br> This is a system generated email. Do not reply!!<br><br>"+
+                "Thank You for Your Attention!<br>"+
+                "Have a Nice Day!!<br>";
 
         helper.setText(TextMail,true);
         // Attach the PDF file to the email
