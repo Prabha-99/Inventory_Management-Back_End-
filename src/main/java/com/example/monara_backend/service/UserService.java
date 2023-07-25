@@ -3,6 +3,7 @@ package com.example.monara_backend.service;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
+import com.example.monara_backend.repository.UserUpdateRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,6 +31,9 @@ public class UserService {
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    UserUpdateRepo userUpdateRepo;
+
     public List<User> getAllUsers() {
             return userRepo.findAll();
         }
@@ -49,17 +53,20 @@ public class UserService {
 //        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
 //        return userRepo.save(existingUser);
 //    }
-    public User updateUser(User user) {
-       Integer id = user.getId();
-
-       User user1 = userRepo.findById(id).get();
-       user1.setId(user.getId());
-       user1.setFirstname(user.getFirstname());
-       user1.setLastname(user.getLastname());
-       user1.setEmail(user.getEmail());
-       user1.setRole(user.getRole());
-       return userRepo.save(user1);
-    }
+//    public User updateUser(User user) {
+//       Integer id = user.getId();
+//
+//       User user1 = userRepo.findById(id).get();
+//       user1.setId(user.getId());
+//       user1.setFirstname(user.getFirstname());
+//       user1.setLastname(user.getLastname());
+//       user1.setEmail(user.getEmail());
+//       user1.setRole(user.getRole());
+//       return userRepo.save(user1);
+//    }
+public User updateUser(User user) {
+    return userUpdateRepo.save(user);
+}
 
 
     public HttpStatus deleteUser(Integer id) {
