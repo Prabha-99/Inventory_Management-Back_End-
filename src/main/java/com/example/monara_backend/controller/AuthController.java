@@ -7,12 +7,14 @@ import com.example.monara_backend.dto.navBarLogin;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthenticationService authenticationService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
@@ -47,8 +51,32 @@ public class AuthController {
     }
 
     @PutMapping("/UpdateProfile")
-    public ResponseEntity<User> updateUserProfile (@RequestBody User user){
-        return new ResponseEntity<>(authenticationService.updateUserProfile(user), HttpStatus.OK);
+    public ResponseEntity<User> updateUserProfile (@RequestBody User updatedUser){
+        int id = updatedUser.getId();
+        User users = authenticationService.getUserById(id);
+
+        if (users != null) {
+            // Update specific fields based on the values in the updatedUser object
+            if (updatedUser.getFirstname() != null) {
+                users.setFirstname(updatedUser.getFirstname());
+            }
+            if (updatedUser.getLastname() != null) {
+                users.setLastname(updatedUser.getLastname());
+            }
+            if (updatedUser.getEmail() != null) {
+                users.setEmail(updatedUser.getEmail());
+            }
+            if (updatedUser.getPassword() != null){
+                users.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
+            if (updatedUser.getRole() != null) {
+                users.setRole(updatedUser.getRole());
+            }
+            User updatedUserEntity = authenticationService.updateUser(users);
+            return ResponseEntity.ok(updatedUserEntity);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

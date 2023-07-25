@@ -6,6 +6,7 @@ import com.example.monara_backend.Configuration.RegisterRequest;
 import com.example.monara_backend.model.Role;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
+import com.example.monara_backend.repository.UserUpdateRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
     private final UserRepo userRepo;
+    private final UserUpdateRepo updateRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -149,6 +152,13 @@ public class AuthenticationService {
         user1.setPassword(passwordEncoder.encode(user.getPassword()));
         user1.setRole(user.getRole());
         return userRepo.save(user1);
+    }
+    public User getUserById(Integer id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
+    public User updateUser(User user) {
+        return updateRepo.save(user);
     }
 
 
