@@ -2,6 +2,7 @@ package com.example.monara_backend.controller;
 
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
+import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
@@ -60,44 +61,15 @@ public class ProductController {
     );
 
 
-    // Beginning of the Inventory Admin
-    @PostMapping(value = "/saveProduct")    //Add products
-    public ResponseEntity saveProduct(@RequestBody ProductDto productDto){
-        try{
+    @PostMapping("/saveProduct")
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) throws MessagingException {
+        Product saved = productService.saveProduct(product);
 
-            String res = productService.saveProduct(productDto);
-            if (res.equals("00")){
-                responseDto.setCode(VarList.RSP_SUCCESS);
-                responseDto.setMessage("Success");
-                responseDto.setContent(productDto);
-
-                //Generating the Updated Stock Report
-                reportService.exportStockReport();
-
-                // Send notifications to each user
-                for (String recipientEmail : recipientEmails) {
-                    notificationService.productAddNotification(recipientEmail, productDto.getProduct_name(),productDto.getCategory_id(), String.valueOf(productDto.getProduct_quantity()));
-                }
-
-                return new ResponseEntity(responseDto, HttpStatus.ACCEPTED);
-
-            }else if(res.equals("06")){
-                responseDto.setCode(VarList.RSP_DUPLICATED);
-                responseDto.setMessage("Product Added");
-                responseDto.setContent(productDto);
-                return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }else{
-                responseDto.setCode(VarList.RSP_FAIL);
-                responseDto.setMessage("Error");
-                responseDto.setContent(null);
-                return new ResponseEntity(responseDto, HttpStatus.BAD_REQUEST);
-            }
-        }catch (Exception ex){
-            responseDto.setCode(VarList.RSP_ERROR);
-            responseDto.setMessage(ex.getMessage());
-            responseDto.setContent(null);
-            return new ResponseEntity(responseDto, HttpStatus.INTERNAL_SERVER_ERROR);
+        // Send notifications to each user
+        for (String recipientEmail : recipientEmails) {
+            notificationService.productAddNotification(recipientEmail, product.getProduct_name(),product.getCategory_id(), String.valueOf(product.getProduct_quantity()));
         }
+        return ResponseEntity.ok(saved);
     }
 
 
