@@ -2,6 +2,8 @@ package com.example.monara_backend.controller;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/backup")
+@EnableScheduling
+
 public class BackupController {
     @PostMapping("/back")
     public ResponseEntity<String> createBackup() {
@@ -49,6 +53,17 @@ public class BackupController {
             }
         } catch (IOException | InterruptedException ex) {
             throw new RuntimeException("Error while creating backup", ex);
+        }
+    }
+
+
+    @Scheduled(cron = "0 00 00 * * ?")
+    public void scheduleBackup() {
+        try {
+            createBackup();
+            System.out.println("Backup created successfully at scheduled time.");
+        } catch (RuntimeException ex) {
+            System.err.println("Error while creating scheduled backup: " + ex.getMessage());
         }
     }
 }
