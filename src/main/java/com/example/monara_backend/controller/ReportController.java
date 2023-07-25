@@ -45,16 +45,6 @@ public class ReportController {
         return reportService.exportPSReport();
     }
 
-    @GetMapping("/GIN")
-    public String generateGINReport() throws JRException, FileNotFoundException {
-        return reportService.exportGIN();
-    }
-
-    @GetMapping("/GRN")
-    public String generateGRNReport() throws JRException, FileNotFoundException {
-        return reportService.exportGRN();
-    }
-
 
     @GetMapping("getAllPSReport")
     public List<Report> getAllPS(){

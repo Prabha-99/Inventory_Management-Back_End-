@@ -72,7 +72,7 @@ public class ProductController {
                 responseDto.setContent(productDto);
 
                 //Generating the Updated Stock Report
-                reportService.exportProductReport();
+                reportService.exportStockReport();
 
                 // Send notifications to each user
                 for (String recipientEmail : recipientEmails) {
@@ -141,7 +141,7 @@ public class ProductController {
 
 
         //Generating the Updated Stock Report
-        reportService.exportProductReport();
+        reportService.exportStockReport();
 
         // Send notifications to each user
         for (String recipientEmail : recipientEmails) {
