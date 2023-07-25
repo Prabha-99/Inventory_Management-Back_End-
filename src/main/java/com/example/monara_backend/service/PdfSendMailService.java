@@ -52,13 +52,13 @@ public class PdfSendMailService {
         helper.setSubject("MONARA CREATIONS (pvt) ltd." + bill_id);
 
         String TextMail="<h2>MONARA CREATIONS (pvt) ltd.</h2> <br> " +
-                "Please find attached the PDF file <br>" +
-                " Your Quotation_no: " + Qu_Number +"<br><br>" +
-                " Your Name: " + Cu_Name +"<br><br>" +
+                "Please find attached PDF file <br>" +
+                " Quotation_no: " + Qu_Number +
+                "<br> Name: " + Cu_Name +"<br><br>" +
                 "<br> No.262,High level Road,<br>" +
                 " Nugegoda.,Sri Lanka.<br>" +
                 "Web : www.monaracreations.lk<br><br>"+
-                "<br> This is an system generated email.Do not reply!!<br><br>"+
+                "<br> This is a system generated email. Do not reply!!<br><br>"+
                 "Thank You for Your Attention!<br>"+
                 "Have a Nice Day!!<br>";
 
