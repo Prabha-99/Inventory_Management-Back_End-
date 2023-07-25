@@ -13,7 +13,7 @@ import java.util.List;
 public class SellForecastingService {
     @Autowired
     private SellForecastingRepo sellForecastingRepo;
-    public List<SellForecastingDto> getAllGinData(String timeDuration, String category) {
+    public List<SellForecastingDto> getAllGinData( String category) {
 
         // Create an empty list to store the result
         List <SellForecastingDto> ginList = new ArrayList<>();

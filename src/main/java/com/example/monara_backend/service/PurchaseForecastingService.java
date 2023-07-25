@@ -13,7 +13,7 @@ public class PurchaseForecastingService {
     @Autowired
     private PurchaseForecastingRepo forecastingRepo;
 
-    public List <PurchaseForecastingDto> getAllGrnData(String timeDuration, String category) {
+    public List <PurchaseForecastingDto> getAllGrnData(String category) {
         // Create an empty list to store the result
         List <PurchaseForecastingDto> grnList = new ArrayList<> ();
 

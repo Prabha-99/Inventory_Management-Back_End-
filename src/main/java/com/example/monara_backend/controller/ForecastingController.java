@@ -33,7 +33,6 @@ public class ForecastingController {
     {
         // Call the PurchaseForecastingService to fetch GRN data based on the provided filters
         List<PurchaseForecastingDto> grnList = forecastingService.getAllGrnData(
-                filterForecastingData.getTimeDuration(),
                 filterForecastingData.getCategory()
         );
 
@@ -50,7 +49,6 @@ public class ForecastingController {
     {
         // Call the SellForecastingService to fetch GIN data based on the provided filters
         List<SellForecastingDto> ginList = sellForecastingService.getAllGinData(
-                filterForecastingData.getTimeDuration(),
                 filterForecastingData.getCategory()
         );
         // Prepare the response containing the GIN data and success status
