@@ -1,7 +1,6 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
-import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
 import com.example.monara_backend.repository.CategoryRepo;
 import com.example.monara_backend.repository.ProductRepo;
@@ -64,6 +63,11 @@ public class ProductService {
             return null;
 
         }
+    }
+
+    //Get product by id
+    public Product getProductById(Integer id) {
+        return productRepo.findById(id).orElse(null);
     }
 
     //Delete products

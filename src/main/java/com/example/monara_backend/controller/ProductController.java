@@ -4,6 +4,7 @@ import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.dto.ResponseDto;
 import com.example.monara_backend.model.BillSave;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.UserRepo;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ProductService;
@@ -73,7 +74,7 @@ public class ProductController {
     }
 
 
-    @PutMapping("/updateProduct/{productID}")
+    @PutMapping("/{productID}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer productID , @RequestBody Product product){
         return new ResponseEntity<Product>(productService.updateProduct(productID , product) , HttpStatus.OK);
     }
@@ -233,6 +234,17 @@ public class ProductController {
 
         public void setProduct_quantity(int product_quantity) {
             this.product_quantity = product_quantity;
+        }
+    }
+
+    @GetMapping("/{product_id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Integer product_id){
+        Product product = productService.getProductById(product_id);
+        if(product == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return  new ResponseEntity<>(product,HttpStatus.OK);
         }
     }
 }
