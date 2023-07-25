@@ -42,31 +42,9 @@ public class UserService {
         return userRepo.findById(id).orElse(null);
     }
 
-//    public User updateUser(Integer id, User user) {
-//        User existingUser = userRepo.findById(id).orElse(null);
-//        if (existingUser == null) {
-//            return null;
-//        }
-//        existingUser.setFirstname(user.getFirstname());
-//        existingUser.setLastname(user.getLastname());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-//        return userRepo.save(existingUser);
-//    }
-//    public User updateUser(User user) {
-//       Integer id = user.getId();
-//
-//       User user1 = userRepo.findById(id).get();
-//       user1.setId(user.getId());
-//       user1.setFirstname(user.getFirstname());
-//       user1.setLastname(user.getLastname());
-//       user1.setEmail(user.getEmail());
-//       user1.setRole(user.getRole());
-//       return userRepo.save(user1);
-//    }
-public User updateUser(User user) {
-    return userUpdateRepo.save(user);
-}
+    public User updateUser(User user) {
+        return userUpdateRepo.save(user);
+    }
 
 
     public HttpStatus deleteUser(Integer id) {
