@@ -45,7 +45,7 @@ public class ShowroomController {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
         }
         String fileName = file.getOriginalFilename();
-        String fileStoragePath = "C:\\Users\\hp\\Desktop\\showroom\\"; // Replace this with the actual storage path location
+        String fileStoragePath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports\\"; // Replace this with the actual storage path location
 
         // Save the file to the file system
         File savedFile = new File(fileStoragePath + fileName);
