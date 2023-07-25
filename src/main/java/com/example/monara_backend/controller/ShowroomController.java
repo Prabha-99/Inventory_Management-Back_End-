@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class ShowroomController {
 
 
     @PostMapping("/add")
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<String> addFile(@RequestParam("file") MultipartFile file) {
 
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
@@ -49,13 +50,18 @@ public class ShowroomController {
 
         // Save the file to the file system
         File savedFile = new File(fileStoragePath + fileName);
-        file.transferTo(savedFile);
+        try {
+            file.transferTo(savedFile);
 
-        ShowroomFile fileUpload = new ShowroomFile();
-        fileUpload.setFilename(fileName);
-        fileUpload.setFilePath(savedFile.getAbsolutePath());
-        showroomService.saveDetails(fileUpload);
-        return "redirect:/";
+            ShowroomFile fileUpload = new ShowroomFile();
+            fileUpload.setFilename(fileName);
+            fileUpload.setFilePath(savedFile.getAbsolutePath());
+            showroomService.saveDetails(fileUpload);
+
+            return ResponseEntity.ok("File uploaded successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload the file.");
+        }
     }
 
 
