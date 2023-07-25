@@ -43,10 +43,13 @@ public class NotificationService implements Notification {
     @Override
     public void productAddNotification(String recipientEmail, String productName, String Category, String Quantity) throws MessagingException {
 
+        String reportName=getNewStockName();
+        String path=attachmentPath+reportName+".pdf";
+
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(recipientEmail);
-        helper.setSubject("Inventory Update: New Product Added ");
+        helper.setSubject("INVENTORY UPDATE : New Product Added ");
         String additionalText = "A new Product was added to the Inventory by Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
                 "<b>Product Name Name</b> : "+productName+ "<br><br> " +
@@ -70,6 +73,11 @@ public class NotificationService implements Notification {
 
         String emailContent = additionalText +"\n"+ tableContent+ greeting;
         helper.setText(emailContent, true);
+
+        // Attach the file
+        FileSystemResource file = new FileSystemResource(new File(path));
+        helper.addAttachment(file.getFilename(), file);
+
         emailSender.send(message);
     }
 
@@ -79,11 +87,14 @@ public class NotificationService implements Notification {
     @Override
     public void productDeleteNotification(String recipientEmail, String productName, String Category) throws MessagingException {
 
+        String reportName=getNewStockName();
+        String path=attachmentPath+reportName+".pdf";
+
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(recipientEmail);
-        helper.setSubject("Inventory Update: Existing Product Deleted !!! ");
+        helper.setSubject("INVENTORY UPDATE : Existing Product Deleted !!! ");
         String additionalText = "An Existing Product was deleted by the Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
                 "<b>Product Name Name</b> : "+productName+ "<br><br> " +
@@ -104,6 +115,11 @@ public class NotificationService implements Notification {
 
         String emailContent = additionalText +"\n"+ tableContent+ greeting;
         helper.setText(emailContent, true);
+
+        // Attach the file
+        FileSystemResource file = new FileSystemResource(new File(path));
+        helper.addAttachment(file.getFilename(), file);
+
         emailSender.send(message);
     }
 
@@ -112,36 +128,35 @@ public class NotificationService implements Notification {
     @Override
     public void GINNotification(String recipientEmail, String Path) throws MessagingException {
 
+        List<GIN> gins=ginRepo.newestGIN();//Retrieving Newest GIN Data into a List
+        Long invoice = gins.get(0).getInvoice_no();
+        String customerName = gins.get(0).getCustomer_name();
+        String mobile = gins.get(0).getContact_nu();
 
-                List<GIN> gins=ginRepo.newestGIN();//Retrieving Newest GIN Data into a List
-                Long invoice = gins.get(0).getInvoice_no();
-                String customerName = gins.get(0).getCustomer_name();
-                String mobile = gins.get(0).getContact_nu();
+        String reportName=getGINName(); //here
+        String path=attachmentPath+reportName+".pdf";
 
-                String reportName=getGINName(); //here
-                String path=attachmentPath+reportName+".pdf";
+        MimeMessage message = emailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-                MimeMessage message = emailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setTo(recipientEmail);
+        helper.setSubject("NEW GOOD ISSUE NOTE - "+reportName);
+        String additionalText = "Good Issue Note for,<br><br> <b>Invoice Number</b> : "+invoice+
+                "<br> <b>Customer Name</b> : "+customerName+
+                "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
+                "Additionally, below attached the <mark>Goods Issue Note (GIN)</mark> related to above goods issuance for the reference purpose.<br><br>";
 
-                helper.setTo(recipientEmail);
-                helper.setSubject("New Good Issue Note - "+reportName);
-                String additionalText = "Good Issue Note for,<br><br> <b>Invoice Number</b> : "+invoice+
-                                                            "<br> <b>Customer Name</b> : "+customerName+
-                                                            "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
-                                        "Additionally, below attached the <mark>Goods Issue Note (GIN)</mark> related to above goods issuance for the reference purpose.<br><br>";
+        String greeting = "<b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
 
-                String greeting = "<b><i>This is an System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
-
-                String emailContent = additionalText +"\n"+ greeting;
-                helper.setText(emailContent, true);
+        String emailContent = additionalText +"\n"+ greeting;
+        helper.setText(emailContent, true);
 
 
-                // Attach the file
-                FileSystemResource file = new FileSystemResource(new File(path));
-                helper.addAttachment(file.getFilename(), file);
+        // Attach the file
+        FileSystemResource file = new FileSystemResource(new File(path));
+        helper.addAttachment(file.getFilename(), file);
 
-                emailSender.send(message);
+        emailSender.send(message);
 
     }
 
@@ -164,7 +179,7 @@ public class NotificationService implements Notification {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(recipientEmail);
-        helper.setSubject("New Good Received Note - "+reportName);
+        helper.setSubject("NEW GOOD RECEIVED NOTE - "+reportName);
         String additionalText = "Good Received Note for,<br><br> <b>Invoice Number</b> : "+invoice+
                 "<br> <b>Supplier</b> : "+supplierName+
                 "<br> <b>Mobile</b> : "+mobile+"<br><br>" +
@@ -184,12 +199,10 @@ public class NotificationService implements Notification {
         emailSender.send(message);
     }
 
-
     @Override
-    public void confirmedGRNNotification() {
+    public void newArchitecturalReport(String recipientEmail, String path) throws MessagingException {
 
     }
-
 
 
 }
