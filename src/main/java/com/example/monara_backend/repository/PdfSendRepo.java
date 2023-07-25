@@ -16,4 +16,7 @@ public interface PdfSendRepo extends JpaRepository<BillSave,Long> {
 
     @Query("SELECT bi2.qu_no FROM BillSave bi2 WHERE bi2.bill_id=:bill_id")
     String findQuatationNoById(@Param("bill_id")Long bill_id);
+
+    @Query("SELECT bi3.cu_name FROM BillSave bi3 WHERE bi3.bill_id=:bill_id")
+    String findNameById(@Param("bill_id")Long bill_id);
 }
