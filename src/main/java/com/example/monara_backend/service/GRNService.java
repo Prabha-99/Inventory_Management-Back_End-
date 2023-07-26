@@ -61,7 +61,6 @@ public class GRNService {
                 exportGRN();// 2. Generating the Report
 
                 for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
-//                    Thread.sleep(1000);
                     notificationService.GRNNotification(recipientEmail,path);
                 }
 
@@ -94,9 +93,9 @@ public class GRNService {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setString(1, "GRN_"+invoiceNo);
+            ps.setString(1, "GRN_"+invoiceNo+".pdf");
             ps.setString(2,supplierName );
-            ps.setString(3,reportPath);
+            ps.setString(3,reportPath+"\\GRN_"+invoiceNo+".pdf");
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
         }, keyHolder);

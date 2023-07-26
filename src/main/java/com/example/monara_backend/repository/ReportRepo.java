@@ -32,6 +32,5 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
     @Query(value = "SELECT * FROM reports WHERE TIME(date) <= CURTIME() ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the Newest Stock Report
     List<Report> newestStock();
 
-    @Query(value = "SELECT report_name FROM reports WHERE report_name LIKE 'Archi%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the name of the Newest Stock Report
-    String nameOFNewestArchi();
+
 }
