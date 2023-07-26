@@ -35,16 +35,6 @@ public class ReportController {
     @Autowired
     private ReportRepo reportRepo;
 
-    @GetMapping("/productReport")
-    public String generateProductReport() throws JRException, FileNotFoundException {
-        return reportService.exportProductReport();
-    }
-
-    @GetMapping("/psReport")
-    public String generatePSReport() throws JRException, FileNotFoundException {
-        return reportService.exportPSReport();
-    }
-
 
     @GetMapping("getAllPSReport")
     public List<Report> getAllPS(){
@@ -77,11 +67,9 @@ public class ReportController {
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestParam Long id) {
         Report file = reportService.getFileById(id);
-//        Optional<Report> file = reportRepo.findById(id);
         if (file == null) {
             return ResponseEntity.notFound().build();
         }
-
         // Get the file path from the ShowroomFile entity
         String filePath = file.getPath();
         File downloadFile = new File(filePath);
@@ -89,7 +77,6 @@ public class ReportController {
         if (!downloadFile.exists() || !downloadFile.isFile()) {
             return ResponseEntity.notFound().build();
         }
-
         // Set the response headers
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getReport_name());
@@ -101,7 +88,6 @@ public class ReportController {
         } catch (FileNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-
         // Stream the file content to the response
         return ResponseEntity.ok()
                 .headers(headers)
@@ -109,8 +95,5 @@ public class ReportController {
                 .contentLength(downloadFile.length())
                 .body(inputStreamResource);
     }
-
-
-
 
 }
