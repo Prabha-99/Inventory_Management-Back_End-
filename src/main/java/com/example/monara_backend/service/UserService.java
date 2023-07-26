@@ -80,6 +80,7 @@ public class UserService {
         String encodedPassword = encoder.encode(profile.getPassword());
         existingUser.setPassword(encodedPassword);
       //existingUser.setRole(profile.getRole());
+
         return userRepo.save(existingUser);
     }
 
