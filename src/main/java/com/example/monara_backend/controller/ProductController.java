@@ -116,7 +116,7 @@ public class ProductController {
 
         // Send notifications to each user
         for (String recipientEmail : recipientEmails) {
-            notificationService.productDeleteNotification(recipientEmail, "product_id", "product_id");
+            notificationService.productDeleteNotification(recipientEmail, "product_id", String.valueOf(product_id));
         }
 
         return ResponseEntity.ok("Product deleted");
