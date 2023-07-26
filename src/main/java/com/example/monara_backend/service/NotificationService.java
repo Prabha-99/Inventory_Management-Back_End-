@@ -7,6 +7,7 @@ import com.example.monara_backend.model.Report;
 import com.example.monara_backend.repository.GINRepo;
 import com.example.monara_backend.repository.GRNRepo;
 import com.example.monara_backend.repository.ReportRepo;
+import com.example.monara_backend.repository.ShowroomRepo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class NotificationService implements Notification {
     private final GINRepo ginRepo;
     private final GRNRepo grnRepo;
     private final ReportRepo reportRepo;
+    private final ShowroomRepo showroomRepo;
 
 
 
@@ -45,6 +47,10 @@ public class NotificationService implements Notification {
 
     public String getNewStockName(){
         return reportRepo.nameOFNewestStock();
+    }
+
+    public String getNewArchiName(){
+        return showroomRepo.nameOFNewestArchi();
     }
 
     @Override
@@ -141,7 +147,7 @@ public class NotificationService implements Notification {
         String mobile = gins.get(0).getContact_nu();
 
         String reportName=getGINName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -180,7 +186,7 @@ public class NotificationService implements Notification {
         String mobile = grns.get(0).getContact_nu();
 
         String reportName=getGRNName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -209,22 +215,15 @@ public class NotificationService implements Notification {
     @Override
     public void newArchitecturalReport(String recipientEmail, String Path) throws MessagingException {
 
-//        List<Report> strocks=reportRepo.newestStock();//Retrieving Newest GIN Data into a List
-//        Long invoice = grns.get(0).getInvoice_no();
-//        String supplierName = grns.get(0).getSupplier_name();
-//        String mobile = grns.get(0).getContact_nu();
-
-        String reportName=getNewStockName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String reportName=getNewArchiName(); //here
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(recipientEmail);
         helper.setSubject("NEW ARCHITECTURAL REPORT - " + reportName);
-        String additionalText = "Architectural Report for," +
-                "<br><br> <b>Customer</b> : " + reportName + "<br><br>" +
-                "Herewith below attached the Architectural Report <mark>" + reportName + "</mark><br><br>";
+        String additionalText = "Herewith below attached the Architectural Report <mark>" + reportName + "</mark><br><br>";
 
         String greeting = "<b><i>This is a System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
 

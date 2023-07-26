@@ -1,6 +1,8 @@
 package com.example.monara_backend.service;
 
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.Report;
+import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.repository.ReportRepo;
@@ -44,52 +46,6 @@ public class ReportService {
     LocalDate currentDate = LocalDate.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     String dateCreated = currentDate.format(formatter);
-
-
-    public String exportUserReport(String format) throws IOException, JRException {
-
-        List<User> users=userRepo.findAll();//Retrieving all User Data into a List
-
-        //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:SystemUsers.jrxml");
-        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
-
-        //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("Created by","Monara Creations pvt,Ltd");
-
-        //Printing the Report
-        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-
-        // Converting the JasperPrint object to a byte array
-        byte[] reportBytes = JasperExportManager.exportReportToPdf(print);
-
-        // Saving the report file to the database
-        String sql = "INSERT INTO reports (report_name, format, data, date) VALUES (?, ?, ?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Users");
-            ps.setString(2, format);
-            ps.setBytes(3, reportBytes);
-            ps.setTimestamp(4, Timestamp.valueOf(dateCreated)); // set the current date and time
-            return ps;
-        }, keyHolder);
-        
-
-        // Retrieving the ID of the inserted row
-        long reportId = keyHolder.getKey().longValue();
-
-
-        // Saving the report file to the local file system
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports" +dateCreated + "." + format.toLowerCase();
-        FileOutputStream fos = new FileOutputStream(reportPath);
-        fos.write(reportBytes);
-        fos.close();
-
-        return "Report generated and saved Successfully at : "+reportPath;
-    }
 
 
 
@@ -197,11 +153,8 @@ public class ReportService {
         return "Report generated Successfully at : "+reportPath;
     }
 
-
-
-
-
-
-
+    public Report getFileById(Long id) {
+        return reportRepo.findById(id).orElse(null);
+    }
 
 }

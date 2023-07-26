@@ -49,12 +49,7 @@ public class ProductController {
         this.reportService = reportService;
     }
 
-//    List<User> recipients=userRepo.getMails();
-
     String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
-
-    // Get the emails of users to notify
-
 
 
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
@@ -63,8 +58,11 @@ public class ProductController {
 
 
     @PostMapping("/saveProduct")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) throws MessagingException {
+    public ResponseEntity<Product> saveProduct(@RequestBody Product product) throws MessagingException, JRException, FileNotFoundException {
         Product saved = productService.saveProduct(product);
+
+        //Generating the Updated Stock Report
+        reportService.exportStockReport();
 
         // Send notifications to each user
         for (String recipientEmail : recipientEmails) {

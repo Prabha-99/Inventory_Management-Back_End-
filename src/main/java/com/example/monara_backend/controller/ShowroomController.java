@@ -4,6 +4,7 @@ import com.example.monara_backend.model.ShowroomFile;
 import com.example.monara_backend.service.DesignerBillSendService;
 import com.example.monara_backend.service.NotificationService;
 import com.example.monara_backend.service.ShowroomService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class ShowroomController {
 
 
     @PostMapping("/add")
-    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException {
+    public String addFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IOException, MessagingException {
 
         if (file.getSize() > MAX_FILE_SIZE) {
             throw new MaxUploadSizeExceededException(MAX_FILE_SIZE);
@@ -66,6 +67,11 @@ public class ShowroomController {
         fileUpload.setFilename(fileName);
         fileUpload.setFilePath(savedFile.getAbsolutePath());
         showroomService.saveDetails(fileUpload);
+
+        // Send the notification to the Designer
+        for (String recipientEmail : recipientEmails) {
+            notificationService.newArchitecturalReport(recipientEmail,file.getOriginalFilename());
+        }
         return "redirect:/";
     }
 
