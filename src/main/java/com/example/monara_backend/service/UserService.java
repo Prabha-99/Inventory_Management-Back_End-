@@ -83,7 +83,7 @@ public class UserService {
         return userRepo.save(existingUser);
     }
 
-    public long getUserCount(){
-        return userRepo.count();
+    public Integer getUserCount(){
+        return Math.toIntExact(userRepo.count());
     }
 }
