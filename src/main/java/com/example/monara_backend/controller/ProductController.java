@@ -49,7 +49,6 @@ public class ProductController {
         this.reportService = reportService;
     }
 
-    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/GRN.pdf";
 
 
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/

@@ -45,7 +45,7 @@ public class GINService {
     List<String> recipientEmails = Arrays.asList(      /*This email list should get From the Database not like this*/
             "prabhashana77@gmail.com"
     );
-    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/";
+    String attachmentPath = "C:/Users/milin/Documents/SPRING/GIT12/reports/";
 
     public String getGINName(){
         return ginRepo.nameOFNewestGIN();
@@ -76,7 +76,7 @@ public class GINService {
 
 
     public String exportGIN() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<GIN> gins=ginRepo.newestGIN();//Retrieving Newest GIN Data into a List
 

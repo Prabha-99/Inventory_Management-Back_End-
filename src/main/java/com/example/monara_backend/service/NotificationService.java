@@ -36,7 +36,7 @@ public class NotificationService implements Notification {
 
 
 
-    String attachmentPath = "F:/Uni Works/Level 3/Sem 1/Group Project/Reports/";
+    String attachmentPath = "C:/Users/milin/Documents/SPRING/GIT12/reports/";
     public String getGINName(){
         return ginRepo.nameOFNewestGIN();
     }

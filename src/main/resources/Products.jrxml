@@ -53,7 +53,7 @@
         <band height="310" splitType="Stretch">
             <image>
                 <reportElement x="0" y="0" width="396" height="270" uuid="ac27a826-aec2-42ea-90d4-8235b229daa2"/>
-                <imageExpression><![CDATA["F:/Uni Works/Level 3/Sem 1/Group Project/monara_BackEnd/src/main/resources/Logo.JPG"]]></imageExpression>
+                <imageExpression><![CDATA["Logo.JPG"]]></imageExpression>
             </image>
             <line>
                 <reportElement x="0" y="280" width="802" height="1" uuid="37e747f8-95c3-4a7e-99a7-a2f055b5a669"/>

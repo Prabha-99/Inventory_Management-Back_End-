@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 public class BackupController {
     @PostMapping("/back")
     public ResponseEntity<String> createBackup() {
-        String path = "D:\\Backup-monara"; // Change this to your path
+        String path = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\Monara-backup"; // Change this to your path
         String dbName = "monara";
         String dbUser = "root";
 
@@ -57,7 +57,7 @@ public class BackupController {
     }
 
 
-    @Scheduled(cron = "0 00 00 * * ?")
+    @Scheduled(cron = "0 39 03 * * ?")
     public void scheduleBackup() {
         try {
             createBackup();

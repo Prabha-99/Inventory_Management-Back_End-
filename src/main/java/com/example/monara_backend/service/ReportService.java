@@ -50,7 +50,7 @@ public class ReportService {
 
     @Scheduled(cron = "0 0 21 * * ?")
     public String exportStockReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
+        String reportPath = "C:\\Users\\milin\\Documents\\SPRING\\GIT12\\reports";/*Declaring the Report path as a Global variable.
          *****This must be a path to DB*****/
         List<Product> products=productRepo.findAll();//Retrieving all User Data into a List
 
