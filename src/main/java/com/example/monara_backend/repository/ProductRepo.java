@@ -1,6 +1,9 @@
 package com.example.monara_backend.repository;
 
+import com.example.monara_backend.model.PdfBillSave;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.Report;
+import com.example.monara_backend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -42,6 +46,10 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
 
     @Query("SELECT DISTINCT p.product_name FROM Product p WHERE p.category.category_id IN ('cat_edge', 'cat_melamine')")
     List<String> getNamesByCategoryIds();
+
+
+    @Query("SELECT pd FROM Product pd WHERE pd.product_id = :product_id")
+    Product getProductByIds(@Param("product_id") Integer product_id);
 
 }
 

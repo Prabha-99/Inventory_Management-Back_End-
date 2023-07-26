@@ -2,7 +2,9 @@ package com.example.monara_backend.service;
 
 import com.example.monara_backend.dto.ProductDto;
 import com.example.monara_backend.model.Product;
+import com.example.monara_backend.model.User;
 import com.example.monara_backend.repository.CategoryRepo;
+import com.example.monara_backend.repository.GetProductRepo;
 import com.example.monara_backend.repository.ProductRepo;
 import com.example.monara_backend.util.VarList;
 import jakarta.transaction.Transactional;
@@ -27,6 +29,9 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private GetProductRepo getProductRepo;
+
 
     //Add products to database
     public Product saveProduct (Product product) {
@@ -34,17 +39,29 @@ public class ProductService {
     }
 
     //Update product in database
-    public Product updateProduct(Integer productID, Product product) {
-        Product existingProduct = productRepo.findById(productID).orElse(null);
-        if (existingProduct == null) {
-            return null;
-        }
-        existingProduct.setCategory_id(product.getCategory_id());
-        existingProduct.setProduct_brand(product.getProduct_brand());
-        existingProduct.setProduct_name(product.getProduct_name());
-        existingProduct.setProduct_price(product.getProduct_price());
-        existingProduct.setProduct_quantity(product.getProduct_quantity());
-        return productRepo.save(existingProduct);
+//    public Product updateProduct(Integer product_id, Product product) {
+//        Product existingProduct = productRepo.findById(product_id).orElse(null);
+//        if (existingProduct == null) {
+//            return null;
+//        }
+//        existingProduct.setCategory_id(product.getCategory_id());
+//        existingProduct.setProduct_brand(product.getProduct_brand());
+//        existingProduct.setProduct_name(product.getProduct_name());
+//        existingProduct.setProduct_price(product.getProduct_price());
+//        existingProduct.setProduct_quantity(product.getProduct_quantity());
+//        return productRepo.save(existingProduct);
+//    }
+
+    public Product updateProduct(Product product) {
+        int product_id = product.getProduct_id();
+
+        Product product1 = getProductRepo.findById(product_id).get();
+
+        product1.setProduct_name(product.getProduct_name());
+        product1.setProduct_brand(product.getProduct_brand());
+        product1.setProduct_quantity(product.getProduct_quantity());
+        product1.setCategory_id(product.getCategory_id());
+        return getProductRepo.save(product1);
     }
 
 
@@ -66,8 +83,8 @@ public class ProductService {
     }
 
     //Get product by id
-    public Product getProductById(Integer id) {
-        return productRepo.findById(id).orElse(null);
+    public Product getProductById(Integer product_id) {
+        return getProductRepo.findById(product_id).orElse(null);
     }
 
     //Delete products

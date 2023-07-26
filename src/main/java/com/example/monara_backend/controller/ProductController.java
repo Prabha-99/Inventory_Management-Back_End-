@@ -74,9 +74,9 @@ public class ProductController {
     }
 
 
-    @PutMapping("/{productID}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer productID , @RequestBody Product product){
-        return new ResponseEntity<Product>(productService.updateProduct(productID , product) , HttpStatus.OK);
+    @PutMapping("/{product_id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
+        return new ResponseEntity<Product>(productService.updateProduct(product) , HttpStatus.OK);
     }
 
     @GetMapping("/getAllProduct")
@@ -247,4 +247,5 @@ public class ProductController {
             return  new ResponseEntity<>(product,HttpStatus.OK);
         }
     }
+
 }
