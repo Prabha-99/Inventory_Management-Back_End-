@@ -7,6 +7,7 @@ import com.example.monara_backend.model.Report;
 import com.example.monara_backend.repository.GINRepo;
 import com.example.monara_backend.repository.GRNRepo;
 import com.example.monara_backend.repository.ReportRepo;
+import com.example.monara_backend.repository.ShowroomRepo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class NotificationService implements Notification {
     private final GINRepo ginRepo;
     private final GRNRepo grnRepo;
     private final ReportRepo reportRepo;
+    private final ShowroomRepo showroomRepo;
 
 
 
@@ -47,11 +49,15 @@ public class NotificationService implements Notification {
         return reportRepo.nameOFNewestStock();
     }
 
+    public String getNewArchiName(){
+        return showroomRepo.nameOFNewestArchi();
+    }
+
     @Override
     public void productAddNotification(String recipientEmail, String productName, String Category, String Quantity) throws MessagingException {
 
         String reportName=getNewStockName();
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -59,8 +65,8 @@ public class NotificationService implements Notification {
         helper.setSubject("INVENTORY UPDATE : New Product Added ");
         String additionalText = "A new Product was added to the Inventory by Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
-                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
-                "<b>Product Name Name</b> : "+Quantity+ "<br><br> " +
+                "<b>Product Name</b> : "+productName+ "<br><br> " +
+                "<b>Product Name</b> : "+Quantity+ "<br><br> " +
                 "Additionally, here the <mark>Product</mark> that has been <mark>Added</mark> to the Inventory.</mark> for the reference purpose.<br><br>";
         String tableContent = "<table style='border-collapse: collapse;'>" +
                 "<tr>" +
@@ -95,7 +101,7 @@ public class NotificationService implements Notification {
     public void productDeleteNotification(String recipientEmail, String productName, String Category) throws MessagingException {
 
         String reportName=getNewStockName();
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -104,7 +110,7 @@ public class NotificationService implements Notification {
         helper.setSubject("INVENTORY UPDATE : Existing Product Deleted !!! ");
         String additionalText = "An Existing Product was deleted by the Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
-                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
+                "<b>Product Name</b> : "+productName+ "<br><br> " +
                 "Additionally, here the Product that has been <mark>Deleted from Inventory.</mark> for the reference purpose.<br><br>";
 
         String tableContent = "<table style='border-collapse: collapse;'>" +
@@ -141,7 +147,7 @@ public class NotificationService implements Notification {
         String mobile = gins.get(0).getContact_nu();
 
         String reportName=getGINName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -180,7 +186,7 @@ public class NotificationService implements Notification {
         String mobile = grns.get(0).getContact_nu();
 
         String reportName=getGRNName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -209,22 +215,15 @@ public class NotificationService implements Notification {
     @Override
     public void newArchitecturalReport(String recipientEmail, String Path) throws MessagingException {
 
-//        List<Report> strocks=reportRepo.newestStock();//Retrieving Newest GIN Data into a List
-//        Long invoice = grns.get(0).getInvoice_no();
-//        String supplierName = grns.get(0).getSupplier_name();
-//        String mobile = grns.get(0).getContact_nu();
-
-        String reportName=getNewStockName(); //here
-        String path=attachmentPath+reportName+".pdf";
+        String reportName=getNewArchiName(); //here
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         helper.setTo(recipientEmail);
         helper.setSubject("NEW ARCHITECTURAL REPORT - " + reportName);
-        String additionalText = "Architectural Report for," +
-                "<br><br> <b>Customer</b> : " + reportName + "<br><br>" +
-                "Herewith below attached the Architectural Report <mark>" + reportName + "</mark><br><br>";
+        String additionalText = "Herewith below attached the Architectural Report <mark>" + reportName + "</mark><br><br>";
 
         String greeting = "<b><i>This is a System Generated Email, Do not reply to this..!!!<br><br>Thank you for your attention <br> Have a nice Day.!!!</i></b>";
 

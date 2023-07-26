@@ -63,7 +63,6 @@ public class GINService {
                 exportGIN();// 2. Generating the Report
 
                 for (String recipientEmail : recipientEmails) { // 3. Sending the Notification
-//                    Thread.sleep(1000);
                     notificationService.GINNotification(recipientEmail,path);
                 }
 
@@ -96,12 +95,13 @@ public class GINService {
         String customerName = gins.get(0).getCustomer_name(); // Assuming customer_name is retrieved from the first GIN object
 
         Long invoiceNo=gins.get(0).getInvoice_no(); // Assuming invoice_no is retrieved from the first GIN object
+
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            ps.setString(1, "GIN_"+invoiceNo);
+            ps.setString(1, "GIN_"+invoiceNo+".pdf");
             ps.setString(2,customerName );
-            ps.setString(3,reportPath);
+            ps.setString(3,reportPath+"\\GIN_"+invoiceNo+".pdf");
             ps.setTimestamp(4, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
         }, keyHolder);
@@ -110,6 +110,7 @@ public class GINService {
         JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
 
         JasperExportManager.exportReportToPdfFile(print,reportPath+"\\GIN_"+invoiceNo+".pdf"); //Printing the report with Combination "GIN"+ Invoice number
+
 
         //Thread
 

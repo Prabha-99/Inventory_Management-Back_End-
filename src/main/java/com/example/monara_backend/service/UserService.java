@@ -82,4 +82,8 @@ public class UserService {
       //existingUser.setRole(profile.getRole());
         return userRepo.save(existingUser);
     }
+
+    public long getUserCount(){
+        return userRepo.count();
+    }
 }
