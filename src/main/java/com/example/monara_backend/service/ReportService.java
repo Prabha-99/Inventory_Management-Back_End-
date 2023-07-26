@@ -69,8 +69,8 @@ public class ReportService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Products"+dateCreated);
-            ps.setString(2,reportPath);
+            ps.setString(1, "Products"+dateCreated+".pdf");
+            ps.setString(2,reportPath+".pdf");
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
         }, keyHolder);
@@ -139,8 +139,8 @@ public class ReportService {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Stock_"+dateCreated);
-            ps.setString(2,reportPath);
+            ps.setString(1, "Stock_"+dateCreated+".pdf");
+            ps.setString(2,reportPath+"Stock_"+dateCreated+".pdf");
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
         }, keyHolder);

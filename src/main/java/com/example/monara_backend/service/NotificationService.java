@@ -57,7 +57,7 @@ public class NotificationService implements Notification {
     public void productAddNotification(String recipientEmail, String productName, String Category, String Quantity) throws MessagingException {
 
         String reportName=getNewStockName();
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -65,8 +65,8 @@ public class NotificationService implements Notification {
         helper.setSubject("INVENTORY UPDATE : New Product Added ");
         String additionalText = "A new Product was added to the Inventory by Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
-                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
-                "<b>Product Name Name</b> : "+Quantity+ "<br><br> " +
+                "<b>Product Name</b> : "+productName+ "<br><br> " +
+                "<b>Product Name</b> : "+Quantity+ "<br><br> " +
                 "Additionally, here the <mark>Product</mark> that has been <mark>Added</mark> to the Inventory.</mark> for the reference purpose.<br><br>";
         String tableContent = "<table style='border-collapse: collapse;'>" +
                 "<tr>" +
@@ -101,7 +101,7 @@ public class NotificationService implements Notification {
     public void productDeleteNotification(String recipientEmail, String productName, String Category) throws MessagingException {
 
         String reportName=getNewStockName();
-        String path=attachmentPath+reportName+".pdf";
+        String path=attachmentPath+reportName;
 
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -110,7 +110,7 @@ public class NotificationService implements Notification {
         helper.setSubject("INVENTORY UPDATE : Existing Product Deleted !!! ");
         String additionalText = "An Existing Product was deleted by the Inventory_Admin. See below for further Details,<br><br> " +
                 "<b>Product Category</b> : "+Category+ "<br> " +
-                "<b>Product Name Name</b> : "+productName+ "<br><br> " +
+                "<b>Product Name</b> : "+productName+ "<br><br> " +
                 "Additionally, here the Product that has been <mark>Deleted from Inventory.</mark> for the reference purpose.<br><br>";
 
         String tableContent = "<table style='border-collapse: collapse;'>" +

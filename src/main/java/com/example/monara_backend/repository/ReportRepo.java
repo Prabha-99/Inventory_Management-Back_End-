@@ -25,6 +25,9 @@ public interface ReportRepo extends JpaRepository<Report, Long> {
     @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'GRN%'", nativeQuery = true)
     List<Report> GRNReports();
 
+    @Query(value = "SELECT * FROM reports WHERE report_name LIKE 'Stock%'", nativeQuery = true)
+    List<Report> StockReports();
+
 
     @Query(value = "SELECT report_name FROM reports WHERE report_name LIKE 'Stock%' ORDER BY date DESC LIMIT 1;", nativeQuery = true)//Getting the name of the Newest Stock Report
     String nameOFNewestStock();

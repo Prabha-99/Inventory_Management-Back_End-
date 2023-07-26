@@ -67,30 +67,13 @@ public class ReportController {
         return files;
     }
 
+    @GetMapping("getAllStockReport")
+    public List<Report> getAllStock(){
+        List<Report> files = reportRepo.StockReports();
+        return files;
+    }
+
     //File Download Endpoint
-
-//    @GetMapping("/{fileId}/download")
-//    public ResponseEntity<Resource> downloadFile(@PathVariable Long fileId) throws FileNotFoundException {
-//        // Retrieve the file record from the database
-//        Optional<Report> optionalFile = reportRepo.findById(fileId);
-//        if (optionalFile.isPresent()) {
-//            Report report = optionalFile.get();
-//
-//            // Create a Resource object from the report's local path
-//            Resource resource = new FileSystemResource(report.getPath());
-//            if (resource.exists()) {
-//                // Return the report as a downloadable attachment
-//                return ResponseEntity.ok()
-//                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + report.getReport_name() + "\"")
-//                        .body(resource);
-//            } else {
-//                throw new FileNotFoundException("File not found: " + report.getPath());
-//            }
-//        } else {
-//            throw new NoSuchElementException("File not found with ID: " + fileId);
-//        }
-//    }
-
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestParam Long id) {
         Report file = reportService.getFileById(id);
