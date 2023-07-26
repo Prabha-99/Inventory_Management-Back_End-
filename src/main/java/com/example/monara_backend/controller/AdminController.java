@@ -64,6 +64,10 @@ public class AdminController {
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer id){
         return  new ResponseEntity<HttpStatus>(userService.deleteUser(id));
     }
+    @GetMapping("/userCount")
+    public long getUserCount(){
+        return userService.getUserCount();
+    }
 
 
 }
