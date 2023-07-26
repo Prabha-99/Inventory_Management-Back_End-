@@ -372,36 +372,6 @@
     </detail>
     <lastPageFooter>
         <band height="193">
-
-            <textField>
-                <reportElement style="Detail" positionType="Float" x="50" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
-                </reportElement>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="8" isBold="false"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
-            </textField>
-
-            <textField>
-                <reportElement style="Detail" positionType="Float" x="350" y="0" width="124" height="20" uuid="00d48815-f03a-4081-aa6c-e0c5d7314911">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55f30b58-6c09-4fb3-94ee-b7f44a6cdaa5"/>
-                </reportElement>
-                <textElement textAlignment="Center" verticalAlignment="Middle">
-                    <font fontName="Arial" size="8" isBold="false"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
-            </textField>
-
-
-            <staticText>
-                <reportElement mode="Opaque" x="60" y="20" width="139" height="40" forecolor="#263F91" uuid="ae5f55c6-5836-4a34-b361-3807190f7131"/>
-                <text><![CDATA[..................................................Issued by Store Keeper]]></text>
-            </staticText>
-            <staticText>
-                <reportElement mode="Opaque" x="350" y="20" width="139" height="40" forecolor="#263F91" uuid="e5d28d36-e459-4f07-bd4f-f124268d57b6"/>
-                <text><![CDATA[..................................................Checked by Account's Assistant]]></text>
-            </staticText>
         </band>
     </lastPageFooter>
 </jasperReport>

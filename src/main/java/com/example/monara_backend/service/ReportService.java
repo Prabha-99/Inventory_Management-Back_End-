@@ -36,10 +36,8 @@ public class ReportService {
     //System Reports are Automatically Generated Every day at 9.00PM
 
     private final JdbcTemplate jdbcTemplate;
-    private final UserRepo userRepo;
     private final ProductRepo productRepo;
     private final ReportRepo reportRepo;
-
 
 
     //Local variable to Store current Data.
@@ -48,75 +46,6 @@ public class ReportService {
     String dateCreated = currentDate.format(formatter);
 
 
-
-    @Scheduled(cron = "0 0 21 * * ?")
-    public String exportProductReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
-         *****This must be a path to DB*****/
-        List<Product> products=productRepo.findAll();//Retrieving all User Data into a List
-
-        //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:Products.jrxml");
-        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
-
-        //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(products);
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("Created by","Monara Creations pvt,Ltd");
-
-        // Saving the report file to the database
-        String sql = "INSERT INTO reports (report_name, path, date) VALUES (?, ?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Products"+dateCreated+".pdf");
-            ps.setString(2,reportPath+".pdf");
-            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
-            return ps;
-        }, keyHolder);
-
-        //Printing the Report
-        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\Products.pdf");
-
-
-        return "Report generated Successfully at : "+reportPath;
-    }
-
-    @Scheduled(cron = "0 0 21 * * ?")
-    public String exportPSReport() throws FileNotFoundException, JRException {
-        String reportPath = "F:\\Uni Works\\Level 3\\Sem 1\\Group Project\\Reports";/*Declaring the Report path as a Global variable.
-         *****This must be a path to DB*****/
-        List<Product> users=productRepo.findAll();//Retrieving all User Data into a List
-
-        //Loading the .jrxml file and Compiling it
-        File file= ResourceUtils.getFile("classpath:JobSpecReport.jrxml");
-        JasperReport jasperReport= JasperCompileManager.compileReport(file.getAbsolutePath());
-
-        //Mapping List Data into the Report
-        JRBeanCollectionDataSource source=new JRBeanCollectionDataSource(users);
-        Map<String,Object> parameters=new HashMap<>();
-        parameters.put("Created by","Monara Creations pvt,Ltd");
-
-
-        // Saving the report file to the database
-        String sql = "INSERT INTO reports (report_name, path, date) VALUES (?, ?, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, "Product_Spec");
-            ps.setString(2,reportPath);
-            ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
-            return ps;
-        }, keyHolder);
-
-        //Printing the Report
-        JasperPrint print= JasperFillManager.fillReport(jasperReport,parameters,source);
-        //Save the Report in the Local File System
-        JasperExportManager.exportReportToPdfFile(print,reportPath+"\\ProductSpec.pdf");
-
-        return "Report generated Successfully at : "+reportPath;
-    }
 
 
     @Scheduled(cron = "0 0 21 * * ?")
@@ -140,7 +69,7 @@ public class ReportService {
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, "Stock_"+dateCreated+".pdf");
-            ps.setString(2,reportPath+"Stock_"+dateCreated+".pdf");
+            ps.setString(2,reportPath+"\\Stock_"+dateCreated+".pdf");
             ps.setTimestamp(3, new Timestamp(System.currentTimeMillis())); // set the current date and time
             return ps;
         }, keyHolder);

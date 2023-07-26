@@ -29,7 +29,7 @@ public class Report {
     }
 
     public String getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         return sdf.format(this.date);
     }
 }
