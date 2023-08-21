@@ -1,1 +1,1 @@
-# Web_Based_Inventory_Management(Back_End).
+# Web_Based_Inventory_Management(Back_End)
